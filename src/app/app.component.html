@@ -3,18 +3,18 @@
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="#">Vietloka</a>
+    <a class="navbar-brand" routerLink="home">Vietloka</a>
 
     <div class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed">
       <ul class="navbar-nav mr-auto mt-2 mt-md-0">
         <li class="nav-item">
-          <a class="nav-link" href="#">Home<span class="sr-only">(current)</span></a>
+          <a class="nav-link" routerLink="home">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Link</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">About us</a>
+          <a class="nav-link" routerLink="about">About us</a>
         </li>
       </ul>
       <form class="form-inline my-2 my-lg-0">
@@ -26,13 +26,5 @@
   </div>
 </nav>
 
-<div class="jumbotron jumbotron-fluid text-white bg-inverse">
-  <div class="container">
-    <h1 class="display-3">From our world to yours.</h1>
-    <p class="lead">Find affordable homestay destinations all around Vietnam.</p>
-    <hr class="my-2">
-    <p class="lead">
-      <button type="button" class="btn btn-lg btn-primary">Let's go!</button>
-    </p>
-  </div>
-</div>
+<router-outlet>
+</router-outlet>
