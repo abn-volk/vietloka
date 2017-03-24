@@ -1,0 +1,11 @@
+/* You can add global styles to this file, and also import other style files */
+* {
+    font-family: "Roboto", "Noto Sans", "Open Sans", "Droid Sans", "Helvetica", "Arial", sans-serif;
+}
+
+/* Navbar container fix */
+@media (max-width: 576px) {
+    nav .container {
+        width: 100%;
+    }
+}
