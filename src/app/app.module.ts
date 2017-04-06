@@ -4,10 +4,11 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Route, RouterModule }   from '@angular/router';
-
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
+import { RegisterComponent } from './register.component';
 import { AboutComponent } from './about.component';
 
 
@@ -20,6 +21,10 @@ const routes: Route[] = [
   {
     path: 'home',
     component: HomeComponent
+  },
+  {
+    path: 'register',
+    component: RegisterComponent
   },
   {
     path: 'about',
@@ -35,6 +40,7 @@ const routes: Route[] = [
   declarations: [
     AppComponent,
     HomeComponent,
+    RegisterComponent,
     AboutComponent
   ],
   imports: [
@@ -42,7 +48,8 @@ const routes: Route[] = [
     RouterModule.forRoot(routes),
     BrowserModule,
     FormsModule,
-    HttpModule
+    HttpModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
