@@ -1,5 +1,4 @@
 <nav class="navbar bg-primary navbar-inverse navbar-toggleable-md">
-  <div class="container">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -17,13 +16,17 @@
           <a class="nav-link" routerLink="about">About us</a>
         </li>
       </ul>
-      <form class="form-inline my-2 my-lg-0">
-        <input class="form-control mr-sm-2" type="text" placeholder="Email">
-        <input class="form-control mr-sm-2" type="password" placeholder="Password">        
-        <button class="btn btn-success my-2 my-sm-0" type="submit">Log in</button>
+      <form class="form-inline my-2 my-lg-0" [formGroup]="loginForm" (ngSubmit)="doLogin($event)">
+        <input class="form-control mr-sm-2" type="email" placeholder="Email" formControlName="email">
+        <input class="form-control mr-sm-2" type="password" placeholder="Password" formControlName="password">        
+        <button class="btn btn-success my-2 my-sm-0" type="submit" [disabled]="!loginForm.valid">Log in</button>
       </form>
+      <ul class="navbar-nav ml-2">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="register">Register</a>
+        </li>
+      </ul>
     </div>
-  </div>
 </nav>
 
 <router-outlet>
