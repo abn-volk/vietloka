@@ -6,6 +6,7 @@
         <div class="alert alert-info" role="alert">
           By default, you can view and search for information on the website. You can apply for a host or guest account later.
         </div>
+        <ngb-alert type="danger" *ngIf="networkError" [dismissible]="true" (close)="networkError = false">An error has occurred. Please try again.</ngb-alert>
         <form [formGroup]="registerForm" (ngSubmit)="doRegister($event)">
           <div class="form-group" [ngClass]="{'has-danger': formErrors.email.length > 0}">
           <input class="form-control" [ngClass]="{'form-control-danger': formErrors.email.length > 0}" type="email" placeholder="Email" formControlName="email">
@@ -13,6 +14,7 @@
                   {{formErrors.email}}
             </div>
           </div>
+          <ngb-alert type="danger" *ngIf="duplicateEmail" [dismissible]="true" (close)="duplicateEmail = false">This email is already registered on Vietloka. Please choose another email.</ngb-alert>
           <div class="form-group" [ngClass]="{'has-danger': formErrors.password.length > 0}">
             <input class="form-control" [ngClass]="{'form-control-danger': formErrors.password.length > 0}" type="password" placeholder="Password" formControlName="password">
             <div class="form-control-feedback" role="alert">
@@ -26,10 +28,12 @@
             </div>
           </div>
           
-          <button class="btn btn-success my-2 my-sm-0" type="submit" [disabled]="!registerForm.valid">Register</button>
+          <button class="btn btn-success my-2 my-sm-0" type="submit" [disabled]="!registerForm.valid || registering">Register</button>
           
         </form>
       </div>
+
+      
     </div>
   </div>
 </div>

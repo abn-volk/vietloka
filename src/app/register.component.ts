@@ -1,5 +1,6 @@
 import {Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UserRequest, User, UserService } from './user.service';
 
 @Component( {
   selector: 'register-section',
@@ -8,7 +9,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 export class RegisterComponent {
 
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -41,6 +42,10 @@ export class RegisterComponent {
     }
   }
 
+  duplicateEmail = false;
+  registering = false;
+  networkError = false;
+
   formErrors = {
     'name': '',
     'email': '',
@@ -62,7 +67,20 @@ export class RegisterComponent {
   };
 
   doRegister(event) {
-    console.log(event);
-    console.log(this.registerForm.value);
+    this.registering = true;
+    this.userService.addUser(new UserRequest(this.registerForm.value))
+    .then(user => {
+      this.registering = false;
+      console.log(user);
+    })
+    .catch(reason => {
+      this.registering = false;
+      if (reason.status == 409) {
+        this.duplicateEmail = true;
+      }
+      else {
+        this.networkError = true;
+      }
+    });
   }
 }

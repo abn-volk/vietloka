@@ -1,3 +1,7 @@
 export const environment = {
-  production: true
+  production: true,
+  server: "SERVER NAME GOES HERE",
+  masterKey: 'masterKey'
 };
+
+

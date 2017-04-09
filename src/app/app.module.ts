@@ -6,10 +6,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Route, RouterModule }   from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
+
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
 import { RegisterComponent } from './register.component';
 import { AboutComponent } from './about.component';
+
+import { UserService } from './user.service';
 
 
 const routes: Route[] = [
@@ -51,7 +54,7 @@ const routes: Route[] = [
     HttpModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
