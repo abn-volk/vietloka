@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { RegisterRequest, User, UserService } from './user.service';
+import { User, UserService } from './user.service';
 
 @Component( {
-  selector: 'register-section',
-  templateUrl: './register.component.html',
+  selector: 'login-section',
+  templateUrl: './login.component.html',
 })
-export class RegisterComponent {
+export class LoginComponent {
 
-  registerForm: FormGroup;
+  loginForm: FormGroup;
   constructor(private fb: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
@@ -16,19 +16,18 @@ export class RegisterComponent {
   }
 
   buildForm(): void {
-    this.registerForm = this.fb.group({
+    this.loginForm = this.fb.group({
       'email': ["", [Validators.required, Validators.email]],
       'password': ["", [Validators.required, Validators.minLength(8)]],
-      'name': ["", [Validators.required,]],
     });
-    this.registerForm.valueChanges
+    this.loginForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
     this.onValueChanged(); // (re)set validation messages now
   }
 
   onValueChanged(data?: any) {
-    if (!this.registerForm) { return; }
-    const form = this.registerForm;
+    if (!this.loginForm) { return; }
+    const form = this.loginForm;
     for (const field in this.formErrors) {
       // clear previous error message (if any)
       this.formErrors[field] = '';
@@ -42,20 +41,16 @@ export class RegisterComponent {
     }
   }
 
-  duplicateEmail = false;
-  registering = false;
+  invalidCredentials = false;
+  loggingIn = false;
   networkError = false;
 
   formErrors = {
-    'name': '',
     'email': '',
     'password': '',
   };
   
   validationMessages = {
-    'name': {
-      'required': 'This field is obligatory.',
-    },
     'email': {
       'required': 'This field is obligatory.',
       'email': 'Please enter a valid email address.'
@@ -66,17 +61,17 @@ export class RegisterComponent {
     },
   };
 
-  doRegister(event) {
-    this.registering = true;
-    this.userService.addUser(new RegisterRequest(this.registerForm.value))
-    .then(user => {
-      this.registering = false;
-      console.log(user);
+  doLogin(event) {
+    this.loggingIn = true;
+    this.userService.authenticate(this.loginForm.value.email, this.loginForm.value.password)
+    .then(token => {
+      this.loggingIn = false;
+      localStorage.setItem("token", token);
     })
     .catch(reason => {
-      this.registering = false;
-      if (reason.status == 409) {
-        this.duplicateEmail = true;
+      this.loggingIn = false;
+      if (reason.status == 401) {
+        this.invalidCredentials = true;
       }
       else {
         this.networkError = true;
