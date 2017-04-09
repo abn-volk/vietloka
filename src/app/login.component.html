@@ -4,7 +4,7 @@
       <div class="card-block">
         <h1>Log into Vietloka</h1>
         <ngb-alert type="danger" *ngIf="networkError" [dismissible]="true" (close)="networkError = false">An error has occurred. Please try again.</ngb-alert>
-        <ngb-alert type="danger" *ngIf="wrongCredentials" [dismissible]="true" (close)="wrongCredentials = false">The email or password you have entered is invalid. Please try again</ngb-alert>
+        <ngb-alert type="danger" *ngIf="invalidCredentials" [dismissible]="true" (close)="invalidCredentials = false">The email or password you have entered is invalid. Please try again.</ngb-alert>
         <form [formGroup]="loginForm" (ngSubmit)="doLogin($event)">
           <div class="form-group" [ngClass]="{'has-danger': formErrors.email.length > 0}">
           <input class="form-control" [ngClass]="{'form-control-danger': formErrors.email.length > 0}" type="email" placeholder="Email" formControlName="email">

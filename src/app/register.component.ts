@@ -1,18 +1,23 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RegisterRequest, User, UserService } from './user.service';
+import { Router } from '@angular/router';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component( {
   selector: 'register-section',
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {
-
+  @ViewChild('content') content; 
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder, private userService: UserService) { }
+  constructor(private fb: FormBuilder, private userService: UserService, private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
     this.buildForm();
+    this.duplicateEmail = false;
+    this.registering = false;
+    this.networkError = false;
   }
 
   buildForm(): void {
@@ -66,12 +71,15 @@ export class RegisterComponent {
     },
   };
 
+  modalRef: NgbModalRef;
+
   doRegister(event) {
     this.registering = true;
     this.userService.addUser(new RegisterRequest(this.registerForm.value))
     .then(user => {
       this.registering = false;
-      console.log(user);
+      this.modalRef = this.modalService.open(this.content);
+      setTimeout(() => this.gotoLogin(), 3000);
     })
     .catch(reason => {
       this.registering = false;
@@ -82,5 +90,10 @@ export class RegisterComponent {
         this.networkError = true;
       }
     });
+  }
+
+  gotoLogin() {
+    this.modalRef.close();
+    this.router.navigateByUrl('/login');
   }
 }

@@ -36,4 +36,16 @@
       
     </div>
   </div>
+  
+  <template #content>
+    <div class="modal-header">
+      <h4 class="modal-title">Registration successful</h4>
+    </div>
+    <div class="modal-body">
+      <p>Welcome to Vietloka! You will be redirected to the login page in a few seconds.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="gotoLogin()">Log in now</button>
+    </div>
+  </template>
 </div>

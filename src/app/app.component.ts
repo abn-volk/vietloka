@@ -20,6 +20,9 @@ export class AppComponent {
           .then(user => {this.name = user.name; this.picture = user.picture; this.signedIn = true; this.checked = true})
           .catch(reason => {this.signedIn = false; this.checked = true});
     }
+    else {
+      this.checked = true;
+    }
   }
 
 }

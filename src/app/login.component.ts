@@ -13,6 +13,9 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.buildForm();
+    this.invalidCredentials = false;
+    this.loggingIn = false;
+    this.networkError = false;
   }
 
   buildForm(): void {
@@ -66,9 +69,11 @@ export class LoginComponent {
     this.userService.authenticate(this.loginForm.value.email, this.loginForm.value.password)
     .then(token => {
       this.loggingIn = false;
-      localStorage.setItem("token", token);
+      localStorage.setItem('token', token);
+      window.location.replace('/home');
     })
     .catch(reason => {
+      console.log(reason);
       this.loggingIn = false;
       if (reason.status == 401) {
         this.invalidCredentials = true;
