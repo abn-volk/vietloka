@@ -16,6 +16,9 @@ export class LoginComponent {
     this.invalidCredentials = false;
     this.loggingIn = false;
     this.networkError = false;
+    if (localStorage.getItem('token') != null) {
+      this.userService.getProfile().then(user => window.location.replace('/home'));
+    }
   }
 
   buildForm(): void {

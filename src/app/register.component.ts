@@ -1,7 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { RegisterRequest, User, UserService } from './user.service';
-import { Router } from '@angular/router';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component( {
@@ -11,7 +10,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 export class RegisterComponent {
   @ViewChild('content') content; 
   registerForm: FormGroup;
-  constructor(private fb: FormBuilder, private userService: UserService, private modalService: NgbModal, private router: Router) { }
+  constructor(private fb: FormBuilder, private userService: UserService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -94,6 +93,6 @@ export class RegisterComponent {
 
   gotoLogin() {
     this.modalRef.close();
-    this.router.navigateByUrl('/login');
+    window.location.replace('/login');
   }
 }
