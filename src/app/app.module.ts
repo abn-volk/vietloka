@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
+import { ProfileComponent } from './profile.component';
 import { AboutComponent } from './about.component';
 
 import { UserService } from './user.service';
@@ -35,6 +36,10 @@ const routes: Route[] = [
     component: RegisterComponent
   },
   {
+    path: 'profile',
+    component: ProfileComponent
+  },
+  {
     path: 'about',
     component: AboutComponent
   },
@@ -50,6 +55,7 @@ const routes: Route[] = [
     HomeComponent,
     LoginComponent,
     RegisterComponent,
+    ProfileComponent,
     AboutComponent
   ],
   imports: [

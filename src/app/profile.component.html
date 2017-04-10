@@ -1,0 +1,7 @@
+<div class="container mt-4">
+  <h1>My profile</h1>
+  <img *ngIf="picture" [src]="picture" class="img-thumbnail rounded-circle">
+  <h2>{{name}}</h2>
+  <div>{{email}}</div>
+  <button class="btn btn-danger" (click)="doLogout()">Log out</button>
+</div>

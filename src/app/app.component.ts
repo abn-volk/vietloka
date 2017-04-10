@@ -8,13 +8,17 @@ import { User, UserService } from './user.service';
 })
 export class AppComponent {
   constructor(private userService: UserService){}
-  isNavbarCollapsed = true;
 
-  checked = false;
-  signedIn = false;
-  name = '';
-  picture = '';
+  isNavbarCollapsed: boolean;
+  checked: boolean;
+  signedIn: boolean;
+  name: string;
+  picture: string;
+
   ngOnInit() : void {
+    this.isNavbarCollapsed = true;
+    this.checked = false;
+    this.signedIn = false;
     if (localStorage.getItem('token') != null) {
       this.userService.getProfile()
           .then(user => {this.name = user.name; this.picture = user.picture; this.signedIn = true; this.checked = true})

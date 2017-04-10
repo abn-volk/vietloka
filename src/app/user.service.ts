@@ -25,7 +25,6 @@ export class RegisterRequest {
 export class User {
   id: string;
   email: string;
-  password: string;
   name: string;
   picture: string;
   role: string;

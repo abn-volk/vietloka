@@ -9,6 +9,10 @@ import { User, UserService } from './user.service';
 export class LoginComponent {
 
   loginForm: FormGroup;
+  invalidCredentials: boolean;
+  loggingIn: boolean;
+  networkError: boolean;
+
   constructor(private fb: FormBuilder, private userService: UserService) { }
 
   ngOnInit(): void {
@@ -47,9 +51,7 @@ export class LoginComponent {
     }
   }
 
-  invalidCredentials = false;
-  loggingIn = false;
-  networkError = false;
+  
 
   formErrors = {
     'email': '',

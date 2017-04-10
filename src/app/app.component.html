@@ -20,8 +20,14 @@
       <ul class="navbar-nav ml-2">
         <li class="nav-item">
           <a class="nav-link" *ngIf="!signedIn && checked" routerLink="register">Register</a>
-          <a class="nav-link" *ngIf="signedIn && checked" routerLink="me">My profile</a>
-          
+        </li>
+        <li class="nav-item">
+          <a routerLink="profile" *ngIf="signedIn && checked">
+            <div class="row">
+            <img *ngIf="picture" [src]="picture" width="40" height="40" class="mr-md-2 rounded-circle"> 
+            <div class="nav-link">Profile</div>
+          </div>
+          </a>
         </li>
       </ul>
     </div>
