@@ -2,8 +2,13 @@
   <div class="container">
     <h1 class="display-3">From our world to yours.</h1>
     <p class="lead">Find affordable homestay destinations all around Vietnam.</p>
-    <p class="lead">
-      <button type="button" class="btn btn-lg btn-primary">Let's go!</button>
-    </p>
+    <div class="row">
+      
+      <form (ngSubmit)="onSubmit()" class="col-md-8 col-lg-6">
+        <input type="text" class="form-control" [(ngModel)]="placeToSearch" placeholder="Search for a place" required [ngModelOptions]="{standalone: true}">
+        <input type="submit" hidden="true" />
+      </form>
+      
+    </div>
   </div>
 </div>

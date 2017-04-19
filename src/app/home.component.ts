@@ -5,5 +5,10 @@ import {Component, Input} from '@angular/core';
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
+  placeToSearch = "";
+
+  onSubmit() {
+    console.log(this.placeToSearch);
+  }
     
 }
