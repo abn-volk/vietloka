@@ -13,6 +13,7 @@ import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { ProfileComponent } from './profile.component';
 import { AboutComponent } from './about.component';
+import { VerifyComponent } from './verify.component';
 
 import { UserService } from './user.service';
 
@@ -40,6 +41,10 @@ const routes: Route[] = [
     component: ProfileComponent
   },
   {
+    path: 'verify',
+    component: VerifyComponent
+  },
+  {
     path: 'about',
     component: AboutComponent
   },
@@ -56,6 +61,7 @@ const routes: Route[] = [
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    VerifyComponent,
     AboutComponent
   ],
   imports: [
