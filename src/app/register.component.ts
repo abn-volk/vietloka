@@ -75,20 +75,21 @@ export class RegisterComponent {
   doRegister(event) {
     this.registering = true;
     this.userService.addUser(new RegisterRequest(this.registerForm.value))
-    .then(user => {
-      this.registering = false;
-      this.modalRef = this.modalService.open(this.content);
-      setTimeout(() => this.gotoLogin(), 3000);
-    })
-    .catch(reason => {
-      this.registering = false;
-      if (reason.status == 409) {
-        this.duplicateEmail = true;
-      }
-      else {
-        this.networkError = true;
-      }
-    });
+    .subscribe(
+      user => {
+        this.registering = false;
+        this.modalRef = this.modalService.open(this.content);
+        setTimeout(() => this.gotoLogin(), 3000);
+      },
+      reason => {
+        this.registering = false;
+        if (reason.status == 409) {
+          this.duplicateEmail = true;
+        }
+        else {
+          this.networkError = true;
+        }
+      });
   }
 
   gotoLogin() {

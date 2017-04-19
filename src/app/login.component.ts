@@ -21,7 +21,7 @@ export class LoginComponent {
     this.loggingIn = false;
     this.networkError = false;
     if (localStorage.getItem('token') != null) {
-      this.userService.getProfile().then(user => window.location.replace('/home'));
+      this.userService.getProfile().subscribe(user => window.location.replace('/home'));
     }
   }
 
@@ -72,12 +72,13 @@ export class LoginComponent {
   doLogin(event) {
     this.loggingIn = true;
     this.userService.authenticate(this.loginForm.value.email, this.loginForm.value.password)
-    .then(token => {
+    .subscribe(
+    token => {
       this.loggingIn = false;
       localStorage.setItem('token', token);
       window.location.replace('/home');
-    })
-    .catch(reason => {
+    },
+    reason => {
       console.log(reason);
       this.loggingIn = false;
       if (reason.status == 401) {

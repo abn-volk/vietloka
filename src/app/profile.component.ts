@@ -14,8 +14,16 @@ export class ProfileComponent {
   constructor (private userService: UserService) {
     if (localStorage.getItem('token') != null) {
       this.userService.getProfile()
-        .then(user => {this.name = user.name; this.picture = user.picture; this.createdAt = user.createdAt; this.email = user.email})
-        .catch(reason => {window.location.replace('/')});
+        .subscribe(
+          user => {
+            this.name = user.name; 
+            this.picture = user.picture; 
+            this.createdAt = user.createdAt; 
+            this.email = user.email
+          },
+          reason => {
+            window.location.replace('/')
+          });
     }
     else window.location.replace('/');
   }

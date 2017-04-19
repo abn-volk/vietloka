@@ -21,8 +21,14 @@ export class AppComponent {
     this.signedIn = false;
     if (localStorage.getItem('token') != null) {
       this.userService.getProfile()
-          .then(user => {this.name = user.name; this.picture = user.picture; this.signedIn = true; this.checked = true})
-          .catch(reason => {this.signedIn = false; this.checked = true});
+          .subscribe(
+            user => {
+              this.name = user.name; 
+              this.picture = user.picture; 
+              this.signedIn = true; 
+              this.checked = true
+            },
+            reason => {this.signedIn = false; this.checked = true})
     }
     else {
       this.checked = true;

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from '@angular/http';
 import { environment } from '../environments/environment';
+import { Observable } from 'rxjs/Rx';
 
-import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
 
 export class RegisterRequest {
   access_token: string;
@@ -38,26 +40,40 @@ export class UserService {
   constructor(private http: Http) {}
 
 
-  addUser(request: RegisterRequest): Promise<User> {
+  addUser(request: RegisterRequest): Observable<User> {
     return this.http.post(this.url + '/api/v1/users', JSON.stringify(request), {headers: this.headers})
-               .toPromise().then(response => response.json() as User)
+               .map(response => response.json() as User)
                .catch(error => Promise.reject(error.message || error));
   }
 
-  authenticate(email: string, password: String): Promise<any> {
+  authenticate(email: string, password: String): Observable<string> {
     let h = new Headers({
       'Content-Type': 'application/json',
       'Authorization': 'Basic ' + btoa(email + ':' + password)
     });
     return this.http.post(this.url + '/auth', JSON.stringify({access_token: environment.masterKey}), {headers: h})
-               .toPromise().then(response => response.json().token)
+               .map(response => response.json().token)
                .catch(error => Promise.reject(error.message || error));
   }
 
-  getProfile(): Promise<User> {
+  getProfile(): Observable<User> {
     let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + '/api/v1/users/me', {headers: h})
-               .toPromise().then(response => response.json() as User)
+               .map(response => response.json() as User)
+               .catch(error => Promise.reject(error.message || error));
+  }
+
+  isGuest(): Observable<User> {
+    let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
+    return this.http.get(this.url + '/api/v1/guests/self', {headers: h})
+               .map(response => response.json() as User)
+               .catch(error => Promise.reject(error.message || error));
+  }
+
+  isHost(): Observable<User> {
+    let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
+    return this.http.get(this.url + '/api/v1/hosts/self', {headers: h})
+               .map(response => response.json() as User)
                .catch(error => Promise.reject(error.message || error));
   }
 }
