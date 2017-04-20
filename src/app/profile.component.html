@@ -1,7 +1,8 @@
 <div class="container mt-4">
   <h1>My profile</h1>
-  <img *ngIf="picture" [src]="picture" class="img-thumbnail rounded-circle">
-  <h2>{{name}}</h2>
-  <div>{{email}}</div>
+  <img *ngIf="user?.picture" [src]="user?.picture" class="img-thumbnail rounded-circle">
+  <h2>{{user?.name}}</h2>
+  <div>{{user?.email}}</div>
+  <div *ngIf="!user?.verified">Your account is not verified. To become a verified host or guest, click <a routerLink="/verify">here</a>.</div>
   <button class="btn btn-danger" (click)="doLogout()">Log out</button>
 </div>

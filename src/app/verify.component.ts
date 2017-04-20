@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { UserService } from './user.service';
 
 @Component( {
   selector: 'verify-section',
@@ -10,7 +11,7 @@ export class VerifyComponent {
   verifying: boolean;
   verificationForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private userService: UserService) {}
 
   ngOnInit(): void {
     this.networkError = false;

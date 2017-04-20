@@ -16,6 +16,7 @@ import { AboutComponent } from './about.component';
 import { VerifyComponent } from './verify.component';
 
 import { UserService } from './user.service';
+import { TokenGuard, GuestGuard, HostGuard, UnverifiedGuard } from './guards';
 
 
 const routes: Route[] = [
@@ -38,11 +39,13 @@ const routes: Route[] = [
   },
   {
     path: 'profile',
-    component: ProfileComponent
+    component: ProfileComponent,
+    canActivate: [TokenGuard]
   },
   {
     path: 'verify',
-    component: VerifyComponent
+    component: VerifyComponent,
+    canActivate: [TokenGuard, UnverifiedGuard]
   },
   {
     path: 'about',
@@ -72,7 +75,11 @@ const routes: Route[] = [
     HttpModule,
     ReactiveFormsModule
   ],
-  providers: [UserService],
+  providers: [UserService, 
+    TokenGuard, 
+    GuestGuard, 
+    HostGuard,
+    UnverifiedGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

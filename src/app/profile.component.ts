@@ -1,4 +1,4 @@
-import { Component, Input, OnInit} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { User, UserService } from './user.service';
 
 @Component( {
@@ -6,30 +6,21 @@ import { User, UserService } from './user.service';
   templateUrl: './profile.component.html',
 })
 export class ProfileComponent {
-  name: string;
-  email: string;
-  createdAt: Date;
-  picture: string;
+  user: User;
 
   constructor (private userService: UserService) {
-    if (localStorage.getItem('token') != null) {
-      this.userService.getProfile()
-        .subscribe(
-          user => {
-            this.name = user.name; 
-            this.picture = user.picture; 
-            this.createdAt = user.createdAt; 
-            this.email = user.email
-          },
-          reason => {
-            window.location.replace('/')
-          });
+    this.userService.getProfile()
+      .subscribe(
+        user => {
+          this.user = user;
+        },
+        reason => {
+          window.location.replace('/')
+        });
     }
-    else window.location.replace('/');
-  }
 
   doLogout() {
-    localStorage.removeItem('token');
+    localStorage.clear();
     window.location.replace('/');
   }
 }

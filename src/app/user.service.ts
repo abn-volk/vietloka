@@ -24,6 +24,17 @@ export class RegisterRequest {
   }
 }
 
+export class GuestRequest {
+  access_token: string;
+  user: User;  
+  nationality: string;
+}
+
+export class HostRequest {
+  access_token: string;
+  user: User;
+}
+
 export class User {
   id: string;
   email: string;
@@ -31,6 +42,12 @@ export class User {
   picture: string;
   role: string;
   createdAt: Date;
+  job: string;
+  placeOfWork: string;
+  phoneNumber: string;
+  identityNumber: string;
+  dateOfBirth: Date;
+  gender: string;
 }
 
 @Injectable()
@@ -73,6 +90,18 @@ export class UserService {
   isHost(): Observable<User> {
     let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + '/api/v1/hosts/self', {headers: h})
+               .map(response => response.json() as User)
+               .catch(error => Promise.reject(error.message || error));
+  }
+
+  addGuest(request: GuestRequest): Observable<User> {
+    return this.http.post(this.url + '/api/v1/guests', JSON.stringify(request), {headers: this.headers})
+               .map(response => response.json() as User)
+               .catch(error => Promise.reject(error.message || error));
+  }
+
+  addHost(request: HostRequest): Observable<User> {
+    return this.http.post(this.url + '/api/v1/hosts', JSON.stringify(request), {headers: this.headers})
                .map(response => response.json() as User)
                .catch(error => Promise.reject(error.message || error));
   }

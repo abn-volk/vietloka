@@ -79,7 +79,6 @@ export class LoginComponent {
       window.location.replace('/home');
     },
     reason => {
-      console.log(reason);
       this.loggingIn = false;
       if (reason.status == 401) {
         this.invalidCredentials = true;
