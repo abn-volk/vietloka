@@ -10,6 +10,10 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 export class RegisterComponent {
   @ViewChild('content') content; 
   registerForm: FormGroup;
+  duplicateEmail: boolean;
+  registering: boolean;
+  networkError: boolean;
+
   constructor(private fb: FormBuilder, private userService: UserService, private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -21,9 +25,9 @@ export class RegisterComponent {
 
   buildForm(): void {
     this.registerForm = this.fb.group({
-      'email': ["", [Validators.required, Validators.email]],
-      'password': ["", [Validators.required, Validators.minLength(8)]],
-      'name': ["", [Validators.required,]],
+      'email': ['', [Validators.required, Validators.email]],
+      'password': ['', [Validators.required, Validators.minLength(8)]],
+      'name': ['', [Validators.required,]],
     });
     this.registerForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
@@ -45,10 +49,6 @@ export class RegisterComponent {
       }
     }
   }
-
-  duplicateEmail = false;
-  registering = false;
-  networkError = false;
 
   formErrors = {
     'name': '',
