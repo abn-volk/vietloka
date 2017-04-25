@@ -16,11 +16,14 @@ export class AppComponent {
   signedIn: boolean;
   name: string;
   picture: string;
+  isHost: boolean;
 
   ngOnInit() : void {
     this.isNavbarCollapsed = true;
     this.checked = false;
     this.signedIn = false;
+    if (localStorage.getItem('is_host') == 'true') 
+      this.isHost = true;
     if (localStorage.getItem('token') != null) {
       this.userService.getProfile()
       .subscribe(
@@ -37,7 +40,7 @@ export class AppComponent {
                 if (localStorage.getItem('is_host') == null)
                   this.userService.isHost()
                   .subscribe(
-                    () => {localStorage.setItem('is_host', 'true');},
+                    () => {this.isHost = true; localStorage.setItem('is_host', 'true');},
                     () => {localStorage.setItem('is_host', 'false');}
                   )
               }

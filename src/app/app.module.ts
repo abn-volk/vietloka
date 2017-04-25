@@ -14,6 +14,7 @@ import { RegisterComponent } from './register.component';
 import { ProfileComponent } from './profile.component';
 import { AboutComponent } from './about.component';
 import { VerifyComponent } from './verify.component';
+import { PublishComponent } from './publish.component';
 
 import { UserService } from './user.service';
 import { TokenGuard, GuestGuard, HostGuard, UnverifiedGuard } from './guards';
@@ -43,6 +44,11 @@ const routes: Route[] = [
     canActivate: [TokenGuard]
   },
   {
+    path: 'publish',
+    component: PublishComponent,
+    canActivate: [TokenGuard, HostGuard]
+  },
+  {
     path: 'verify',
     component: VerifyComponent,
     canActivate: [TokenGuard, UnverifiedGuard]
@@ -64,6 +70,7 @@ const routes: Route[] = [
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    PublishComponent,
     VerifyComponent,
     AboutComponent
   ],
