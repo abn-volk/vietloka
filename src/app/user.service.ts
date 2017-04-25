@@ -24,17 +24,6 @@ export class RegisterRequest {
   }
 }
 
-export class GuestRequest {
-  access_token: string;
-  user: User;  
-  nationality: string;
-}
-
-export class HostRequest {
-  access_token: string;
-  user: User;
-}
-
 export class User {
   id: string;
   email: string;
@@ -63,46 +52,48 @@ export class UserService {
                .catch(error => Promise.reject(error.message || error));
   }
 
+  updateUser(id: string, token: string, request: any): Observable<any> {
+    let h = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    });
+    return this.http.put(this.url + '/api/v1/users/' + id, JSON.stringify(request), {headers: h});         
+  }
+
   authenticate(email: string, password: String): Observable<string> {
     let h = new Headers({
       'Content-Type': 'application/json',
       'Authorization': 'Basic ' + btoa(email + ':' + password)
     });
     return this.http.post(this.url + '/auth', JSON.stringify({access_token: environment.masterKey}), {headers: h})
-               .map(response => response.json().token)
-               .catch(error => Promise.reject(error.message || error));
+               .map(response => response.json().token);
   }
 
   getProfile(): Observable<User> {
     let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + '/api/v1/users/me', {headers: h})
-               .map(response => response.json() as User)
-               .catch(error => Promise.reject(error.message || error));
+               .map(response => response.json() as User);
   }
 
   isGuest(): Observable<User> {
     let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + '/api/v1/guests/self', {headers: h})
-               .map(response => response.json() as User)
-               .catch(error => Promise.reject(error.message || error));
+               .map(response => response.json() as User);
   }
 
   isHost(): Observable<User> {
     let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + '/api/v1/hosts/self', {headers: h})
-               .map(response => response.json() as User)
-               .catch(error => Promise.reject(error.message || error));
+               .map(response => response.json() as User);
   }
 
-  addGuest(request: GuestRequest): Observable<User> {
+  addGuest(request: any): Observable<User> {
     return this.http.post(this.url + '/api/v1/guests', JSON.stringify(request), {headers: this.headers})
-               .map(response => response.json() as User)
-               .catch(error => Promise.reject(error.message || error));
+               .map(response => response.json() as User);
   }
 
-  addHost(request: HostRequest): Observable<User> {
+  addHost(request: any): Observable<User> {
     return this.http.post(this.url + '/api/v1/hosts', JSON.stringify(request), {headers: this.headers})
-               .map(response => response.json() as User)
-               .catch(error => Promise.reject(error.message || error));
+               .map(response => response.json() as User);
   }
 }

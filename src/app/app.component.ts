@@ -37,14 +37,14 @@ export class AppComponent {
                 if (localStorage.getItem('is_host') == null)
                   this.userService.isHost()
                   .subscribe(
-                    user => {localStorage.setItem('is_host', 'true')},
-                    reason => {localStorage.setItem('is_host', 'false')}
+                    () => {localStorage.setItem('is_host', 'true');},
+                    () => {localStorage.setItem('is_host', 'false');}
                   )
               }
             )
             .subscribe(
-              user => {localStorage.setItem('is_guest', 'true'); console.log("WTF")},
-              reason => {localStorage.setItem('is_guest', 'false')}
+              () => {localStorage.setItem('is_guest', 'true')},
+              () => {localStorage.setItem('is_guest', 'false')}
             )
         },
         reason => {this.signedIn = false; this.checked = true})

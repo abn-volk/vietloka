@@ -56,6 +56,41 @@ export class VerifyComponent {
 
   doVerify(event) {
     this.verifying = true;
+    let v = this.verificationForm.value;
+    let updatedInfo = {
+      job: v.job,
+      placeOfWork: v.placeOfWork,
+      identityNumber: v.idNumber,
+      gender: v.gender,
+      dateOfBirth: v.dateOfBirth
+    }
+    this.userService.updateUser(localStorage.getItem('id'), localStorage.getItem('token'), updatedInfo).subscribe(
+      () => {
+        let nationality;
+        if (v.role == 'guest') nationality = v.nationality;
+        else nationality = "Vietnam";
+        if (v.role == 'guest' || v.role=='both') {
+          let req = {user: localStorage.getItem('id'), nationality: nationality};
+          this.userService.addGuest(req)
+          .finally(
+            () => {
+              if (v.role == 'host' || v.role=='both') {
+                this.userService.addHost({user: localStorage.getItem('id')}).subscribe(
+                  () => {console.log("SUCCESS!!!");},
+                  () => {this.networkError = true}
+                );
+              }
+            }
+          )
+          .subscribe(
+            () => {console.log("SUCCESS!!!");},
+            () => {this.networkError = true}
+          );
+        }
+      },
+      () => {this.networkError = true},
+      () => {this.verifying = false}
+    );
     console.log(this.verificationForm.value);
     console.log(this.verificationForm.valid);
   }
