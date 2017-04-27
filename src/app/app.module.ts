@@ -5,7 +5,7 @@ import { HttpModule } from '@angular/http';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Route, RouterModule }   from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { AgmCoreModule } from '@agm/core'
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home.component';
@@ -15,8 +15,10 @@ import { ProfileComponent } from './profile.component';
 import { AboutComponent } from './about.component';
 import { VerifyComponent } from './verify.component';
 import { PublishComponent } from './publish.component';
+import { SearchComponent } from './search.component';
 
 import { UserService } from './user.service';
+import { GeocodingService } from './geocoding.service';
 import { TokenGuard, GuestGuard, HostGuard, UnverifiedGuard } from './guards';
 
 
@@ -49,6 +51,10 @@ const routes: Route[] = [
     canActivate: [TokenGuard, HostGuard]
   },
   {
+    path: 'search',
+    component: SearchComponent,
+  },
+  {
     path: 'verify',
     component: VerifyComponent,
     canActivate: [TokenGuard, UnverifiedGuard]
@@ -71,6 +77,7 @@ const routes: Route[] = [
     RegisterComponent,
     ProfileComponent,
     PublishComponent,
+    SearchComponent,
     VerifyComponent,
     AboutComponent
   ],
@@ -80,9 +87,12 @@ const routes: Route[] = [
     BrowserModule,
     FormsModule,
     HttpModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AgmCoreModule.forRoot({apiKey: 'AIzaSyDGwHWYBuey33KjRe7J9xqyHnZLPTXe6JA'})
   ],
-  providers: [UserService, 
+  providers: [
+    UserService, 
+    GeocodingService,
     TokenGuard, 
     GuestGuard, 
     HostGuard,

@@ -1,8 +1,6 @@
-<div class="jumbotron jumbotron-fluid">
-  <div class="container">
-    <h1 class="display-3">From our world to yours.</h1>
-    <p class="lead">Find affordable homestay destinations all around Vietnam.</p>
-    <form #form="ngForm" (ngSubmit)="search(form.value.query)">
+<div class="container-fluid">
+  <div class="container" id="top-form">
+    <form #form="ngForm" (ngSubmit)="submitSearch(form.value)">
       <div class="form-group">
         <div class="row">
         <input type="text" class="col form-control" name="query" aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
@@ -12,4 +10,8 @@
       </div>
     </form>
   </div>
+
+  
 </div>
+<agm-map [zoom]="zoom" [(latitude)]="lat" [(longitude)]="long" [usePanning]="true" [(fitBounds)]="bounds">
+</agm-map>

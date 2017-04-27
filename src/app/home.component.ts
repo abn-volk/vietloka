@@ -1,14 +1,18 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'home-section',
   templateUrl: './home.component.html',
 })
 export class HomeComponent {
-  placeToSearch = "";
 
-  onSubmit() {
-    console.log(this.placeToSearch);
+  constructor(private router: Router) {}
+  query = "";
+
+  search(term: string) {
+    if (term) {
+      this.router.navigate(['search'], { queryParams: { query: term } });
+    }
   }
-    
 }
