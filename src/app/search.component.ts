@@ -16,7 +16,7 @@ export class SearchComponent {
   zoom: number = 6;
   lat: number = 18;
   long: number = 105;
-  bounds: LatLngBoundsLiteral;
+  // bounds: LatLngBoundsLiteral;
 
   ngOnInit() {
     this.route.queryParams.subscribe((params: Params) => {
@@ -33,11 +33,11 @@ export class SearchComponent {
         (data) => {
           this.lat = parseFloat(data.results[0].geometry.location.lat);  
           this.long = parseFloat(data.results[0].geometry.location.lng); 
-          let bounds = data.results[0].geometry.viewport;
-          this.bounds = {north: parseFloat(bounds.northeast.lat),
-                         east: parseFloat(bounds.northeast.lng),
-                         south: parseFloat(bounds.southwest.lat),
-                         west: parseFloat(bounds.southwest.lng)}  as LatLngBoundsLiteral;
+          // let bounds = data.results[0].geometry.viewport;
+          // this.bounds = {north: parseFloat(bounds.northeast.lat),
+          //                east: parseFloat(bounds.northeast.lng),
+          //                south: parseFloat(bounds.southwest.lat),
+          //                west: parseFloat(bounds.southwest.lng)}  as LatLngBoundsLiteral;
         }
       )
     }

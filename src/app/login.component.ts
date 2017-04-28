@@ -27,8 +27,8 @@ export class LoginComponent {
 
   buildForm(): void {
     this.loginForm = this.fb.group({
-      'email': ["", [Validators.required, Validators.email]],
-      'password': ["", [Validators.required, Validators.minLength(8)]],
+      'email': ['', [Validators.required, Validators.email]],
+      'password': ['', [Validators.required, Validators.minLength(8)]],
     });
     this.loginForm.valueChanges
       .subscribe(data => this.onValueChanged(data));

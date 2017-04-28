@@ -1,15 +1,15 @@
 import { Injectable } from '@angular/core';
-import { CanActivate } from '@angular/router';
+import { Router, CanActivate } from '@angular/router';
 import { UserService } from './user.service';
 
 @Injectable() 
 export class TokenGuard implements CanActivate {
-  constructor(private svc: UserService) {}
+  constructor(private svc: UserService, private router: Router) {}
   canActivate() {
     let id = localStorage.getItem('id');
     let token = localStorage.getItem('token');
     if (token == null) {
-      window.location.replace('/');
+      this.router.navigateByUrl('/');
       return false;
     }
     if (id == null) {
@@ -20,6 +20,7 @@ export class TokenGuard implements CanActivate {
         },
         () => {
           localStorage.removeItem('token');
+          this.router.navigateByUrl('/');          
           return false;
         }
       )
@@ -30,12 +31,12 @@ export class TokenGuard implements CanActivate {
 
 @Injectable() 
 export class GuestGuard implements CanActivate {
-  constructor (private svc: UserService) {}
+  constructor(private svc: UserService, private router: Router) {}
   canActivate() {
     let token = localStorage.getItem('token');
     let isGuest = localStorage.getItem('is_guest');
     if (token == null) {
-      window.location.replace('/');
+      this.router.navigateByUrl('/');
       return false;
     }
     if (!!token && isGuest == 'true') return true;
@@ -47,6 +48,7 @@ export class GuestGuard implements CanActivate {
       }, 
       () => {
         localStorage.setItem('is_guest', 'false');
+        this.router.navigateByUrl('/');
         return false;
       });
   }
@@ -54,12 +56,12 @@ export class GuestGuard implements CanActivate {
 
 @Injectable() 
 export class HostGuard implements CanActivate {
-  constructor (private svc: UserService) {}
+  constructor(private svc: UserService, private router: Router) {}
   canActivate() {
     let token = localStorage.getItem('token');
     let isHost = localStorage.getItem('is_host');
     if (token == null) {
-      window.location.replace('/');
+      this.router.navigateByUrl('/');
       return false;
     }
     if (!!token && isHost == 'true') return true;
@@ -71,6 +73,7 @@ export class HostGuard implements CanActivate {
       }, 
       () => {
         localStorage.setItem('is_host', 'false');
+        this.router.navigateByUrl('/');
         return false;
       });
   }
@@ -78,7 +81,10 @@ export class HostGuard implements CanActivate {
 
 @Injectable()
 export class UnverifiedGuard implements CanActivate {
+  constructor(private router: Router) {}
   canActivate() {
-    return (localStorage.getItem('is_host') == 'false' && localStorage.getItem('is_guest') == 'false');
+    let value = localStorage.getItem('is_host') == 'false' && localStorage.getItem('is_guest') == 'false';
+    if (!value) this.router.navigateByUrl('/');
+    return value;
   }
 }
