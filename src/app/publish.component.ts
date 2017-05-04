@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { HouseService } from './house.service';
 import { GeocodingService } from './geocoding.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
@@ -26,7 +27,7 @@ export class PublishComponent {
   draggable: boolean = true;
   
 
-  constructor(private fb: FormBuilder, private svc: HouseService, private modalService: NgbModal, private geocodingService: GeocodingService) {}
+  constructor(private fb: FormBuilder, private router: Router, private houseService: HouseService, private modalService: NgbModal, private geocodingService: GeocodingService) {}
   ngOnInit(): void {
     this.buildForm();
   }
@@ -67,7 +68,7 @@ export class PublishComponent {
       owner: localStorage.getItem('token'),
       address: v.address,
       price: v.price,
-      numOfMember: v.numOfMembers,
+      numOfMember: v.numOfMember,
       hasChildren: v.hasChildren,
       hasOlders: v.hasOlders,
       numOfTotalSlots: v.numOfTotalSlots,
@@ -86,7 +87,9 @@ export class PublishComponent {
       }
     }
 
-    this.svc.addHouse(req).subscribe(
+    console.log(req);
+
+    this.houseService.addHouse(req).subscribe(
       (res) => {
         this.id = res.id;
         this.modalRef = this.modalService.open(this.content);
@@ -131,7 +134,7 @@ export class PublishComponent {
 
 
   gotoHouse(id: number) {
-    // id: "590b5fccd378200d12c4edb5"
+    this.router.navigateByUrl('house', id);
   }
 
 

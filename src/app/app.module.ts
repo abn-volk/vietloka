@@ -13,6 +13,7 @@ import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { ProfileComponent } from './profile.component';
 import { AboutComponent } from './about.component';
+import { HouseComponent } from './house.component';
 import { VerifyComponent } from './verify.component';
 import { PublishComponent } from './publish.component';
 import { SearchComponent } from './search.component';
@@ -47,6 +48,10 @@ const routes: Route[] = [
     canActivate: [TokenGuard]
   },
   {
+    path: 'house/:id',
+    component: HouseComponent,
+  },
+  {
     path: 'publish',
     component: PublishComponent,
     canActivate: [TokenGuard, HostGuard]
@@ -77,6 +82,7 @@ const routes: Route[] = [
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    HouseComponent,
     PublishComponent,
     SearchComponent,
     VerifyComponent,

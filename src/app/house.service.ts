@@ -23,8 +23,7 @@ export class HouseService {
 
     getHouse(id: string): Observable<any> {
       let h = new Headers({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + localStorage.getItem('token')
+        'Content-Type': 'application/json'
       });
 
       return this.http.get(this.url + `/api/v1/houses/${id}`, {headers: h})
