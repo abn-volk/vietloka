@@ -4,7 +4,6 @@ import { environment } from '../environments/environment';
 import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/map';
-import 'rxjs/add/operator/catch';
 
 export class RegisterRequest {
   access_token: string;
@@ -48,8 +47,7 @@ export class UserService {
 
   addUser(request: RegisterRequest): Observable<User> {
     return this.http.post(this.url + '/api/v1/users', JSON.stringify(request), {headers: this.headers})
-               .map(response => response.json() as User)
-               .catch(error => Promise.reject(error.message || error));
+               .map(response => response.json() as User);
   }
 
   updateUser(request: any): Observable<any> {

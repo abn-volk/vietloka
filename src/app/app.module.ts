@@ -19,6 +19,7 @@ import { SearchComponent } from './search.component';
 
 import { UserService } from './user.service';
 import { GeocodingService } from './geocoding.service';
+import { HouseService } from './house.service';
 import { TokenGuard, GuestGuard, HostGuard, UnverifiedGuard } from './guards';
 
 
@@ -93,6 +94,7 @@ const routes: Route[] = [
   providers: [
     UserService, 
     GeocodingService,
+    HouseService,
     TokenGuard, 
     GuestGuard, 
     HostGuard,

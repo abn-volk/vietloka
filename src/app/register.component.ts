@@ -13,6 +13,7 @@ export class RegisterComponent {
   duplicateEmail: boolean;
   registering: boolean;
   networkError: boolean;
+  modalRef: NgbModalRef;
 
   constructor(private fb: FormBuilder, private userService: UserService, private modalService: NgbModal) { }
 
@@ -69,8 +70,6 @@ export class RegisterComponent {
       'minlength': 'Your password must be at least 8 characters long.'
     },
   };
-
-  modalRef: NgbModalRef;
 
   doRegister(event) {
     this.registering = true;

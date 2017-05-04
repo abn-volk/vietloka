@@ -5,24 +5,52 @@
   <form [formGroup]="publishForm" (ngSubmit)="doPublish($event)">
     <div class="form-group">
       <label for="address">Address</label>
-      <input type="text" class="form-control" name="address" [(ngModel)]="address" required>
+      <input type="text" class="form-control" name="address" formControlName="address" required>
     </div>
+    <div class="row">
+      <div class="form-group col-sm-6 col-md-4">
+        <label for="lat">Latitude: </label>
+        <input type="number"
+          class="form-control" name="lat" formControlName="lat" min="-180" max="180" step="0.000001">
+      </div>
+      <div class="form-group col-sm-6 col-md-4">
+        <label for="lng">Longitude: </label>
+        <input type="number"
+          class="form-control" name="lng" formControlName="lng" min="-180" max="180" step="0.000001">
+      </div>
+    
+      <button type="button" class="btn btn-info">Pick on map</button>
+    </div>
+
     <div class="form-group">
-      <label for="num-members">Number of family members</label>
-      <input type="number" class="form-control" min="0" max="15" name="num-members" formControlName="numOfMembers" required>
+        <label for="price">Daily price (in VND) </label>
+        <input type="number"
+          class="form-control" name="price" formControlName="price" min="50000" max="50000000" step="1000">
+      </div>
+    
+    <div class="row">
+      <div class="form-group col">
+        <label for="num-members">Number of family members</label>
+        <input type="number" class="form-control" min="0" max="15" step="1" name="num-members" formControlName="numOfMember" required>
+      </div>
+      <div class="col">
+      <label class="checkbox-inline">
+        <input type="checkbox" formControlName="hasChildren">Children
+      </label>
+      <label class="checkbox-inline">
+        <input type="checkbox" formControlName="hasOlders">Elderly people
+      </label>
+      </div>
     </div>
     <div class="form-group">
       <label for="num-slots">Maximum number of guests</label>
-      <input type="number" class="form-control" min="1" max="15" name="num-slots" formControlName="numOfRemainingSlots" required>
+      <input type="number" class="form-control" min="1" max="15" name="num-slots" formControlName="numOfTotalSlots" required>
     </div>
+
+
     <div class="form-group">
-      <label for="aspect">House aspect</label>
-      <select class="form-control" name="aspect" formControlName="aspect" required>
-        <option>North</option>
-        <option>East</option>
-        <option>South</option>
-        <option>West</option>
-      </select>
+      <label for="num-slots">House area (in square meters)</label>
+      <input type="number" class="form-control" min="10" max="1000" name="area" formControlName="area" required>
     </div>
     <label class="checkbox-inline">
       <input type="checkbox" formControlName="hasElectricHeater">Water heater
@@ -47,7 +75,26 @@
         <option>Western</option>
       </select>
     </div>
-
+    <div class="form-group">
+      <label for="desc">Optional short description</label>
+      <textarea class="form-control" name="desc" formControlName="description" maxlength="2000" rows="3"></textarea>
+    </div>
+    <div class="form-group">
+      <label for="pics">Picture links (separated by comma)</label>
+      <input type="text" name="pics" class="form-control" formControlName="images">
+    </div>
     <button class="btn btn-success" type="submit" [disabled]="!publishForm.valid || publishing">Publish</button>
   </form>
+
+  <ng-template #content>
+    <div class="modal-header">
+      <h4 class="modal-title">Congratulations!</h4>
+    </div>
+    <div class="modal-body">
+      <p>Your house details are now live on Vietloka. We will take you there in a few seconds.</p>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="gotoHouse(this.id)">Go now</button>
+    </div>
+  </ng-template>
 </div>
