@@ -15,7 +15,7 @@ export class SearchComponent {
   query = '';  
   zoom: number = 6;
   lat: number = 18;
-  long: number = 105;
+  lng: number = 105;
   // bounds: LatLngBoundsLiteral;
 
   ngOnInit() {
@@ -32,7 +32,7 @@ export class SearchComponent {
       this.geocodingService.find(value.query).subscribe(
         (data) => {
           this.lat = parseFloat(data.results[0].geometry.location.lat);  
-          this.long = parseFloat(data.results[0].geometry.location.lng); 
+          this.lng = parseFloat(data.results[0].geometry.location.lng); 
           // let bounds = data.results[0].geometry.viewport;
           // this.bounds = {north: parseFloat(bounds.northeast.lat),
           //                east: parseFloat(bounds.northeast.lng),

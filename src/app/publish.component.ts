@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { HouseService } from './house.service';
+import { GeocodingService } from './geocoding.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component( {
@@ -9,17 +10,25 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 })
 export class PublishComponent {
   @ViewChild('content') content; 
+  @ViewChild('mapModal') mapModal; 
   publishForm: FormGroup;
-  publishing: boolean;
-  networkError: boolean;  
+  publishing: boolean = false;
+  networkError: boolean = false;  
   id: number;
   modalRef: NgbModalRef;
+  mapModalRef: NgbModalRef;
+  lat: number = 21.03;
+  lng: number = 105.83;
+  latMarker: number = 21.03;
+  lngMarker: number = 105.83;
+  zoom: number = 7;
+  query: string;
+  draggable: boolean = true;
+  
 
-  constructor(private fb: FormBuilder, private svc: HouseService, private modalService: NgbModal) {}
+  constructor(private fb: FormBuilder, private svc: HouseService, private modalService: NgbModal, private geocodingService: GeocodingService) {}
   ngOnInit(): void {
     this.buildForm();
-    this.networkError = false;
-    this.publishing = false;
   }
 
   buildForm(): void {
@@ -89,7 +98,41 @@ export class PublishComponent {
     );
   }
 
-  gotoHouse(id: number) {
-
+  markerDragEnd(m: any, $event: any) {
+    this.latMarker = $event.coords.lat;
+    this.lngMarker = $event.coords.lng;
+  
   }
+
+  showMap() {
+    this.mapModalRef = this.modalService.open(this.mapModal);
+  }
+
+  closeMap() {
+    this.mapModalRef.close();
+  }
+
+  saveMapLatLng() {
+    this.publishForm.patchValue({lat: this.latMarker});
+    this.publishForm.patchValue({lng: this.lngMarker});
+    this.closeMap();
+  }
+
+  submitSearch(value) {
+    if (value.query) {
+      this.geocodingService.find(value.query).subscribe(
+        (data) => {
+          this.lat = this.latMarker = parseFloat(data.results[0].geometry.location.lat);  
+          this.lng = this.lngMarker =  parseFloat(data.results[0].geometry.location.lng); 
+        }
+      )
+    }
+  }
+
+
+  gotoHouse(id: number) {
+    // id: "590b5fccd378200d12c4edb5"
+  }
+
+
 }

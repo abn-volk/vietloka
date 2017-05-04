@@ -19,7 +19,7 @@
           class="form-control" name="lng" formControlName="lng" min="-180" max="180" step="0.000001">
       </div>
     
-      <button type="button" class="btn btn-info">Pick on map</button>
+      <button type="button" class="btn btn-info" (click)="showMap()">Pick on map</button>
     </div>
 
     <div class="form-group">
@@ -95,6 +95,34 @@
     </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="gotoHouse(this.id)">Go now</button>
+    </div>
+  </ng-template>
+
+  <ng-template #mapModal>
+    <div class="modal-header">
+      <h4 class="modal-title">Location picker</h4>
+    </div>
+    <div class="modal-body">
+      <form #form="ngForm" class="container-fluid" (ngSubmit)="submitSearch(form.value)">
+        <div class="form-group">
+          <div class="row">
+          <input type="text" class="col form-control" name="query" aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
+          <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+        </div>
+      </form>
+      <agm-map style="height:60vh" [zoom]="zoom" [(latitude)]="lat" [(longitude)]="lng">
+        <agm-marker
+          [markerDraggable]="draggable"
+          (dragEnd)="markerDragEnd(m, $event)"
+          [(latitude)]="latMarker"
+          [(longitude)]="lngMarker">
+        </agm-marker>
+      </agm-map>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="closeMap()">Cancel</button> 
+      <button type="button" class="btn btn-primary" (click)="saveMapLatLng()">OK</button>
     </div>
   </ng-template>
 </div>
