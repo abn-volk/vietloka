@@ -14,4 +14,13 @@
   
 </div>
 <agm-map [zoom]="zoom" [(latitude)]="lat" [(longitude)]="long" [usePanning]="true">
+  <agm-marker
+    *ngFor="let m of markers; let i=index"
+    (markerClick)="clickedMarker(label, i)"
+    [latitude]="m.lat"
+    [longitude]="m.lng">
+  </agm-marker>
+  <agm-info-windows>
+    Hello
+  </agm-info-windows>
 </agm-map>
