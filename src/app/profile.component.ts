@@ -7,17 +7,21 @@ import { User, UserService } from './user.service';
 })
 export class ProfileComponent {
   user: User;
+  verified = false;
 
-  constructor (private userService: UserService) {
+  constructor (private userService: UserService) {}
+
+  ngOnInit() {
     this.userService.getProfile()
       .subscribe(
         user => {
           this.user = user;
+          this.verified = (localStorage.getItem('is_guest') === 'true' || localStorage.getItem('is_host') === 'true');
         },
         reason => {
           window.location.replace('/')
         });
-    }
+  }
 
   doLogout() {
     localStorage.clear();
