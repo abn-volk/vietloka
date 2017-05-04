@@ -1,17 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from './user.service';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component( {
   selector: 'verify-section',
   templateUrl: './verify.component.html',
 })
 export class VerifyComponent {
+  @ViewChild('content') content; 
   networkError: boolean;
   verifying: boolean;
   verificationForm: FormGroup;
+  modalRef: NgbModalRef;
 
-  constructor(private fb: FormBuilder, private userService: UserService) {}
+  constructor(private fb: FormBuilder, private userService: UserService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.networkError = false;
@@ -72,18 +76,25 @@ export class VerifyComponent {
         if (v.role == 'guest' || v.role=='both') {
           let req = {user: localStorage.getItem('id'), nationality: nationality};
           this.userService.addGuest(req)
-          .finally(
-            () => {
-              if (v.role == 'host' || v.role=='both') {
-                this.userService.addHost({user: localStorage.getItem('id')}).subscribe(
-                  () => {console.log("SUCCESS!!!");},
-                  () => {this.networkError = true}
-                );
-              }
-            }
-          )
           .subscribe(
-            () => {console.log("SUCCESS!!!");},
+            () => {
+              localStorage.setItem('is_guest', 'true');
+              if (v.role == 'guest') {
+                this.modalRef = this.modalService.open(this.content);
+                setTimeout(() => this.gotoHome(), 3000);
+              }
+            },
+            () => {this.networkError = true}
+          );
+        }
+
+        if (v.role == 'host' || v.role=='both') {
+          this.userService.addHost({user: localStorage.getItem('id')}).subscribe(
+            () => {
+              localStorage.setItem('is_host', 'true');
+              this.modalRef = this.modalService.open(this.content);
+              setTimeout(() => this.gotoHome(), 3000);
+            },
             () => {this.networkError = true}
           );
         }
@@ -91,7 +102,12 @@ export class VerifyComponent {
       () => {this.networkError = true},
       () => {this.verifying = false}
     );
-    console.log(this.verificationForm.value);
-    console.log(this.verificationForm.valid);
+
   }
+
+  gotoHome() {
+    this.modalRef.close();
+    window.location.replace('/');
+  }
+
 }

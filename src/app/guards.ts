@@ -5,7 +5,7 @@ import { UserService } from './user.service';
 @Injectable() 
 export class TokenGuard implements CanActivate {
   constructor(private svc: UserService, private router: Router) {}
-  canActivate() {
+  canActivate(): boolean {
     let id = localStorage.getItem('id');
     let token = localStorage.getItem('token');
     if (token == null) {
@@ -32,7 +32,7 @@ export class TokenGuard implements CanActivate {
 @Injectable() 
 export class GuestGuard implements CanActivate {
   constructor(private svc: UserService, private router: Router) {}
-  canActivate() {
+  canActivate(): boolean {
     let token = localStorage.getItem('token');
     let isGuest = localStorage.getItem('is_guest');
     if (token == null) {
@@ -57,7 +57,7 @@ export class GuestGuard implements CanActivate {
 @Injectable() 
 export class HostGuard implements CanActivate {
   constructor(private svc: UserService, private router: Router) {}
-  canActivate() {
+  canActivate(): boolean{
     let token = localStorage.getItem('token');
     let isHost = localStorage.getItem('is_host');
     if (token == null) {
@@ -82,7 +82,7 @@ export class HostGuard implements CanActivate {
 @Injectable()
 export class UnverifiedGuard implements CanActivate {
   constructor(private router: Router) {}
-  canActivate() {
+  canActivate(): boolean {
     let value = localStorage.getItem('is_host') == 'false' && localStorage.getItem('is_guest') == 'false';
     if (!value) this.router.navigateByUrl('/');
     return value;
