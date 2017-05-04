@@ -42,7 +42,7 @@ export class VerifyComponent {
       const control = form.get(field);
       if (control && control.dirty && !control.valid) {
         this.formErrors[field] = this.msg;
-      } 
+      }
     }
   }
 
@@ -64,7 +64,7 @@ export class VerifyComponent {
       gender: v.gender,
       dateOfBirth: v.dateOfBirth
     }
-    this.userService.updateUser(localStorage.getItem('id'), localStorage.getItem('token'), updatedInfo).subscribe(
+    this.userService.updateUser(updatedInfo).subscribe(
       () => {
         let nationality;
         if (v.role == 'guest') nationality = v.nationality;

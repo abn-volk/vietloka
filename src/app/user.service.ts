@@ -52,12 +52,12 @@ export class UserService {
                .catch(error => Promise.reject(error.message || error));
   }
 
-  updateUser(id: string, token: string, request: any): Observable<any> {
+  updateUser(request: any): Observable<any> {
     let h = new Headers({
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
     });
-    return this.http.put(this.url + '/api/v1/users/' + id, JSON.stringify(request), {headers: h});         
+    return this.http.put(this.url + '/api/v1/users/' + localStorage.getItem('id'), JSON.stringify(request), {headers: h});
   }
 
   authenticate(email: string, password: String): Observable<string> {
@@ -88,12 +88,20 @@ export class UserService {
   }
 
   addGuest(request: any): Observable<User> {
-    return this.http.post(this.url + '/api/v1/guests', JSON.stringify(request), {headers: this.headers})
+    let h = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+    return this.http.post(this.url + '/api/v1/guests', JSON.stringify(request), {headers: h})
                .map(response => response.json() as User);
   }
 
   addHost(request: any): Observable<User> {
-    return this.http.post(this.url + '/api/v1/hosts', JSON.stringify(request), {headers: this.headers})
+    let h = new Headers({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + localStorage.getItem('token')
+    });
+    return this.http.post(this.url + '/api/v1/hosts', JSON.stringify(request), {headers: h})
                .map(response => response.json() as User);
   }
 }
