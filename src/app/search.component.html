@@ -13,7 +13,7 @@
 
 
 </div>
-<agm-map [zoom]="zoom" [(latitude)]="lat" [(longitude)]="long" [usePanning]="true">
+<agm-map [(zoom)]="zoom" [(latitude)]="lat" [(longitude)]="lng" [usePanning]="true">
   <agm-marker
     *ngFor="let m of markers; let i=index"
     (markerClick)="clickedMarker(label, i)"

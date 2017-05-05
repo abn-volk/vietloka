@@ -34,6 +34,7 @@ export class PublishComponent {
 
   buildForm(): void {
     this.publishForm = this.fb.group({
+      'title': ['', [Validators.required]],
       'address': ['', [Validators.required]],
       'lat': [0, [Validators.required]],
       'lng': [0, [Validators.required]],  
@@ -65,7 +66,8 @@ export class PublishComponent {
   doPublish(event: any) {
     const v = this.publishForm.value;
     let req = {
-      owner: localStorage.getItem('token'),
+      title: v.title,
+      owner: localStorage.getItem('id'),
       address: v.address,
       price: v.price,
       numOfMember: v.numOfMember,
@@ -134,7 +136,8 @@ export class PublishComponent {
 
 
   gotoHouse(id: number) {
-    this.router.navigateByUrl('house', id);
+    this.modalRef.close();
+    this.router.navigateByUrl(`house/${id}`);
   }
 
 
