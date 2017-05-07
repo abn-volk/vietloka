@@ -2,9 +2,9 @@
   
 
   <ngb-carousel *ngIf="house.image.length > 0" style="background: black">
-    <template ngbSlide *ngFor="let slide of house.image">
+    <ng-template ngbSlide *ngFor="let slide of house.image">
       <img [src]="slide" height="500px" class="mx-auto">
-    </template>
+    </ng-template>
   </ngb-carousel> 
 
   <div class="mt-3"></div>

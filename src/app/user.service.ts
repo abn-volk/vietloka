@@ -73,6 +73,14 @@ export class UserService {
                .map(response => response.json() as User);
   }
 
+  getUser(id: String): Observable<User> {
+    let h = new Headers({
+        'Content-Type': 'application/json'
+      });
+    return this.http.get(this.url + `api/v1/users/${id}`, {headers: h})
+               .map(response => response.json() as User);
+  }
+
   isGuest(): Observable<User> {
     let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + '/api/v1/guests/self', {headers: h})

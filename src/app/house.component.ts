@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HouseService } from './house.service';
+import { UserService } from './user.service';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 
 @Component( {
@@ -9,7 +10,7 @@ import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 })
 export class HouseComponent implements OnInit, OnDestroy{
 
-  constructor(private router: Router, private route: ActivatedRoute, private houseService: HouseService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private houseService: HouseService, private userService: UserService) {}
   id: string;
   sub: any;
   house: any = {
@@ -46,7 +47,7 @@ export class HouseComponent implements OnInit, OnDestroy{
       this.houseService.getHouse(this.id).subscribe(
         (house) => {
           this.house = house;
-          
+          console.log(house);
         },
         (error) => console.log(error)
       );
