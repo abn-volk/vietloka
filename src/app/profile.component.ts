@@ -10,6 +10,7 @@ export class ProfileComponent {
   user: User;
   verified = false;
   isHost = false;
+  isGuest = false;
 
   constructor (private userService: UserService) {}
 
@@ -20,6 +21,7 @@ export class ProfileComponent {
           this.user = user;
           this.verified = (localStorage.getItem('is_guest') === 'true' || localStorage.getItem('is_host') === 'true');
           this.isHost = localStorage.getItem('is_host') === 'true';
+          this.isGuest = localStorage.getItem('is_guest') === 'true';
         },
         reason => {
           window.location.replace('/')

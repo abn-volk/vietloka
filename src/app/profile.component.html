@@ -11,30 +11,39 @@
         <div *ngIf="!verified">
           Your account is not verified. To become a verified host or guest, click <a routerLink="/verify">here</a>.
         </div>
-        <div *ngIf="verified">
-          <div>
-          <p>{{user?.name}} at {{user?.email}}</p>
-          <p>{{user?.role}}</p>
-          <p>{{user?.job}}</p>
-          <p>{{user?.placeOfWork}}</p>
-          <p>{{user?.phoneNumber}}</p>
-          <p>{{user?.identityNumber}}</p>
-          <p>{{user?.dateOfBirth}}</p>
-          <p>{{user?.gender}}</p>
-        </div>
-        <button class="btn btn-danger mt-2" (click)="doLogout()">Log out</button>
-        <div class="row">
+
+        <div class="row" *ngIf="verified">
           <ngb-tabset class="mx-auto mt-3">
-            <ngb-tab *ngIf="isHost" title="My houses">
+            <ngb-tab title="User Profile">
+              <ng-template ngbTabContent>
+                <div>
+                  <p>{{user?.name}} at {{user?.email}}</p>
+                  <p>{{user?.role}}</p>
+                  <p>{{user?.job}}</p>
+                  <p>{{user?.placeOfWork}}</p>
+                  <p>{{user?.phoneNumber}}</p>
+                  <p>{{user?.identityNumber}}</p>
+                  <p>{{user?.dateOfBirth}}</p>
+                  <p>{{user?.gender}}</p>
+                </div>
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="isHost" title="My Houses">
               <ng-template ngbTabContent>Not yet implemented.
               </ng-template>
             </ngb-tab>
-            <ngb-tab *ngIf="isHost" title="My guests">
+            <ngb-tab *ngIf="isHost" title="My Guests">
+              <ng-template ngbTabContent>Not yet implemented
+              </ng-template>
+            </ngb-tab>
+            <ngb-tab *ngIf="isGuest" title="Rented Houses">
               <ng-template ngbTabContent>Not yet implemented
               </ng-template>
             </ngb-tab>
           </ngb-tabset>
         </div>
+
+        <button class="btn btn-danger mt-2" (click)="doLogout()">Log out</button>
       </div>
     </div>
   </div>
