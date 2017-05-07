@@ -22,6 +22,32 @@
           <p>{{user?.dateOfBirth}}</p>
           <p>{{user?.gender}}</p>
         </div>
+        <div class="row" align="center">
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" href="#userProfile" role="tab" data-toggle="tab">User Profile</a>
+            </li>
+            <li *ngIf="isHost" class="nav-item">
+              <a class="nav-link" href="#hostHouse" role="tab" data-toggle="tab">House</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="userRent role="tab" data-toggle="tab"">User Rent</a>
+            </li>
+            <li *ngIf="isHost" class="nav-item">
+              <a class="nav-link" href="#hostRent" role="tab" data-toggle="tab">HostRent</a>
+            </li>
+          </ul>
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade in active" id="userProfile">
+              Name: {{user?.name}}
+              Email: {{user?.email}}
+              Job: {{user?.job}}
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="hostHouse">Not Yet</div>
+            <div role="tabpanel" class="tab-pane fade" id="userRent">Not Yet</div>
+            <div role="tabpanel" class="tab-pane fade" id="hostRent">Not Yet</div>
+          </div>
+        </div>
         <button class="btn btn-danger mt-2" (click)="doLogout()">Log out</button>
       </div>
     </div>
