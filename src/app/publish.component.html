@@ -3,9 +3,12 @@
   <p class="lead"></p>
   <ngb-alert type="danger" *ngIf="networkError" [dismissible]="true" (close)="networkError = false">An error has occurred. Please try again.</ngb-alert>
   <form [formGroup]="publishForm" (ngSubmit)="doPublish($event)">
-    <div class="form-group">
+    <div class="form-group" [ngClass]="{'has-danger': formErrors.title.length > 0}">
       <label for="title">Listing title</label>
-      <input type="text" class="form-control" name="title" formControlName="title" required>
+      <input class="form-control" [ngClass]="{'form-control-danger': formErrors.title.length > 0}" type="title" name="title" formControlName="title" required>
+      <div class="form-control-feedback" role="alert">
+            {{formErrors.title}}
+      </div>
     </div>
     <div class="form-group">
       <label for="address">Address</label>
@@ -22,7 +25,7 @@
         <input type="number"
           class="form-control" name="lng" formControlName="lng" min="-180" max="180" step="0.000001">
       </div>
-    
+
       <button type="button" class="btn btn-info" (click)="showMap()">Pick on map</button>
     </div>
 
@@ -31,7 +34,7 @@
         <input type="number"
           class="form-control" name="price" formControlName="price" min="50000" max="50000000" step="1000">
       </div>
-    
+
     <div class="row">
       <div class="form-group col">
         <label for="num-members">Number of family members</label>
@@ -125,7 +128,7 @@
       </agm-map>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="closeMap()">Cancel</button> 
+      <button type="button" class="btn btn-secondary" (click)="closeMap()">Cancel</button>
       <button type="button" class="btn btn-primary" (click)="saveMapLatLng()">OK</button>
     </div>
   </ng-template>

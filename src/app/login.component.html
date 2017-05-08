@@ -7,7 +7,7 @@
         <ngb-alert type="danger" *ngIf="invalidCredentials" [dismissible]="true" (close)="invalidCredentials = false">The email or password you have entered is invalid. Please try again.</ngb-alert>
         <form [formGroup]="loginForm" (ngSubmit)="doLogin($event)">
           <div class="form-group" [ngClass]="{'has-danger': formErrors.email.length > 0}">
-          <input class="form-control" [ngClass]="{'form-control-danger': formErrors.email.length > 0}" type="email" placeholder="Email" formControlName="email">
+            <input class="form-control" [ngClass]="{'form-control-danger': formErrors.email.length > 0}" type="email" placeholder="Email" formControlName="email">
             <div class="form-control-feedback" role="alert">
                   {{formErrors.email}}
             </div>
@@ -19,11 +19,11 @@
             </div>
           </div>
           <button class="btn btn-success my-2 my-sm-0" type="submit" [disabled]="!loginForm.valid || loggingIn">Log in</button>
-          
+
         </form>
       </div>
 
-      
+
     </div>
   </div>
 </div>

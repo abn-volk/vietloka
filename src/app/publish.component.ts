@@ -10,11 +10,11 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './publish.component.html',
 })
 export class PublishComponent {
-  @ViewChild('content') content; 
-  @ViewChild('mapModal') mapModal; 
+  @ViewChild('content') content;
+  @ViewChild('mapModal') mapModal;
   publishForm: FormGroup;
   publishing: boolean = false;
-  networkError: boolean = false;  
+  networkError: boolean = false;
   id: number;
   modalRef: NgbModalRef;
   mapModalRef: NgbModalRef;
@@ -25,7 +25,7 @@ export class PublishComponent {
   zoom: number = 7;
   query: string;
   draggable: boolean = true;
-  
+
 
   constructor(private fb: FormBuilder, private router: Router, private houseService: HouseService, private modalService: NgbModal, private geocodingService: GeocodingService) {}
   ngOnInit(): void {
@@ -37,8 +37,8 @@ export class PublishComponent {
       'title': ['', [Validators.required]],
       'address': ['', [Validators.required]],
       'lat': [0, [Validators.required]],
-      'lng': [0, [Validators.required]],  
-      'price': [50000, [Validators.required]],    
+      'lng': [0, [Validators.required]],
+      'price': [50000, [Validators.required]],
       'numOfMember': [1, [Validators.required]],
       'hasChildren': [false],
       'hasOlders': [false],
@@ -60,8 +60,59 @@ export class PublishComponent {
   onValueChanged(data?: any) {
     if (!this.publishForm) return;
     const form = this.publishForm;
-    
+    for (const field in this.formErrors) {
+      // clear previous error message (if any)
+      this.formErrors[field] = '';
+      const control = form.get(field);
+      if (control && control.dirty && !control.valid) {
+        const messages = this.validationMessages[field];
+        for (const key in control.errors) {
+          this.formErrors[field] += messages[key] + ' ';
+        }
+      }
   }
+
+  formErrors = {
+    'title': '',
+    'address': '',
+    'lat': '',
+    'lng': '',
+    'price': '',
+    'numOfMember': '',
+    'numOfTotalSlots': '',
+    'area': '',
+    'WC': '',
+  };
+
+  validationMessages = {
+    'title': {
+      'required': 'This field is obligatory.',
+    },
+    'address': {
+      'required': 'This field is obligatory.',
+    },
+    'lat': {
+      'required': 'This field is obligatory.',
+    },
+    'lng': {
+      'required': 'This field is obligatory.',
+    },
+    'price': {
+      'required': 'This field is obligatory.',
+    },
+    'numOfMember': {
+      'required': 'This field is obligatory.',
+    },
+    'numOfTotalSlots': {
+      'required': 'This field is obligatory.',
+    },
+    'area': {
+      'required': 'This field is obligatory.',
+    },
+    'WC': {
+      'required': 'This field is obligatory.',
+    },
+  };
 
   doPublish(event: any) {
     const v = this.publishForm.value;
@@ -87,7 +138,7 @@ export class PublishComponent {
         lat: v.lat,
         lng: v.lng
       }
-    }
+    };
 
     console.log(req);
 
@@ -107,7 +158,7 @@ export class PublishComponent {
   markerDragEnd(m: any, $event: any) {
     this.latMarker = $event.coords.lat;
     this.lngMarker = $event.coords.lng;
-  
+
   }
 
   showMap() {
@@ -128,8 +179,8 @@ export class PublishComponent {
     if (value.query) {
       this.geocodingService.find(value.query).subscribe(
         (data) => {
-          this.lat = this.latMarker = parseFloat(data.results[0].geometry.location.lat);  
-          this.lng = this.lngMarker =  parseFloat(data.results[0].geometry.location.lng); 
+          this.lat = this.latMarker = parseFloat(data.results[0].geometry.location.lat);
+          this.lng = this.lngMarker =  parseFloat(data.results[0].geometry.location.lng);
         }
       )
     }
