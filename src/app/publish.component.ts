@@ -27,7 +27,8 @@ export class PublishComponent {
   draggable: boolean = true;
 
 
-  constructor(private fb: FormBuilder, private router: Router, private houseService: HouseService, private modalService: NgbModal, private geocodingService: GeocodingService) {}
+  constructor(private fb: FormBuilder, private router: Router, private houseService: HouseService,
+     private modalService: NgbModal, private geocodingService: GeocodingService) {}
   ngOnInit(): void {
     this.buildForm();
   }
@@ -57,6 +58,13 @@ export class PublishComponent {
     this.onValueChanged();
   }
 
+  /**
+  * In this version, when users type in these properties and then delete all the
+  * content and left those blank, the website will display the error message
+  * Need to find a new function for formErrors so that if users left those blank,
+  * the website will display the error message immediately in the next version
+  **/
+
   onValueChanged(data?: any) {
     if (!this.publishForm) return;
     const form = this.publishForm;
@@ -80,7 +88,6 @@ export class PublishComponent {
     'numOfMember': '',
     'numOfTotalSlots': '',
     'area': '',
-    'WC': '',
   };
 
   doPublish(event: any) {
