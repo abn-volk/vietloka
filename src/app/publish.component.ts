@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+mport { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HouseService } from './house.service';
@@ -60,16 +60,15 @@ export class PublishComponent {
   onValueChanged(data?: any) {
     if (!this.publishForm) return;
     const form = this.publishForm;
+
     for (const field in this.formErrors) {
       // clear previous error message (if any)
       this.formErrors[field] = '';
       const control = form.get(field);
       if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
-        for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
-        }
+        this.formErrors[field] = 'This field is obligatory.';
       }
+    }
   }
 
   formErrors = {
@@ -82,36 +81,6 @@ export class PublishComponent {
     'numOfTotalSlots': '',
     'area': '',
     'WC': '',
-  };
-
-  validationMessages = {
-    'title': {
-      'required': 'This field is obligatory.',
-    },
-    'address': {
-      'required': 'This field is obligatory.',
-    },
-    'lat': {
-      'required': 'This field is obligatory.',
-    },
-    'lng': {
-      'required': 'This field is obligatory.',
-    },
-    'price': {
-      'required': 'This field is obligatory.',
-    },
-    'numOfMember': {
-      'required': 'This field is obligatory.',
-    },
-    'numOfTotalSlots': {
-      'required': 'This field is obligatory.',
-    },
-    'area': {
-      'required': 'This field is obligatory.',
-    },
-    'WC': {
-      'required': 'This field is obligatory.',
-    },
   };
 
   doPublish(event: any) {
@@ -139,8 +108,6 @@ export class PublishComponent {
         lng: v.lng
       }
     };
-
-    console.log(req);
 
     this.houseService.addHouse(req).subscribe(
       (res) => {
@@ -185,7 +152,6 @@ export class PublishComponent {
       )
     }
   }
-
 
   gotoHouse(id: number) {
     this.modalRef.close();
