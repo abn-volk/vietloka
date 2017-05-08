@@ -93,7 +93,8 @@ export class PublishComponent {
 
     this.houseService.addHouse(req).subscribe(
       (res) => {
-        this.id = res.id;
+        console.log(res);
+        this.id = res._id;
         this.modalRef = this.modalService.open(this.content);
                 setTimeout(() => this.gotoHouse(this.id), 3000);
       },
