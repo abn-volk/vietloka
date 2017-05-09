@@ -58,13 +58,12 @@ export class PublishComponent {
     this.onValueChanged();
   }
 
-  /**
-  * In this version, when users type in these properties and then delete all the
-  * content and left those blank, the website will display the error message
-  * Need to find a new function for formErrors so that if users left those blank,
-  * the website will display the error message immediately in the next version
-  **/
+  // In this version, when users type in these properties and then delete all the
+  // content and left those blank, the website will display the error message
+  // Need to find a new function for formErrors so that if users left those blank,
+  // the website will display the error message immediately in the next version
 
+  // Set validation message when users start to type in
   onValueChanged(data?: any) {
     if (!this.publishForm) return;
     const form = this.publishForm;
@@ -79,6 +78,7 @@ export class PublishComponent {
     }
   }
 
+  // Form errors, errors when users left a required field blank
   formErrors = {
     'title': '',
     'address': '',
@@ -90,6 +90,7 @@ export class PublishComponent {
     'area': '',
   };
 
+  // After users press publish button
   doPublish(event: any) {
     const v = this.publishForm.value;
     let req = {
@@ -116,6 +117,7 @@ export class PublishComponent {
       }
     };
 
+    // After the house was added to the database
     this.houseService.addHouse(req).subscribe(
       (res) => {
         console.log(res);
@@ -129,26 +131,8 @@ export class PublishComponent {
     );
   }
 
-  markerDragEnd(m: any, $event: any) {
-    this.latMarker = $event.coords.lat;
-    this.lngMarker = $event.coords.lng;
-
-  }
-
-  showMap() {
-    this.mapModalRef = this.modalService.open(this.mapModal);
-  }
-
-  closeMap() {
-    this.mapModalRef.close();
-  }
-
-  saveMapLatLng() {
-    this.publishForm.patchValue({lat: this.latMarker});
-    this.publishForm.patchValue({lng: this.lngMarker});
-    this.closeMap();
-  }
-
+  // Hosts submit their locations for the system to search for
+  // Output: the latitude and longtitude of the location
   submitSearch(value) {
     if (value.query) {
       this.geocodingService.find(value.query).subscribe(
@@ -160,6 +144,33 @@ export class PublishComponent {
     }
   }
 
+  // Hosts drag the marker to their location on map
+  // Output: the latitude and longtitude of the location
+  markerDragEnd(m: any, $event: any) {
+    this.latMarker = $event.coords.lat;
+    this.lngMarker = $event.coords.lng;
+
+  }
+
+  // Open map dialog
+  showMap() {
+    this.mapModalRef = this.modalService.open(this.mapModal);
+  }
+
+  // Close map dialog
+  closeMap() {
+    this.mapModalRef.close();
+  }
+
+  // Save the latitude and long titude of the location to
+  // the latitude and longtitude field in the publish form
+  saveMapLatLng() {
+    this.publishForm.patchValue({lat: this.latMarker});
+    this.publishForm.patchValue({lng: this.lngMarker});
+    this.closeMap();
+  }
+
+  // Go to the page of the house just added
   gotoHouse(id: number) {
     this.modalRef.close();
     this.router.navigateByUrl(`house/${id}`);

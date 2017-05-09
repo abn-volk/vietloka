@@ -1,10 +1,16 @@
+<!-- Component for publish page, used for host to publish a house they want to rent -->
+
 <div class="container mt-4">
   <h1>Publish</h1>
   <p class="lead"></p>
-  <ngb-alert type="danger" *ngIf="networkError" [dismissible]="true" (close)="networkError = false">
+
+  <!-- Network error -->
+  <ngb-alert type="danger" *ngIf="networkError"
+  [dismissible]="true" (close)="networkError = false">
     An error has occurred. Please try again.
   </ngb-alert>
 
+  <!-- Publish form -->
   <form [formGroup]="publishForm" (ngSubmit)="doPublish($event)">
 
     <div class="form-group" [ngClass]="{'has-danger': formErrors.title.length > 0}">
@@ -26,6 +32,7 @@
     </div>
 
     <div class="row">
+      
       <div class="form-group col-sm-6 col-md-4" [ngClass]="{'has-danger': formErrors.lat.length > 0}">
         <label for="lat">Latitude: </label>
         <input class="form-control" [ngClass]="{'form-control-danger': formErrors.lat.length > 0}"
@@ -34,6 +41,7 @@
           {{formErrors.lat}}
         </div>
       </div>
+
       <div class="form-group col-sm-6 col-md-4" [ngClass]="{'has-danger': formErrors.lng.length > 0}">
         <label for="lng">Longitude: </label>
         <input class="form-control" [ngClass]="{'form-control-danger': formErrors.lng.length > 0}"
@@ -42,6 +50,7 @@
           {{formErrors.lng}}
         </div>
       </div>
+
       <button type="button" class="btn btn-info" (click)="showMap()">Pick on map</button>
     </div>
 
@@ -125,9 +134,11 @@
       <label for="pics">Picture links (separated by comma)</label>
       <input type="text" name="pics" class="form-control" formControlName="images">
     </div>
-    <button class="btn btn-success" type="submit" [disabled]="!publishForm.valid || publishing">Publish</button>
+    <button class="btn btn-success" type="submit"
+      [disabled]="!publishForm.valid || publishing">Publish</button>
   </form>
 
+  <!-- Message dialog if the use case is succeeded -->
   <ng-template #content>
     <div class="modal-header">
       <h4 class="modal-title">Congratulations!</h4>
@@ -140,15 +151,19 @@
     </div>
   </ng-template>
 
+  <!-- Pick on map dialog, for hosts to pick their house location on the map -->
   <ng-template #mapModal>
     <div class="modal-header">
       <h4 class="modal-title">Location picker</h4>
     </div>
+
+    <!-- Map -->
     <div class="modal-body">
       <form #form="ngForm" class="container-fluid" (ngSubmit)="submitSearch(form.value)">
         <div class="form-group">
           <div class="row">
-          <input type="text" class="col form-control" name="query" aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
+          <input type="text" class="col form-control" name="query"
+          aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
           <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
@@ -162,6 +177,7 @@
         </agm-marker>
       </agm-map>
     </div>
+
     <div class="modal-footer">
       <button type="button" class="btn btn-secondary" (click)="closeMap()">Cancel</button>
       <button type="button" class="btn btn-primary" (click)="saveMapLatLng()">OK</button>
