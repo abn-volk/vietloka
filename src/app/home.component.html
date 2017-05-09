@@ -1,14 +1,20 @@
+<!-- The homepage of Vietloka website -->
+
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-3">From our world to yours.</h1>
+
+    <!-- Introduction -->
+    <h1 class="display-4">From our world to yours.</h1>
     <p class="lead">Find affordable homestay destinations all around Vietnam.</p>
+
+    <!-- Search bar -->
     <form #form="ngForm" (ngSubmit)="search(form.value.query)">
       <div class="form-group">
         <div class="row">
-        <input type="text" class="col form-control" name="query" aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
+        <input type="text" class="col form-control" name="query"
+          aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
         <button type="submit" class="btn btn-primary">Submit</button>
         </div>
-
       </div>
     </form>
   </div>

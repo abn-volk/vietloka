@@ -1,4 +1,4 @@
-// Test for the home page
+// Test for the app component
 
 import { TestBed, async } from '@angular/core/testing';
 
