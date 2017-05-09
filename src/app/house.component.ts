@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HouseService } from './house.service';
-import { UserService } from './user.service';
+import { HouseService, House } from './house.service';
+import { UserService, User } from './user.service';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 
 @Component( {
@@ -13,32 +13,10 @@ export class HouseComponent implements OnInit, OnDestroy{
   constructor(private router: Router, private route: ActivatedRoute, private houseService: HouseService, private userService: UserService) {}
   id: string;
   sub: any;
-  house: any = {
-    image: ['http://i.imgur.com/y9VtVep.jpg', 'http://i.imgur.com/fSbhzNL.jpg'],
-    title: 'Clickbaits',
-    description: 'Hot new modern house with super nice hosts',
-    area: 30,
-    address: 'Nieuwe Binnenweg 176, Rotterdam, the Netherlands',
-    numOfTotalSlots: 9,
-    hasChildren: true,
-    hasOlders: false,
-    hasElectricHeater: true,
-    hasTV: true,
-    hasCarPark: true,
-    hasInternet: true,
-    hasWashingMachine: false,
-    WC: 'None'
-  };
-
-  host: any = {
-    id:"590b590b2043f315704f3b53",
-    name:"Vietloka",
-    picture:"https://gravatar.com/avatar/d2fa7965bdc0f8eb4e6a66426acf0574?d=identicon",
-    role:"user",
-    email:"b@e.com",
-    job: "Teacher",
-    placeOfWork: "UET-VNU"
-  }
+  house: House;
+  isLoggedIn = (localStorage.getItem('token') && localStorage.getItem('id'));
+  isGuest = (localStorage.getItem('is_guest') === 'true');
+  isHost = (localStorage.getItem('is_host') === 'true');
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {

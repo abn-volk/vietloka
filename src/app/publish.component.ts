@@ -120,9 +120,6 @@ export class PublishComponent {
     // After the house was added to the database
     this.houseService.addHouse(req).subscribe(
       (res) => {
-        console.log(res);
-        console.log(res.id);
-        console.log(res._id);
         this.id = res.id;
         this.modalRef = this.modalService.open(this.content);
                 setTimeout(() => this.gotoHouse(this.id), 3000);

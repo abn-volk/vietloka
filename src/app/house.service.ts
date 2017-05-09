@@ -4,6 +4,31 @@ import { environment } from '../environments/environment';
 import { Observable } from 'rxjs/Rx';
 
 import 'rxjs/add/operator/map';
+import { User } from "app/user.service";
+
+export class House {
+  id: string;
+  owner: User;
+  WC: string;
+  address: string;
+  title: string;
+  numOfMember: string;
+  hasChildren: boolean;
+  hasOlders: boolean;
+  area: number;
+  price: number;
+  numOfTotalSlots: number;
+  hasElectricHeater: boolean;
+  hasWashingMachine: boolean;
+  hasTV: boolean;
+  hasInternet: boolean;
+  description: string;
+  image: Array<string>;
+  map: {
+    lat: number;
+    lng: number;
+  };
+}
 
 
 @Injectable()
@@ -27,6 +52,14 @@ export class HouseService {
       });
 
       return this.http.get(this.url + `/api/v1/houses/${id}`, {headers: h})
-               .map(response => response.json());
+               .map(response => response.json() as House);
+    }
+
+    getAllHouses(): Observable<any> {
+      let h = new Headers({
+        'Content-Type': 'application/json'
+      });
+      return this.http.get(this.url + `/api/v1/houses`, {headers: h})
+               .map(response => response.json() as Array<House>);
     }
 }
