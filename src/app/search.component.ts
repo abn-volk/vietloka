@@ -12,7 +12,7 @@ import { LatLngBoundsLiteral } from "@agm/core";
 export class SearchComponent {
   constructor(private route: ActivatedRoute, private router: Router, private geocodingService: GeocodingService) {}
 
-  query = '';  
+  query = '';
   zoom: number = 6;
   lat: number = 18;
   lng: number = 105;
@@ -27,12 +27,13 @@ export class SearchComponent {
     });
   }
 
+  // After users press submit button
   submitSearch(value) {
     if (value.query) {
       this.geocodingService.find(value.query).subscribe(
         (data) => {
-          this.lat = parseFloat(data.results[0].geometry.location.lat);  
-          this.lng = parseFloat(data.results[0].geometry.location.lng); 
+          this.lat = parseFloat(data.results[0].geometry.location.lat);
+          this.lng = parseFloat(data.results[0].geometry.location.lng);
           // let bounds = data.results[0].geometry.viewport;
           // this.bounds = {north: parseFloat(bounds.northeast.lat),
           //                east: parseFloat(bounds.northeast.lng),

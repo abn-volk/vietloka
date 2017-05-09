@@ -1,10 +1,13 @@
+<!-- Search component for destination page -->
+
 <div class="container-fluid">
   <div class="container" id="top-form">
     <form #form="ngForm" (ngSubmit)="submitSearch(form.value)">
       <div class="form-group">
         <div class="row">
-        <input type="text" class="col form-control" name="query" aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
-        <button type="submit" class="btn btn-primary">Submit</button>
+          <input type="text" class="col form-control" name="query"
+            aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
 
       </div>
@@ -13,6 +16,8 @@
 
 
 </div>
+
+<!-- Map -->
 <agm-map [(zoom)]="zoom" [(latitude)]="lat" [(longitude)]="lng" [usePanning]="true">
   <agm-marker
     *ngFor="let m of markers; let i=index"
