@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { UserService } from './user.service';
 
-@Injectable() 
+@Injectable()
 export class TokenGuard implements CanActivate {
   constructor(private svc: UserService, private router: Router) {}
   canActivate(): boolean {
@@ -20,7 +20,7 @@ export class TokenGuard implements CanActivate {
         },
         () => {
           localStorage.removeItem('token');
-          this.router.navigateByUrl('/');          
+          this.router.navigateByUrl('/');
           return false;
         }
       )
@@ -29,7 +29,7 @@ export class TokenGuard implements CanActivate {
   }
 }
 
-@Injectable() 
+@Injectable()
 export class GuestGuard implements CanActivate {
   constructor(private svc: UserService, private router: Router) {}
   canActivate(): boolean {
@@ -45,7 +45,7 @@ export class GuestGuard implements CanActivate {
       (user) => {
         localStorage.setItem('is_guest', 'true');
         return true;
-      }, 
+      },
       () => {
         localStorage.setItem('is_guest', 'false');
         this.router.navigateByUrl('/');
@@ -54,7 +54,7 @@ export class GuestGuard implements CanActivate {
   }
 }
 
-@Injectable() 
+@Injectable()
 export class HostGuard implements CanActivate {
   constructor(private svc: UserService, private router: Router) {}
   canActivate(): boolean{
@@ -70,7 +70,7 @@ export class HostGuard implements CanActivate {
       (user) => {
         localStorage.setItem('is_host', 'true');
         return true;
-      }, 
+      },
       () => {
         localStorage.setItem('is_host', 'false');
         this.router.navigateByUrl('/');
@@ -84,7 +84,7 @@ export class UnverifiedGuard implements CanActivate {
   constructor(private router: Router) {}
   canActivate(): boolean {
     let value = localStorage.getItem('is_host') == 'false' && localStorage.getItem('is_guest') == 'false';
-    if (!value) this.router.navigateByUrl('/');
+    if (!value) this.router.navigateByUrl('/profile');
     return value;
   }
 }
