@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { GeocodingService } from './geocoding.service';
 import { LatLngBoundsLiteral } from "@agm/core";
+import { House, HouseService } from "app/house.service";
 
 
 @Component( {
@@ -10,12 +11,15 @@ import { LatLngBoundsLiteral } from "@agm/core";
   styleUrls: ['search.component.css']
 })
 export class SearchComponent {
-  constructor(private route: ActivatedRoute, private router: Router, private geocodingService: GeocodingService) {}
+  constructor(private route: ActivatedRoute, private router: Router, private houseService: HouseService, private geocodingService: GeocodingService) {}
 
   query = '';
   zoom: number = 6;
   lat: number = 18;
   lng: number = 105;
+  houses: Array<House>;
+  currentHouse: House;
+  showInfo: boolean = false;
   // bounds: LatLngBoundsLiteral;
 
   ngOnInit() {
@@ -25,7 +29,13 @@ export class SearchComponent {
         this.submitSearch({query: this.query});
       }
     });
+    this.houseService.getAllHouses().subscribe(
+      (houses) => {
+        this.houses = houses;
+      }
+    )
   }
+
 
   // After users press submit button
   submitSearch(value) {

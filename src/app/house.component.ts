@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { HouseService, House } from './house.service';
 import { UserService, User } from './user.service';
 import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component( {
   selector: 'house-section',
@@ -10,7 +11,7 @@ import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
 })
 export class HouseComponent implements OnInit, OnDestroy{
 
-  constructor(private router: Router, private route: ActivatedRoute, private houseService: HouseService, private userService: UserService) {}
+  constructor(private router: Router, private route: ActivatedRoute, private houseService: HouseService, private userService: UserService, private sanitizer: DomSanitizer) {}
   id: string;
   sub: any;
   house: House;
@@ -30,6 +31,10 @@ export class HouseComponent implements OnInit, OnDestroy{
         (error) => console.log(error)
       );
     })
+  }
+
+  trustResource(i: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(i)
   }
 
   ngOnDestroy() {
