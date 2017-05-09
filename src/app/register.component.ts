@@ -8,7 +8,7 @@ import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './register.component.html',
 })
 export class RegisterComponent {
-  @ViewChild('content') content; 
+  @ViewChild('content') content;
   registerForm: FormGroup;
   duplicateEmail: boolean;
   registering: boolean;
@@ -22,6 +22,11 @@ export class RegisterComponent {
     this.duplicateEmail = false;
     this.registering = false;
     this.networkError = false;
+    // If users already logged in but try to access the page,
+    // the browser will automatically go to the home page
+    if (localStorage.getItem('token') != null) {
+      this.userService.getProfile().subscribe(user => window.location.replace('/home'));
+    }
   }
 
   buildForm(): void {
@@ -32,9 +37,10 @@ export class RegisterComponent {
     });
     this.registerForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
-    this.onValueChanged(); // (re)set validation messages now
+    this.onValueChanged();
   }
 
+  // Set validation message when users start to type in
   onValueChanged(data?: any) {
     if (!this.registerForm) { return; }
     const form = this.registerForm;
@@ -51,12 +57,13 @@ export class RegisterComponent {
     }
   }
 
+  // Form errors, errors when users type in wrong format of information
   formErrors = {
     'name': '',
     'email': '',
     'password': '',
   };
-  
+
   validationMessages = {
     'name': {
       'required': 'This field is obligatory.',
@@ -71,6 +78,7 @@ export class RegisterComponent {
     },
   };
 
+  // After users press register button
   doRegister(event) {
     this.registering = true;
     this.userService.addUser(new RegisterRequest(this.registerForm.value))
@@ -91,6 +99,7 @@ export class RegisterComponent {
       });
   }
 
+  // Go to the login page after the registration is succeeded
   gotoLogin() {
     this.modalRef.close();
     window.location.replace('/login');

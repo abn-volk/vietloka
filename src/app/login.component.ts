@@ -20,6 +20,8 @@ export class LoginComponent {
     this.invalidCredentials = false;
     this.loggingIn = false;
     this.networkError = false;
+    // If users already logged in but try to access the page,
+    // the browser will automatically go to the home page
     if (localStorage.getItem('token') != null) {
       this.userService.getProfile().subscribe(user => window.location.replace('/home'));
     }
@@ -32,15 +34,17 @@ export class LoginComponent {
     });
     this.loginForm.valueChanges
       .subscribe(data => this.onValueChanged(data));
-    this.onValueChanged(); // (re)set validation messages now
+    this.onValueChanged();
   }
 
+  // Set validation message when users start to type in
   onValueChanged(data?: any) {
     if (!this.loginForm) { return; }
     const form = this.loginForm;
     for (const field in this.formErrors) {
       // clear previous error message (if any)
       this.formErrors[field] = '';
+
       const control = form.get(field);
       if (control && control.dirty && !control.valid) {
         const messages = this.validationMessages[field];
@@ -51,13 +55,13 @@ export class LoginComponent {
     }
   }
 
-  
 
+  // Form errors, errors when users type in wrong format of information
   formErrors = {
     'email': '',
     'password': '',
   };
-  
+
   validationMessages = {
     'email': {
       'required': 'This field is obligatory.',
@@ -69,6 +73,7 @@ export class LoginComponent {
     },
   };
 
+  // After users press login button
   doLogin(event) {
     this.loggingIn = true;
     this.userService.authenticate(this.loginForm.value.email, this.loginForm.value.password)
