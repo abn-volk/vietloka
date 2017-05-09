@@ -22,7 +22,7 @@ import { UserService } from './user.service';
 import { GeocodingService } from './geocoding.service';
 import { HouseService } from './house.service';
 import { RentService } from './rent.service';
-import { TokenGuard, NonLoggedInGuard, GuestGuard, HostGuard, UnverifiedGuard } from './guards';
+import { TokenGuard, GuestGuard, HostGuard, UnverifiedGuard } from './guards';
 
 
 const routes: Route[] = [
@@ -37,13 +37,11 @@ const routes: Route[] = [
   },
   {
     path: 'login',
-    component: LoginComponent,
-    canActivate: [NonLoggedInGuard]
+    component: LoginComponent
   },
   {
     path: 'register',
-    component: RegisterComponent,
-    canActivate: [NonLoggedInGuard]
+    component: RegisterComponent
   },
   {
     path: 'profile',
@@ -106,7 +104,6 @@ const routes: Route[] = [
     HouseService,
     RentService,
     TokenGuard,
-    NonLoggedInGuard,
     GuestGuard,
     HostGuard,
     UnverifiedGuard],

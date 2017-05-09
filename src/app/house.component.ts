@@ -15,8 +15,8 @@ export class HouseComponent implements OnInit, OnDestroy{
   sub: any;
   house: any = {
     image: ['http://i.imgur.com/y9VtVep.jpg', 'http://i.imgur.com/fSbhzNL.jpg'],
-    title: 'Lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    description: 'En la mondon venis nova sento, tra la mondo iras forta voko,  per flugiloj de facila vento,  nun de loko flugu ĝi al loko.',
+    title: 'Clickbaits',
+    description: 'Hot new modern house with super nice hosts',
     area: 30,
     address: 'Nieuwe Binnenweg 176, Rotterdam, the Netherlands',
     numOfTotalSlots: 9,
