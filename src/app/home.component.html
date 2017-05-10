@@ -13,3 +13,55 @@
     </form>
   </div>
 </div>
+
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <div class="row" style="text-align:center">
+      <div class="col-md-12">
+        <h3><img src="src/img/pin.png" style="width:75px">Our Most Popular Destinations</h3>
+        <p class="lead">Find homestay in the most popular destinations of Vietnam</p>
+      </div>
+    </div>
+    <div class="row" style="padding:10%">
+      <div class="row" style="text-align:center">
+        <div class="col-md-4" style="cursor:pointer" (click)="search('Hanoi')">
+          <img src="src/img/hanoi.jpg" class="img-fluid img-thumbnail" alt="Hanoi">
+          <h5 class="lead">Hanoi</h5>
+        </div>
+
+        <div class="col-md-4" style="cursor:pointer" (click)="search('Ho Chi Minh')">
+          <img src="src/img/hochiminh.jpg" class="img-fluid img-thumbnail" alt="Ho Chi Minh">
+          <h5 class="lead">Ho Chi Minh City</h5>
+        </div>
+
+        <div class="col-md-4" style="cursor:pointer" (click)="search('Hoi An')">
+          <img src="src/img/hoian.jpg" class="img-fluid img-thumbnail" alt="Hoi An">
+          <h5 class="lead">Hoi An</h5>
+        </div>
+      </div>
+
+      <div class="row" style="text-align:center">
+        <div class="col-md-8" style="cursor:pointer" (click)="search('Ha Long')">
+          <img src="src/img/halong.jpg" class="img-fluid img-thumbnail" alt="Ha Long">
+          <h5 class="lead">Ha Long Bay</h5>
+        </div>
+
+        <div class="col-md-4">
+          <div class="row" style="cursor:pointer" (click)="search('Da Nang')">
+            <div class="col-md-12">
+              <img src="src/img/danang.jpg" class="img-fluid img-thumbnail" alt="Da Nang">
+              <h5 class="lead">Da Nang</h5>
+            </div>
+          </div>
+
+          <div class="row" style="cursor:pointer" (click)="search('Sa Pa')">
+            <div class="col-md-12">
+              <img src="src/img/sapa.jpg" class="img-fluid img-thumbnail" alt="Sa Pa">
+              <h5 class="lead">Sa Pa</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
