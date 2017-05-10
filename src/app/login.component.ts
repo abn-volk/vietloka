@@ -22,9 +22,9 @@ export class LoginComponent {
     this.networkError = false;
     // If users already logged in but try to access the page,
     // the browser will automatically go to the home page
-    // if (localStorage.getItem('token') != null) {
-    //   this.userService.getProfile().subscribe(user => window.location.replace('/home'));
-    // }
+    if (localStorage.getItem('token') != null) {
+      this.userService.getProfile().subscribe(user => window.location.replace('/'));
+    }
   }
 
   buildForm(): void {

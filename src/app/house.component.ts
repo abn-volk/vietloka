@@ -28,7 +28,8 @@ export class HouseComponent implements OnInit, OnDestroy{
           this.house = house;
           console.log(house);
         },
-        (error) => console.log(error)
+        // (error) => console.log(error)
+        (error) => window.location.replace('/home')
       );
     })
   }
@@ -36,6 +37,7 @@ export class HouseComponent implements OnInit, OnDestroy{
   trustResource(i: string) {
     return this.sanitizer.bypassSecurityTrustResourceUrl(i)
   }
+
 
   ngOnDestroy() {
     this.sub.unsubscribe();

@@ -2,7 +2,7 @@
 
 <div class="container mt-3" *ngIf="!!house">
 
-
+  <!-- Image of the house -->
   <ngb-carousel *ngIf="house.image.length > 0 && house.image[0] != ''" style="background: black">
     <ng-template ngbSlide *ngFor="let slide of house.image">
       <img [src]="trustResource(slide)" height="500px" class="mx-auto">
@@ -16,6 +16,7 @@
     <br>
   </div>
 
+  <!-- Information about the house -->
   <div class="row">
     <div class="col-md-6">
       <h2>{{house.title}}</h2>
@@ -35,29 +36,40 @@
 
       <hr>
 
+      <!-- The house has these conviniences or not -->
       <h4>Conveniences</h4>
       <ul class="list-unstyled">
-        <li><span *ngIf="house.hasElectricHeater" class="text-success"><b>✓</b> water heater</span>
-            <span *ngIf="!house.hasElectricHeater" class="text-danger"><b>✗</b>  water heater</span>
+        <li>
+          <span *ngIf="house.hasElectricHeater" class="text-success"><b>✓</b> water heater</span>
+          <span *ngIf="!house.hasElectricHeater" class="text-danger"><b>✗</b>  water heater</span>
         </li>
-        <li><span *ngIf="house.hasWashingMachine" class="text-success"><b>✓</b> washing machine</span>
-            <span *ngIf="!house.hasWashingMachine" class="text-danger"><b>✗</b> washing machine</span>
+        <li>
+          <span *ngIf="house.hasWashingMachine" class="text-success"><b>✓</b> washing machine</span>
+          <span *ngIf="!house.hasWashingMachine" class="text-danger"><b>✗</b> washing machine</span>
         </li>
-        <li><span *ngIf="house.hasTV" class="text-success"><b>✓</b> television</span>
-            <span *ngIf="!house.hasTV" class="text-danger"><b>✗</b> television</span>
+        <li>
+          <span *ngIf="house.hasTV" class="text-success"><b>✓</b> television</span>
+          <span *ngIf="!house.hasTV" class="text-danger"><b>✗</b> television</span>
         </li>
-        <li><span *ngIf="house.hasInternet" class="text-success"><b>✓</b> internet</span>
-            <span *ngIf="!house.hasInternet" class="text-danger"><b>✗</b> internet</span>
+        <li>
+          <span *ngIf="house.hasInternet" class="text-success"><b>✓</b> internet</span>
+          <span *ngIf="!house.hasInternet" class="text-danger"><b>✗</b> internet</span>
         </li>
-        <li><span *ngIf="house.hasCarPark" class="text-success"><b>✓</b> car park</span>
-            <span *ngIf="!house.hasCarPark" class="text-danger"><b>✗</b> car park</span>
+        <li>
+          <span *ngIf="house.hasCarPark" class="text-success"><b>✓</b> car park</span>
+          <span *ngIf="!house.hasCarPark" class="text-danger"><b>✗</b> car park</span>
         </li>
-        <li><span *ngIf="house.WC != 'None'" class="text-success"><b>✓</b> toilet <span *ngIf="house.WC=='Squat'">(squat)</span><span *ngIf="house.WC=='Western'">(Western)</span></span>
-            <span *ngIf="house.WC == 'None'" class="text-danger"><b>✗</b> toilet</span>
+        <li>
+          <span *ngIf="house.WC != 'None'" class="text-success"><b>✓</b> toilet
+            <span *ngIf="house.WC=='Squat'">(squat)</span>
+            <span *ngIf="house.WC=='Western'">(Western)</span>
+          </span>
+          <span *ngIf="house.WC == 'None'" class="text-danger"><b>✗</b> toilet</span>
         </li>
       </ul>
     </div>
 
+    <!-- Hosts Information -->
     <div class="col-md-6">
       <div class="row hidden-sm-down"><button type="button" class="btn btn-success btn-lg mx-auto">Stay at this place</button></div>
       <hr>
