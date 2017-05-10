@@ -30,11 +30,21 @@ export class House {
   };
 }
 
+export class Comment {
+  rent: string;
+  guest: string;
+  title: string;
+  content: string;
+  approves: boolean;
+}
+
 
 @Injectable()
 export class HouseService {
   private url = environment.server;
-
+  h = new Headers({
+    'Content-Type': 'application/json'
+  });
   constructor(private http: Http) {}
 
   addHouse(request: any): Observable<any> {
@@ -47,19 +57,22 @@ export class HouseService {
     }
 
     getHouse(id: string): Observable<any> {
-      let h = new Headers({
-        'Content-Type': 'application/json'
-      });
-
-      return this.http.get(this.url + `/api/v1/houses/${id}`, {headers: h})
+      return this.http.get(this.url + `/api/v1/houses/${id}`, {headers: this.h})
                .map(response => response.json() as House);
     }
 
     getAllHouses(): Observable<any> {
-      let h = new Headers({
-        'Content-Type': 'application/json'
-      });
-      return this.http.get(this.url + `/api/v1/houses`, {headers: h})
+      return this.http.get(this.url + `/api/v1/houses`, {headers: this.h})
                .map(response => response.json() as Array<House>);
+    }
+
+    getHouseComments(id: string): Observable<Array<Comment>> {
+      return this.http.get(this.url + `/api/v1/houses/${id}/comments`, {headers: this.h})
+                 .map(response => response.json() as Array<Comment>);
+    }
+
+    getHouseRatings(id: string): Observable<any> {
+      return this.http.get(this.url + `/api/v1/houses/${id}/ratings`, {headers: this.h})
+                 .map(response => response.json());
     }
 }

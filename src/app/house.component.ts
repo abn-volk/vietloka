@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HouseService, House } from './house.service';
+import { HouseService, House, Comment } from './house.service';
 import { UserService, User } from './user.service';
 import { NgbCarousel, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer } from "@angular/platform-browser";
@@ -16,6 +16,15 @@ export class HouseComponent implements OnInit, OnDestroy{
   id: string;
   sub: any;
   house: House;
+  comments: Array<Comment> = [{
+    title: 'You can dance, you can jive.',
+    content: 'Having the time of your life. Ooh, see that girl, watch that scene, digging the dancing queen. Friday night and the lights are low',
+    guest: 'jlajg',
+    approves: false,
+    rent: 'djgl'
+  }];
+  users: Array<any> = [{id:"590b590b2043f315704f3b53",name:"Vietloka",picture:"https://gravatar.com/avatar/d2fa7965bdc0f8eb4e6a66426acf0574?d=identicon",role:"user",email:"b@e.com",createdAt: new Date("2017-05-04T16:38:35.248Z")}];
+  ratings = {approval: 10, disapproval: 13}
   isLoggedIn = (localStorage.getItem('token') && localStorage.getItem('id'));
   isGuest = (localStorage.getItem('is_guest') === 'true');
   isHost = (localStorage.getItem('is_host') === 'true');
@@ -32,6 +41,33 @@ export class HouseComponent implements OnInit, OnDestroy{
         (house) => {
           this.house = house;
           console.log(house);
+          this.houseService.getHouseRatings(this.id).subscribe(
+            (ratings) => {
+              this.ratings = ratings;
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+          this.houseService.getHouseComments(this.id).subscribe(
+            (comments) => {
+              console.log(comments);
+              this.comments = comments;
+              comments.forEach((comment, index) => {
+                this.userService.getUser(comment.guest).subscribe(
+                  (user) => {
+                    this.users.push(user);
+                  },
+                  (error) => {
+                    console.log(error);
+                  }
+                );
+              });
+            },
+            (error) => {
+              console.log(error);
+            }
+           );
         },
         // (error) => console.log(error)
         (error) => window.location.replace('/home')
@@ -50,7 +86,11 @@ export class HouseComponent implements OnInit, OnDestroy{
         this.modalRef = this.modalService.open(this.rentModal);
       },
       (error) => {
+<<<<<<< HEAD
 
+=======
+        console.log(error);
+>>>>>>> c331a681357342d5df29e19169765e312860d6c4
       }
     )
   }
