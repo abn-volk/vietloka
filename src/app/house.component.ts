@@ -41,6 +41,7 @@ export class HouseComponent implements OnInit, OnDestroy{
         (house) => {
           this.house = house;
           console.log(house);
+          // Get ratings
           this.houseService.getHouseRatings(this.id).subscribe(
             (ratings) => {
               this.ratings = ratings;
@@ -49,6 +50,7 @@ export class HouseComponent implements OnInit, OnDestroy{
               console.log(error);
             }
           );
+          // Get reviews
           this.houseService.getHouseComments(this.id).subscribe(
             (comments) => {
               console.log(comments);

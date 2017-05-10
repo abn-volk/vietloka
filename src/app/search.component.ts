@@ -11,7 +11,8 @@ import { House, HouseService } from "app/house.service";
   styleUrls: ['search.component.css']
 })
 export class SearchComponent {
-  constructor(private route: ActivatedRoute, private router: Router, private houseService: HouseService, private geocodingService: GeocodingService) {}
+  constructor(private route: ActivatedRoute, private router: Router,
+    private houseService: HouseService, private geocodingService: GeocodingService) {}
 
   query = '';
   zoom: number = 6;

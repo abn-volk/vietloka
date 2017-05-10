@@ -1,6 +1,7 @@
 <!-- Search component for destination page -->
 
 <div class="container" id="top-form">
+  <!-- Search bar -->
   <form #form="ngForm" (ngSubmit)="submitSearch(form.value)">
     <div class="form-group">
       <div class="row">
@@ -13,6 +14,7 @@
   </form>
 </div>
 
+<!-- Map -->
 <agm-map [(zoom)]="zoom" [(latitude)]="lat" [(longitude)]="lng" [usePanning]="true">
   <agm-marker
     *ngFor="let h of houses; let i=index"
@@ -25,5 +27,3 @@
     </agm-info-window>
   </agm-marker>
 </agm-map>
-
-

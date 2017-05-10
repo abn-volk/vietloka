@@ -19,7 +19,7 @@ export class GuestComponent implements OnInit, OnDestroy{
   isHost = (localStorage.getItem('is_host') === 'true');
 
   constructor(private router: Router, private route: ActivatedRoute,
-    private userService: UserService, private sanitizer: DomSanitizer, private modalService: NgbModal) {}
+    private userService: UserService, private sanitizer: DomSanitizer) {}
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
