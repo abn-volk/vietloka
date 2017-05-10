@@ -24,10 +24,12 @@ export class ProfileComponent {
                             || localStorage.getItem('is_host') === 'true');
           this.isHost = localStorage.getItem('is_host') === 'true';
           this.isGuest = localStorage.getItem('is_guest') === 'true';
+          console.log(user)
         },
         reason => {
           window.location.replace('/')
         });
+
   }
 
 
@@ -36,4 +38,5 @@ export class ProfileComponent {
     localStorage.clear();
     window.location.replace('/');
   }
+
 }

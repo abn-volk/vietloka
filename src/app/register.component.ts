@@ -104,4 +104,6 @@ export class RegisterComponent {
     this.modalRef.close();
     window.location.replace('/login');
   }
+
+  
 }

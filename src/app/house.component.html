@@ -12,6 +12,8 @@
   <div class="mt-3"></div>
 
   <div class="hidden-md-up" *ngIf="!(isLoggedIn && isHost && !isGuest)">
+
+    <!-- Check if users logged in to use rent feature -->
     <div class="row">
       <button type="button" class="btn btn-success btn-lg mx-auto"
         [disabled]="!isLoggedIn || !isGuest"
@@ -86,7 +88,9 @@
       <div>
         <h4 class="text-center">About the host</h4>
         <p class="text-center"><img *ngIf="house.owner.picture" [src]="house.owner.picture" class="img-thumbnail rounded-circle"></p>
-        <p class="lead text-center">{{house.owner.name}}</p>
+        <p class="lead text-center">
+          <a routerLink="/host/{{house.owner.id}}">{{house.owner.name}}</a>
+        </p>
         <p class="text-center"><a href="mailto:{{house.owner.email}}">✉ {{house.owner.email}}</a></p>
       </div>
     </div>
