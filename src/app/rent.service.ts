@@ -24,7 +24,12 @@ export class RentService {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer ' + localStorage.getItem('token')
     });
-    return this.http.get(this.url + `/api/v1/rents/`, {headers: h})
+    let rent = {
+      house: id,
+      accepted: false,
+      completed: false
+    }
+    return this.http.post(this.url + `/api/v1/rents/`, rent, {headers: h})
                .map(response => response.json());
   }
 
