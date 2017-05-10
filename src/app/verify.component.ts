@@ -2,6 +2,7 @@ import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { UserService } from './user.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from "@angular/router";
 
 
 @Component( {
@@ -15,7 +16,7 @@ export class VerifyComponent {
   verificationForm: FormGroup;
   modalRef: NgbModalRef;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private modalService: NgbModal) {}
+  constructor(private fb: FormBuilder, private userService: UserService, private modalService: NgbModal, private router: Router) {}
 
   ngOnInit(): void {
     this.networkError = false;
@@ -123,7 +124,7 @@ export class VerifyComponent {
   // Go to the profile page after verification
   gotoProfile() {
     this.modalRef.close();
-    window.location.replace('/profile');
+    this.router.navigateByUrl('/profile');
   }
 
 }

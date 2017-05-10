@@ -10,7 +10,7 @@ export class TokenGuard implements CanActivate {
     let id = localStorage.getItem('id');
     let token = localStorage.getItem('token');
     if (token == null) {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/home');
       return false;
     }
     if (id == null) {
@@ -21,7 +21,7 @@ export class TokenGuard implements CanActivate {
         },
         () => {
           localStorage.removeItem('token');
-          this.router.navigateByUrl('/');
+          this.router.navigateByUrl('/home');
           return false;
         }
       )
@@ -92,7 +92,7 @@ export class HostGuard implements CanActivate {
     let token = localStorage.getItem('token');
     let isHost = localStorage.getItem('is_host');
     if (token == null) {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/home');
       return false;
     }
     if (!!token && isHost == 'true') return true;
@@ -104,7 +104,7 @@ export class HostGuard implements CanActivate {
       },
       () => {
         localStorage.setItem('is_host', 'false');
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/home');
         return false;
       });
   }
