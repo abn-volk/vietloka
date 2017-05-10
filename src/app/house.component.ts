@@ -86,11 +86,7 @@ export class HouseComponent implements OnInit, OnDestroy{
         this.modalRef = this.modalService.open(this.rentModal);
       },
       (error) => {
-<<<<<<< HEAD
-
-=======
         console.log(error);
->>>>>>> c331a681357342d5df29e19169765e312860d6c4
       }
     )
   }
