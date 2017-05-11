@@ -1,11 +1,18 @@
+<!-- A component that exist in all pages of the website -->
+
+<!-- Navigation bar of Vietloka website -->
 <nav class="navbar bg-primary navbar-inverse navbar-toggleable-md">
   <div class="container">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler navbar-toggler-right" type="button"
+      data-toggle="collapse" (click)="isNavbarCollapsed = !isNavbarCollapsed"
+      aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" routerLink="home">Vietloka</a>
 
     <div class="collapse navbar-collapse" [ngbCollapse]="isNavbarCollapsed">
+
+      <!-- Navigation bar indexes -->
       <ul class="navbar-nav mr-auto mt-2 mt-md-0">
         <li class="nav-item">
           <a class="nav-link" routerLink="search">Destinations</a>
@@ -17,22 +24,25 @@
           <a class="nav-link" routerLink="about">About us</a>
         </li>
       </ul>
+
+      <!-- Log in or register -->
       <form class="form-inline">
-          <button class="btn btn-success" *ngIf="!signedIn && checked" routerLink="login">Log in</button>        
+          <button class="btn btn-info" *ngIf="!signedIn && checked" routerLink="login">Log in</button>
+          <button class="btn btn-success" *ngIf="!signedIn && checked" routerLink="register">Register</button>
       </form>
+
+      <!-- User profile link -->
       <ul class="navbar-nav ml-2">
-        <li class="nav-item">
-          <a class="nav-link" *ngIf="!signedIn && checked" routerLink="register">Register</a>
-        </li>
         <li class="nav-item">
           <a routerLink="profile" *ngIf="signedIn && checked">
             <div class="row">
-            <img *ngIf="picture" [src]="picture" width="40" height="40" class="mr-md-2 rounded-circle"> 
-            <div class="nav-link">Profile</div>
-          </div>
+              <img *ngIf="picture" [src]="picture" width="40" height="40" class="mr-md-2 rounded-circle">
+              <div class="nav-link">Profile</div>
+            </div>
           </a>
         </li>
       </ul>
+
     </div>
   </div>
 </nav>

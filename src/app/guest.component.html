@@ -1,0 +1,56 @@
+<!-- Component for a guest profile page, for hosts to check on guest profile -->
+
+<div class="container mt-4">
+
+
+  <div class="card">
+    <div class="card-block">
+      <div class="card-text text-center">
+
+        <!-- Title -->
+        <h1>Guest profile</h1>
+
+        <!-- <Warning if users do not have permission to view this profile -->
+        <p *ngIf="!isLoggedIn" class="form-text text-muted">
+          Please <a routerLink="/login">log into Vietloka</a>
+          or <a routerLink="/register">register an account</a> to use this feature.
+        </p>
+        <p *ngIf="isLoggedIn && !isHost" class="form-text text-muted">
+          Your account is not verified. <a routerLink="/verify">Verify</a> your account to become a host.
+        </p>
+
+        <img *ngIf="guest?.user.picture && isHost" [src]="guest?.user.picture" class="img-thumbnail rounded-circle">
+
+        <!-- Profile tabs -->
+        <div class="row" *ngIf="isHost">
+          <ngb-tabset class="mx-auto mt-3">
+
+            <ngb-tab title="Guest Profile">
+              <ng-template ngbTabContent>
+                <div>
+                  <p>Name: {{guest?.user.name}}</p>
+                  <!-- <p>Email: {{guest?.user.email}}</p> -->
+                  <p>Gender: {{guest?.user?.gender}}</p>
+                  <p>Job: {{guest?.user.job}}</p>
+                  <p>Place of Work: {{guest?.user.placeOfWork}}</p>
+                  <!-- <p>Phone: {{guest?.user.phoneNumber}}</p>
+                  <p>ID: {{guest?.user.identityNumber}}</p> -->
+                  <p>Birthday: {{guest?.user.dateOfBirth}}</p>
+                  <p>Nationality: {{guest?.nationality}}</p>
+                </div>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Rented Houses">
+              <ng-template ngbTabContent>Not yet implemented.
+              </ng-template>
+            </ngb-tab>
+
+          </ngb-tabset>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

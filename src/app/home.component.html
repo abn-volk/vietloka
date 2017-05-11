@@ -1,12 +1,24 @@
+<!-- Component for the homepage of Vietloka website -->
+
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1 class="display-3">From our world to yours.</h1>
+
+    <!-- Introduction -->
+    <h1 class="display-4">From our world to yours.</h1>
     <p class="lead">Find affordable homestay destinations all around Vietnam.</p>
+
+    <!-- Search bar -->
     <form #form="ngForm" (ngSubmit)="search(form.value.query)">
       <div class="form-group">
         <div class="row">
+<<<<<<< HEAD
           <input type="text" class="col form-control" name="query" aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
           <button type="submit" class="btn btn-primary">Submit</button>
+=======
+        <input type="text" class="col form-control" name="query"
+          aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
+        <button type="submit" class="btn btn-primary">Submit</button>
+>>>>>>> a2fd4819d1709e2c879993f99e6d1e43e06d30a4
         </div>
       </div>
     </form>
@@ -63,4 +75,9 @@
       </div>
     </div>
   </div>
+<<<<<<< HEAD
 </div> 
+=======
+</div>
+
+>>>>>>> a2fd4819d1709e2c879993f99e6d1e43e06d30a4

@@ -22,16 +22,18 @@ export class AppComponent {
     this.isNavbarCollapsed = true;
     this.checked = false;
     this.signedIn = false;
-    if (localStorage.getItem('is_host') == 'true') 
+    if (localStorage.getItem('is_host') == 'true')
       this.isHost = true;
+
+    // Check user login, if logged in then set user information
     if (localStorage.getItem('token') != null) {
       this.userService.getProfile()
       .subscribe(
         user => {
           localStorage.setItem('id', user.id);
-          this.name = user.name; 
-          this.picture = user.picture; 
-          this.signedIn = true; 
+          this.name = user.name;
+          this.picture = user.picture;
+          this.signedIn = true;
           this.checked = true
           if (localStorage.getItem('is_guest') == null)
             this.userService.isGuest()

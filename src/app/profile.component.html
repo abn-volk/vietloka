@@ -1,45 +1,58 @@
+<!-- Component for profile page -->
+
 <div class="container mt-4">
-  
+
 
   <div class="card">
     <div class="card-block">
       <div class="card-text text-center">
+
+        <!-- Title -->
         <h1>My profile</h1>
         <img *ngIf="user?.picture" [src]="user?.picture" class="img-thumbnail rounded-circle">
-        <h2>{{user?.name}}</h2>
-        <div>{{user?.email}}</div>
+
+        <!-- Navigation link to the verify page if the user hasn't been verified yet -->
         <div *ngIf="!verified">
           Your account is not verified. To become a verified host or guest, click <a routerLink="/verify">here</a>.
         </div>
 
+        <!-- Profile tabs -->
         <div class="row" *ngIf="verified">
           <ngb-tabset class="mx-auto mt-3">
+
             <ngb-tab title="User Profile">
               <ng-template ngbTabContent>
                 <div>
-                  <p>{{user?.name}} at {{user?.email}}</p>
-                  <p>{{user?.role}}</p>
-                  <p>{{user?.job}}</p>
-                  <p>{{user?.placeOfWork}}</p>
-                  <p>{{user?.phoneNumber}}</p>
-                  <p>{{user?.identityNumber}}</p>
-                  <p>{{user?.dateOfBirth}}</p>
-                  <p>{{user?.gender}}</p>
+                  <p>Name: {{user?.name}}</p>
+                  <!-- <p>Email: {{user?.email}}</p> -->
+                  <p>Gender: {{user?.gender}}</p>
+                  <p *ngIf="isHost && isGuest">Role: Host, Guest</p>
+                  <p *ngIf="isHost && !isGuest">Role: Host</p>
+                  <p *ngIf="!isHost && isGuest">Role: Guest</p>
+                  <p>Job: {{user?.job}}</p>
+                  <p>Place of Work: {{user?.placeOfWork}}</p>
+                  <!-- <p>Phone: {{user?.phoneNumber}}</p>
+                  <p>ID: {{user?.identityNumber}}</p> -->
+                  <p>Birthday: {{user?.dateOfBirth}}</p>
                 </div>
               </ng-template>
             </ngb-tab>
+
             <ngb-tab *ngIf="isHost" title="My Houses">
               <ng-template ngbTabContent>Not yet implemented.
               </ng-template>
             </ngb-tab>
+
             <ngb-tab *ngIf="isHost" title="My Guests">
               <ng-template ngbTabContent>Not yet implemented
               </ng-template>
             </ngb-tab>
+
             <ngb-tab *ngIf="isGuest" title="Rented Houses">
               <ng-template ngbTabContent>Not yet implemented
               </ng-template>
             </ngb-tab>
+
           </ngb-tabset>
         </div>
 

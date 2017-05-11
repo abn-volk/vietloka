@@ -17,19 +17,26 @@ export class ProfileComponent {
   ngOnInit() {
     this.userService.getProfile()
       .subscribe(
+        // Check if user is a host or a guest or both
         user => {
           this.user = user;
-          this.verified = (localStorage.getItem('is_guest') === 'true' || localStorage.getItem('is_host') === 'true');
+          this.verified = (localStorage.getItem('is_guest') === 'true'
+                            || localStorage.getItem('is_host') === 'true');
           this.isHost = localStorage.getItem('is_host') === 'true';
           this.isGuest = localStorage.getItem('is_guest') === 'true';
+          console.log(user)
         },
         reason => {
           window.location.replace('/')
         });
+
   }
 
+
+  // After users press log out button
   doLogout() {
     localStorage.clear();
     window.location.replace('/');
   }
+
 }

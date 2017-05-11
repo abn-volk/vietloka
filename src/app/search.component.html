@@ -1,26 +1,29 @@
-<div class="container-fluid">
-  <div class="container" id="top-form">
-    <form #form="ngForm" (ngSubmit)="submitSearch(form.value)">
-      <div class="form-group">
-        <div class="row">
-        <input type="text" class="col form-control" name="query" aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
+<!-- Search component for destination page -->
+
+<div class="container" id="top-form">
+  <!-- Search bar -->
+  <form #form="ngForm" (ngSubmit)="submitSearch(form.value)">
+    <div class="form-group">
+      <div class="row">
+        <input type="text" class="col form-control" name="query"
+          aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
         <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-
       </div>
-    </form>
-  </div>
 
-
+    </div>
+  </form>
 </div>
+
+<!-- Map -->
 <agm-map [(zoom)]="zoom" [(latitude)]="lat" [(longitude)]="lng" [usePanning]="true">
   <agm-marker
-    *ngFor="let m of markers; let i=index"
-    (markerClick)="clickedMarker(label, i)"
-    [latitude]="m.lat"
-    [longitude]="m.lng">
+    *ngFor="let h of houses; let i=index"
+    [latitude]="h.map.lat"
+    [longitude]="h.map.lng">
+    <agm-info-window>
+      <h4><a routerLink="/house/{{h.id}}">{{h.title}}</a></h4>
+      <p>{{h.address}}</p>
+      <p>{{h.owner.name}}</p>
+    </agm-info-window>
   </agm-marker>
-  <agm-info-window>
-    Hello
-  </agm-info-window>
 </agm-map>
