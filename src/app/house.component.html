@@ -42,7 +42,9 @@
   <div class="row">
     <div class="col-md-6">
       <h2>{{house.title}}</h2>
-      <p class="lead">{{house.address}}</p>
+      <p class="lead">{{house.address}} 
+        <a href="http://maps.google.com/?q={{house.map.lat}},{{house.map.lng}}" target="_blank">(View on Google Maps)</a>
+      </p>
       <p>{{house.description}}</p>
 
       <hr>
@@ -125,7 +127,7 @@
 
   <!-- Reviews -->
   <hr>
-  <h4>Reviews (<span class="text-success">{{ratings.approval}}</span>/<span class="text-danger">{{ratings.disapproval}}</span>)</h4>
+  <h4>Reviews (<span class="text-success">{{ratings?.approval}}</span>/<span class="text-danger">{{ratings?.disapproval}}</span>)</h4>
   <div>
     <div class="card" *ngFor="let comment of comments">
       <div class="card-block">
