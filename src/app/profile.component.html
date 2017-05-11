@@ -51,13 +51,21 @@
 
             <!-- List of guests stayed at users' houses, if the users are hosts -->
             <ngb-tab *ngIf ="isHost" title="My Guests">
-              <ng-template ngbTabContent>Not yet implemented
+              <ng-template ngbTabContent>
+                <br>
+                <div *ngFor="let r of renteds">
+                  <a routerLink="/house/{{r.house.id}}">{{r.house.title | uppercase}} at {{r.house.address}}</a>
+                </div>
               </ng-template>
             </ngb-tab>
 
             <!-- List of houses users stayed, if the users are guests -->
             <ngb-tab *ngIf="isGuest" title="Rented Houses">
-              <ng-template ngbTabContent>Not yet implemented
+              <ng-template ngbTabContent>
+                <br>
+                <div *ngFor="let r of rents">
+                  <a routerLink="/house/{{r.house.id}}">{{r.house.title | uppercase}} at {{r.house.address}}</a>
+                </div>
               </ng-template>
             </ngb-tab>
 
