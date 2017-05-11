@@ -1,0 +1,61 @@
+<!-- Component for a host profile page, for guests to check on host profile -->
+
+<div class="container mt-4">
+
+
+  <div class="card">
+    <div class="card-block">
+      <div class="card-text text-center">
+
+        <!-- Title -->
+        <h1>Host profile</h1>
+
+        <!-- <Warning if users do not have permission to view this profile -->
+        <p *ngIf="!isLoggedIn" class="form-text text-muted">
+          Please <a routerLink="/login">log into Vietloka</a>
+          or <a routerLink="/register">register an account</a> to use this feature.
+        </p>
+        <p *ngIf="isLoggedIn && !isGuest" class="form-text text-muted">
+          Your account is not verified. <a routerLink="/verify">Verify</a> your account to become a guest.
+        </p>
+
+        <img *ngIf="host?.user.picture && isGuest" [src]="host?.user.picture" class="img-thumbnail rounded-circle">
+
+        <!-- Profile tabs -->
+        <div class="row" *ngIf="isGuest">
+          <ngb-tabset class="mx-auto mt-3">
+
+            <ngb-tab title="Host Profile">
+              <ng-template ngbTabContent>
+                <div>
+                  <p>Name: {{host?.user.name}}</p>
+                  <!-- <p>Email: {{host?.user.email}}</p> -->
+                  <p>Gender: {{host?.user?.gender}}</p>
+                  <p>Job: {{host?.user.job}}</p>
+                  <p>Place of Work: {{host?.user.placeOfWork}}</p>
+                  <!-- <p>Phone: {{host?.user.phoneNumber}}</p>
+                  <p>ID: {{host?.user.identityNumber}}</p> -->
+                  <p>Birthday: {{host?.user.dateOfBirth}}</p>
+                </div>
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Host's Houses">
+              <ng-template ngbTabContent>Not yet implemented.
+              </ng-template>
+            </ngb-tab>
+
+            <ngb-tab title="Host's Guests">
+              <ng-template ngbTabContent>Not yet implemented
+              </ng-template>
+            </ngb-tab>
+
+          </ngb-tabset>
+        </div>
+
+        <!-- For guests who want to contact hosts -->
+        <!-- <button class="btn btn-info mt-2" (click)="mail()">Mail</button> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,44 +1,37 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { HouseService } from './house.service';
-import { UserService } from './user.service';
-import { NgbCarousel } from '@ng-bootstrap/ng-bootstrap';
+import { HouseService, House, Comment } from './house.service';
+import { UserService, User } from './user.service';
+import { NgbCarousel, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { DomSanitizer } from "@angular/platform-browser";
+import { RentService } from './rent.service';
 
 @Component( {
   selector: 'house-section',
   templateUrl: './house.component.html',
 })
 export class HouseComponent implements OnInit, OnDestroy{
-
-  constructor(private router: Router, private route: ActivatedRoute, private houseService: HouseService, private userService: UserService) {}
+  @ViewChild('rentModal') rentModal;
+  modalRef: NgbModalRef;
   id: string;
   sub: any;
-  house: any = {
-    image: ['http://i.imgur.com/y9VtVep.jpg', 'http://i.imgur.com/fSbhzNL.jpg'],
-    title: 'Lorem ipsum dolor sit amet lorem ipsum dolor sit amet',
-    description: 'En la mondon venis nova sento, tra la mondo iras forta voko,  per flugiloj de facila vento,  nun de loko flugu ĝi al loko.',
-    area: 30,
-    address: 'Nieuwe Binnenweg 176, Rotterdam, the Netherlands',
-    numOfTotalSlots: 9,
-    hasChildren: true,
-    hasOlders: false,
-    hasElectricHeater: true,
-    hasTV: true,
-    hasCarPark: true,
-    hasInternet: true,
-    hasWashingMachine: false,
-    WC: 'None'
-  };
+  house: House;
+  comments: Array<Comment> = [{
+    title: 'You can dance, you can jive.',
+    content: 'Having the time of your life. Ooh, see that girl, watch that scene, digging the dancing queen. Friday night and the lights are low',
+    guest: 'jlajg',
+    approves: false,
+    rent: 'djgl'
+  }];
+  users: Array<any> = [{id:"590b590b2043f315704f3b53",name:"Vietloka",picture:"https://gravatar.com/avatar/d2fa7965bdc0f8eb4e6a66426acf0574?d=identicon",role:"user",email:"b@e.com",createdAt: new Date("2017-05-04T16:38:35.248Z")}];
+  ratings = {approval: 10, disapproval: 13}
+  isLoggedIn = (localStorage.getItem('token') && localStorage.getItem('id'));
+  isGuest = (localStorage.getItem('is_guest') === 'true');
+  isHost = (localStorage.getItem('is_host') === 'true');
 
-  host: any = {
-    id:"590b590b2043f315704f3b53",
-    name:"Vietloka",
-    picture:"https://gravatar.com/avatar/d2fa7965bdc0f8eb4e6a66426acf0574?d=identicon",
-    role:"user",
-    email:"b@e.com",
-    job: "Teacher",
-    placeOfWork: "UET-VNU"
-  }
+  constructor(private router: Router, private route: ActivatedRoute, private houseService: HouseService,
+    private userService: UserService, private sanitizer: DomSanitizer,
+    private rentService: RentService, private modalService: NgbModal) {}
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -48,15 +41,65 @@ export class HouseComponent implements OnInit, OnDestroy{
         (house) => {
           this.house = house;
           console.log(house);
+          // Get ratings
+          this.houseService.getHouseRatings(this.id).subscribe(
+            (ratings) => {
+              this.ratings = ratings;
+            },
+            (error) => {
+              console.log(error);
+            }
+          );
+          // Get reviews
+          this.houseService.getHouseComments(this.id).subscribe(
+            (comments) => {
+              console.log(comments);
+              this.comments = comments;
+              comments.forEach((comment, index) => {
+                this.userService.getUser(comment.guest).subscribe(
+                  (user) => {
+                    this.users.push(user);
+                  },
+                  (error) => {
+                    console.log(error);
+                  }
+                );
+              });
+            },
+            (error) => {
+              console.log(error);
+            }
+           );
         },
-        (error) => console.log(error)
+        // (error) => console.log(error)
+        (error) => window.location.replace('/home')
       );
     })
+  }
+
+  trustResource(i: string) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(i)
+  }
+
+  // Check if the users visting the house page is the owner or not
+  checkOwner() {
+    return (localStorage.getItem('id') === this.house.owner.id)
+  }
+
+  // If users press on Stay at this place button
+  doStay() {
+    this.rentService.postRent(this.house.id).subscribe(
+      (res) => {
+        this.modalRef = this.modalService.open(this.rentModal);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
   }
 
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
 
 }

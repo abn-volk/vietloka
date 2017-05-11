@@ -1,93 +1,119 @@
+<!-- Component for verify page -->
+
 <div class="container mt-4">
   <h1>Verify your account</h1>
   <div class="lead mb-3">Want to become a host or a guest on Vietloka? Simply fill in the form below!</div>
+
+  <!-- Introduction -->
   <ngb-alert type="info" [dismissible]="false">
     <p class="lead">What are hosts and guests?</p>
-    <p>By default, you can only view basic information about homestay destinations. 
+    <p>By default, you can only view basic information about homestay destinations.
       Being a verified guest, you will be able to see hosts' contact information, as well as rate and comment on destination listings.
       Verified hosts can publish information on the website and interact with guests.</p>
   </ngb-alert>
 
   <hr/>
 
+  <!-- Verification form -->
   <form [formGroup]="verificationForm" (ngSubmit)="doVerify($event)">
-    <ngb-alert type="danger" *ngIf="networkError" [dismissible]="true" (close)="networkError = false">An error has occurred. Please try again.</ngb-alert>
+    <ngb-alert type="danger" *ngIf="networkError"
+      [dismissible]="true" (close)="networkError = false">
+      An error has occurred. Please try again.
+    </ngb-alert>
 
     <div class="form-group" [ngClass]="{'has-danger': formErrors.job.length > 0}">
       <label for="job">What do you do?</label>
       <input [ngClass]="{'form-control-danger': formErrors.placeOfWork.length > 0}"
         type="text" class="form-control" formControlName="job" name="job">
-      <div class="form-control-feedback" role="alert">{{formErrors.job}}</div>
+      <div class="form-control-feedback" role="alert">
+        {{formErrors.job}}
+      </div>
     </div>
 
     <div class="form-group" [ngClass]="{'has-danger': formErrors.placeOfWork.length > 0}">
       <label for="placeOfWork">Where do you work?</label>
       <input [ngClass]="{'form-control-danger': formErrors.placeOfWork.length > 0}"
         type="text" class="form-control" formControlName="placeOfWork" name="placeOfWork" class="form-control">
-      <div class="form-control-feedback" role="alert">{{formErrors.placeOfWork}}</div>
+      <div class="form-control-feedback" role="alert">
+        {{formErrors.placeOfWork}}
+      </div>
     </div>
 
     <div class="form-group" [ngClass]="{'has-danger': formErrors.idNumber.length > 0}">
       <label for="idNumber">What is your identity number?</label>
       <input [ngClass]="{'form-control-danger': formErrors.idNumber.length > 0}"
         type="telephone" class="form-control" formControlName="idNumber" name="idNumber">
-      <div class="form-control-feedback" role="alert">{{formErrors.idNumber}}</div>
+      <div class="form-control-feedback" role="alert">
+        {{formErrors.idNumber}}
+      </div>
     </div>
 
     <fieldset class="form-group">
       <label>What is your gender?</label>
+
       <div class="form-check form-check-inline">
         <label class="form-check-label">
           <input type="radio" class="form-check-input" formControlName="gender" value="male">
           Male
         </label>
       </div>
+
       <div class="form-check form-check-inline">
       <label class="form-check-label">
           <input type="radio" class="form-check-input" formControlName="gender" value="female">
           Female
         </label>
       </div>
+
       <div class="form-check form-check-inline">
       <label class="form-check-label">
           <input type="radio" class="form-check-input" formControlName="gender" value="other" checked>
           Other
         </label>
       </div>
+
     </fieldset>
 
     <div class="form-group" [ngClass]="{'has-danger': formErrors.dateOfBirth.length > 0}">
       <label for="dateOfBirth">When were you born?</label>
       <input [ngClass]="{'form-control-danger': formErrors.dateOfBirth.length > 0}"
         type="date" class="form-control" formControlName="dateOfBirth" name="dateOfBirth" placeholder="YYYY-MM-DD">
-      <div class="form-control-feedback" role="alert">{{formErrors.dateOfBirth}}</div>
+      <div class="form-control-feedback" role="alert">
+        {{formErrors.dateOfBirth}}
+      </div>
     </div>
 
     <fieldset class="form-group">
-      <label>I want to become: </label>
+      <label>You want to become: </label>
+
       <div class="form-check form-check-inline">
         <label class="form-check-label">
           <input type="radio" class="form-check-input" formControlName="role" value="guest">
           A guest
         </label>
       </div>
+
       <div class="form-check form-check-inline">
       <label class="form-check-label">
           <input type="radio" class="form-check-input" formControlName="role" value="host">
           A host
         </label>
       </div>
+
       <div class="form-check form-check-inline">
       <label class="form-check-label">
           <input type="radio" class="form-check-input" formControlName="role" value="both" checked>
           Both
         </label>
       </div>
+
     </fieldset>
 
     <div class="form-group"
       [ngClass]="{'has-danger': verificationForm.get('role') == 'guest' && verificationForm.get('nationality').length == 0}">
       <label for="nationality">For guests: Where do you come from? </label>
+
+      <!-- List of nations -->
       <select name="nationality" formControlName="nationality">
         <option value="" selected="selected"></option>
         <option value="Afghanistan">Afghanistan</option>
@@ -298,22 +324,25 @@
       </select>
     </div>
 
-    <button class="btn btn-success my-2 my-sm-0" type="submit" [disabled]="(!verificationForm.valid || verifying) || (verificationForm.get('role').value == 'guest' && verificationForm.get('nationality').value.length == 0)">Verify</button>
+    <button class="btn btn-success my-2 my-sm-0" type="submit"
+      [disabled]="(!verificationForm.valid || verifying)
+      || (verificationForm.get('role').value == 'guest'
+      && verificationForm.get('nationality').value.length == 0)">Verify</button>
 
   </form>
 
-
+  <!-- Message dialog if the verification is succeeded -->
   <ng-template #content>
     <div class="modal-header">
       <h4 class="modal-title">Verification successful</h4>
     </div>
     <div class="modal-body">
-      <p>Congratulations! You will be redirected to the home page in a few seconds.</p>
+      <p>Congratulations! You will be redirected to the profile page in a few seconds.</p>
     </div>
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="gotoHome()">Go to Home</button>
+      <button type="button" class="btn btn-secondary" (click)="gotoProfile()">Go to Profile</button>
     </div>
   </ng-template>
-  
+
 
 </div>

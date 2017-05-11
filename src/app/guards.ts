@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
 import { UserService } from './user.service';
 
-@Injectable() 
+// Protecting routers that only registered users can access
+@Injectable()
 export class TokenGuard implements CanActivate {
   constructor(private svc: UserService, private router: Router) {}
   canActivate(): boolean {
     let id = localStorage.getItem('id');
     let token = localStorage.getItem('token');
     if (token == null) {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/home');
       return false;
     }
     if (id == null) {
@@ -20,7 +21,7 @@ export class TokenGuard implements CanActivate {
         },
         () => {
           localStorage.removeItem('token');
-          this.router.navigateByUrl('/');          
+          this.router.navigateByUrl('/home');
           return false;
         }
       )
@@ -29,7 +30,8 @@ export class TokenGuard implements CanActivate {
   }
 }
 
-@Injectable() 
+// Protecting routers that only guests can access
+@Injectable()
 export class GuestGuard implements CanActivate {
   constructor(private svc: UserService, private router: Router) {}
   canActivate(): boolean {
@@ -45,7 +47,7 @@ export class GuestGuard implements CanActivate {
       (user) => {
         localStorage.setItem('is_guest', 'true');
         return true;
-      }, 
+      },
       () => {
         localStorage.setItem('is_guest', 'false');
         this.router.navigateByUrl('/');
@@ -54,14 +56,15 @@ export class GuestGuard implements CanActivate {
   }
 }
 
-@Injectable() 
+// Protecting routers that only hosts can access
+@Injectable()
 export class HostGuard implements CanActivate {
   constructor(private svc: UserService, private router: Router) {}
   canActivate(): boolean{
     let token = localStorage.getItem('token');
     let isHost = localStorage.getItem('is_host');
     if (token == null) {
-      this.router.navigateByUrl('/');
+      this.router.navigateByUrl('/home');
       return false;
     }
     if (!!token && isHost == 'true') return true;
@@ -70,21 +73,22 @@ export class HostGuard implements CanActivate {
       (user) => {
         localStorage.setItem('is_host', 'true');
         return true;
-      }, 
+      },
       () => {
         localStorage.setItem('is_host', 'false');
-        this.router.navigateByUrl('/');
+        this.router.navigateByUrl('/home');
         return false;
       });
   }
 }
 
+// Protecting routers that only unverified users can access
 @Injectable()
 export class UnverifiedGuard implements CanActivate {
   constructor(private router: Router) {}
   canActivate(): boolean {
     let value = localStorage.getItem('is_host') == 'false' && localStorage.getItem('is_guest') == 'false';
-    if (!value) this.router.navigateByUrl('/');
+    if (!value) this.router.navigateByUrl('/profile');
     return value;
   }
 }

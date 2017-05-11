@@ -10,6 +10,7 @@ export class HomeComponent {
   constructor(private router: Router) {}
   query = "";
 
+  // Navigate to the search page
   search(term: string) {
     if (term) {
       this.router.navigate(['search'], { queryParams: { query: term } });

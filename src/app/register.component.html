@@ -1,3 +1,5 @@
+<!-- Component for the register page -->
+
 <div class="container mt-4">
   <div class="row justify-content-md-center">
     <div class="card col-md-8 col-lg-6">
@@ -6,37 +8,54 @@
         <div class="alert alert-info" role="alert">
           By default, you can view and search for information on the website. You can apply for a host or guest account later.
         </div>
-        <ngb-alert type="danger" *ngIf="networkError" [dismissible]="true" (close)="networkError = false">An error has occurred. Please try again.</ngb-alert>
+
+        <!-- Register errors: network error -->
+        <ngb-alert type="danger" *ngIf="networkError"
+          [dismissible]="true" (close)="networkError = false">
+          An error has occurred. Please try again.
+        </ngb-alert>
+
+        <!-- Register form -->
         <form [formGroup]="registerForm" (ngSubmit)="doRegister($event)">
+
           <div class="form-group" [ngClass]="{'has-danger': formErrors.email.length > 0}">
-          <input class="form-control" [ngClass]="{'form-control-danger': formErrors.email.length > 0}" type="email" placeholder="Email" formControlName="email">
+          <input class="form-control" [ngClass]="{'form-control-danger': formErrors.email.length > 0}"
+            type="email" placeholder="Email" formControlName="email">
             <div class="form-control-feedback" role="alert">
                   {{formErrors.email}}
             </div>
           </div>
-          <ngb-alert type="danger" *ngIf="duplicateEmail" [dismissible]="true" (close)="duplicateEmail = false">This email is already registered on Vietloka. Please choose another email.</ngb-alert>
+          <ngb-alert type="danger" *ngIf="duplicateEmail"
+            [dismissible]="true" (close)="duplicateEmail = false">
+            This email is already registered on Vietloka. Please choose another email.
+          </ngb-alert>
+
           <div class="form-group" [ngClass]="{'has-danger': formErrors.password.length > 0}">
-            <input class="form-control" [ngClass]="{'form-control-danger': formErrors.password.length > 0}" type="password" placeholder="Password" formControlName="password">
+            <input class="form-control" [ngClass]="{'form-control-danger': formErrors.password.length > 0}"
+              type="password" placeholder="Password" formControlName="password">
             <div class="form-control-feedback" role="alert">
                   {{formErrors.password}}
             </div>
           </div>
           <div class="form-group" [ngClass]="{'has-danger': formErrors.name.length > 0}">
-            <input class="form-control" [ngClass]="{'form-control-danger': formErrors.name.length > 0}" type="text" placeholder="Your name" formControlName="name">
+            <input class="form-control" [ngClass]="{'form-control-danger': formErrors.name.length > 0}"
+              type="text" placeholder="Your name" formControlName="name">
             <div class="form-control-feedback" role="alert">
                 {{formErrors.name}}
             </div>
           </div>
-          
-          <button class="btn btn-success my-2 my-sm-0" type="submit" [disabled]="!registerForm.valid || registering">Register</button>
-          
+
+          <button class="btn btn-success my-2 my-sm-0" type="submit"
+            [disabled]="!registerForm.valid || registering">Register</button>
+
         </form>
       </div>
 
-      
+
     </div>
   </div>
-  
+
+  <!-- Message dialog appears if the registration is succeeded -->
   <ng-template #content>
     <div class="modal-header">
       <h4 class="modal-title">Registration successful</h4>
@@ -48,5 +67,5 @@
       <button type="button" class="btn btn-secondary" (click)="gotoLogin()">Log in now</button>
     </div>
   </ng-template>
-  
+
 </div>

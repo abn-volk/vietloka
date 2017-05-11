@@ -1,41 +1,76 @@
+<!-- Component for publish page, used for host to publish a house they want to rent -->
+
 <div class="container mt-4">
   <h1>Publish</h1>
   <p class="lead"></p>
-  <ngb-alert type="danger" *ngIf="networkError" [dismissible]="true" (close)="networkError = false">An error has occurred. Please try again.</ngb-alert>
+
+  <!-- Network error -->
+  <ngb-alert type="danger" *ngIf="networkError"
+  [dismissible]="true" (close)="networkError = false">
+    An error has occurred. Please try again.
+  </ngb-alert>
+
+  <!-- Publish form -->
   <form [formGroup]="publishForm" (ngSubmit)="doPublish($event)">
-    <div class="form-group">
+
+    <div class="form-group" [ngClass]="{'has-danger': formErrors.title.length > 0}">
       <label for="title">Listing title</label>
-      <input type="text" class="form-control" name="title" formControlName="title" required>
+      <input class="form-control" [ngClass]="{'form-control-danger': formErrors.title.length > 0}"
+        type="text" name="title" formControlName="title" required>
+      <div class="form-control-feedback" role="alert">
+        {{formErrors.title}}
+      </div>
     </div>
-    <div class="form-group">
+
+    <div class="form-group" [ngClass]="{'has-danger': formErrors.address.length > 0}">
       <label for="address">Address</label>
-      <input type="text" class="form-control" name="address" formControlName="address" required>
+      <input class="form-control" [ngClass]="{'form-control-danger': formErrors.address.length > 0}"
+        type="text" name="address" formControlName="address" required>
+      <div class="form-control-feedback" role="alert">
+        {{formErrors.address}}
+      </div>
     </div>
+
     <div class="row">
-      <div class="form-group col-sm-6 col-md-4">
+      
+      <div class="form-group col-sm-6 col-md-4" [ngClass]="{'has-danger': formErrors.lat.length > 0}">
         <label for="lat">Latitude: </label>
-        <input type="number"
-          class="form-control" name="lat" formControlName="lat" min="-180" max="180" step="0.000001">
+        <input class="form-control" [ngClass]="{'form-control-danger': formErrors.lat.length > 0}"
+          type="number" name="lat" formControlName="lat" min="-180" max="180" step="0.000001">
+        <div class="form-control-feedback" role="alert">
+          {{formErrors.lat}}
+        </div>
       </div>
-      <div class="form-group col-sm-6 col-md-4">
+
+      <div class="form-group col-sm-6 col-md-4" [ngClass]="{'has-danger': formErrors.lng.length > 0}">
         <label for="lng">Longitude: </label>
-        <input type="number"
-          class="form-control" name="lng" formControlName="lng" min="-180" max="180" step="0.000001">
+        <input class="form-control" [ngClass]="{'form-control-danger': formErrors.lng.length > 0}"
+          type="number" name="lng" formControlName="lng" min="-180" max="180" step="0.000001">
+        <div class="form-control-feedback" role="alert">
+          {{formErrors.lng}}
+        </div>
       </div>
-    
+
       <button type="button" class="btn btn-info" (click)="showMap()">Pick on map</button>
     </div>
 
-    <div class="form-group">
-        <label for="price">Daily price (in VND) </label>
-        <input type="number"
-          class="form-control" name="price" formControlName="price" min="50000" max="50000000" step="1000">
+    <div class="form-group" [ngClass]="{'has-danger': formErrors.price.length > 0}">
+      <label for="address">Daily price (in VND)</label>
+      <input class="form-control" [ngClass]="{'form-control-danger': formErrors.price.length > 0}"
+        type="number" name="price" formControlName="price" min="50000" max="50000000" step="1000" required>
+      <div class="form-control-feedback" role="alert">
+        {{formErrors.price}}
       </div>
-    
+    </div>
+
     <div class="row">
-      <div class="form-group col">
+      <div class="form-group col" [ngClass]="{'has-danger': formErrors.numOfMember.length > 0}">
         <label for="num-members">Number of family members</label>
-        <input type="number" class="form-control" min="0" max="15" step="1" name="num-members" formControlName="numOfMember" required>
+        <input class="form-control" [ngClass]="{'form-control-danger': formErrors.numOfMember.length > 0}"
+          type="number" name="num-members" formControlName="numOfMember" min="0" max="15" step="1" required>
+        <div class="form-control-feedback" role="alert">
+          {{formErrors.numOfMember}}
+        </div>
       </div>
       <div class="col">
       <label class="checkbox-inline">
@@ -46,16 +81,25 @@
       </label>
       </div>
     </div>
-    <div class="form-group">
+
+    <div class="form-group" [ngClass]="{'has-danger': formErrors.numOfTotalSlots.length > 0}">
       <label for="num-slots">Maximum number of guests</label>
-      <input type="number" class="form-control" min="1" max="15" name="num-slots" formControlName="numOfTotalSlots" required>
+      <input class="form-control" [ngClass]="{'form-control-danger': formErrors.numOfTotalSlots.length > 0}"
+        type="number" name="num-slots" formControlName="numOfTotalSlots" min="1" max="15" required>
+      <div class="form-control-feedback" role="alert">
+        {{formErrors.numOfTotalSlots}}
+      </div>
     </div>
 
-
-    <div class="form-group">
+    <div class="form-group" [ngClass]="{'has-danger': formErrors.area.length > 0}">
       <label for="num-slots">House area (in square meters)</label>
-      <input type="number" class="form-control" min="10" max="1000" name="area" formControlName="area" required>
+      <input class="form-control" [ngClass]="{'form-control-danger': formErrors.area.length > 0}"
+        type="number" name="area" formControlName="area" min="10" max="1000" required>
+      <div class="form-control-feedback" role="alert">
+        {{formErrors.area}}
+      </div>
     </div>
+
     <label class="checkbox-inline">
       <input type="checkbox" formControlName="hasElectricHeater">Water heater
     </label>
@@ -71,6 +115,7 @@
     <label class="checkbox-inline">
       <input type="checkbox" formControlName="hasInternet">Internet
     </label>
+
     <div class="form-group">
       <label for="wc">WC type</label>
       <select class="form-control" name="wc" formControlName="WC" required>
@@ -79,17 +124,21 @@
         <option>Western</option>
       </select>
     </div>
+
     <div class="form-group">
       <label for="desc">Optional short description</label>
       <textarea class="form-control" name="desc" formControlName="description" maxlength="2000" rows="3"></textarea>
     </div>
+
     <div class="form-group">
       <label for="pics">Picture links (separated by comma)</label>
       <input type="text" name="pics" class="form-control" formControlName="images">
     </div>
-    <button class="btn btn-success" type="submit" [disabled]="!publishForm.valid || publishing">Publish</button>
+    <button class="btn btn-success" type="submit"
+      [disabled]="!publishForm.valid || publishing">Publish</button>
   </form>
 
+  <!-- Message dialog if the use case is succeeded -->
   <ng-template #content>
     <div class="modal-header">
       <h4 class="modal-title">Congratulations!</h4>
@@ -102,15 +151,19 @@
     </div>
   </ng-template>
 
+  <!-- Pick on map dialog, for hosts to pick their house location on the map -->
   <ng-template #mapModal>
     <div class="modal-header">
       <h4 class="modal-title">Location picker</h4>
     </div>
+
+    <!-- Map -->
     <div class="modal-body">
       <form #form="ngForm" class="container-fluid" (ngSubmit)="submitSearch(form.value)">
         <div class="form-group">
           <div class="row">
-          <input type="text" class="col form-control" name="query" aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
+          <input type="text" class="col form-control" name="query"
+          aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
           <button type="submit" class="btn btn-primary">Submit</button>
           </div>
         </div>
@@ -124,8 +177,9 @@
         </agm-marker>
       </agm-map>
     </div>
+
     <div class="modal-footer">
-      <button type="button" class="btn btn-secondary" (click)="closeMap()">Cancel</button> 
+      <button type="button" class="btn btn-secondary" (click)="closeMap()">Cancel</button>
       <button type="button" class="btn btn-primary" (click)="saveMapLatLng()">OK</button>
     </div>
   </ng-template>

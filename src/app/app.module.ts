@@ -12,6 +12,8 @@ import { HomeComponent } from './home.component';
 import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { ProfileComponent } from './profile.component';
+import { HostComponent} from './host.component';
+import { GuestComponent} from './guest.component';
 import { AboutComponent } from './about.component';
 import { HouseComponent } from './house.component';
 import { VerifyComponent } from './verify.component';
@@ -21,6 +23,7 @@ import { SearchComponent } from './search.component';
 import { UserService } from './user.service';
 import { GeocodingService } from './geocoding.service';
 import { HouseService } from './house.service';
+import { RentService } from './rent.service';
 import { TokenGuard, GuestGuard, HostGuard, UnverifiedGuard } from './guards';
 
 
@@ -46,6 +49,14 @@ const routes: Route[] = [
     path: 'profile',
     component: ProfileComponent,
     canActivate: [TokenGuard]
+  },
+  {
+    path: 'host/:id',
+    component: HostComponent,
+  },
+  {
+    path: 'guest/:id',
+    component: GuestComponent,
   },
   {
     path: 'house/:id',
@@ -82,6 +93,8 @@ const routes: Route[] = [
     LoginComponent,
     RegisterComponent,
     ProfileComponent,
+    HostComponent,
+    GuestComponent,
     HouseComponent,
     PublishComponent,
     SearchComponent,
@@ -98,11 +111,12 @@ const routes: Route[] = [
     AgmCoreModule.forRoot({apiKey: 'AIzaSyDGwHWYBuey33KjRe7J9xqyHnZLPTXe6JA'})
   ],
   providers: [
-    UserService, 
+    UserService,
     GeocodingService,
     HouseService,
-    TokenGuard, 
-    GuestGuard, 
+    RentService,
+    TokenGuard,
+    GuestGuard,
     HostGuard,
     UnverifiedGuard],
   bootstrap: [AppComponent]

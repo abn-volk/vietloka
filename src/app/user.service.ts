@@ -77,8 +77,24 @@ export class UserService {
     let h = new Headers({
         'Content-Type': 'application/json'
       });
-    return this.http.get(this.url + `api/v1/users/${id}`, {headers: h})
+    return this.http.get(this.url + `/api/v1/users/${id}`, {headers: h})
                .map(response => response.json() as User);
+  }
+
+  getHost(id: String): Observable<any> {
+    let h = new Headers({
+        'Content-Type': 'application/json'
+      });
+    return this.http.get(this.url + `/api/v1/users/${id}/as_host`, {headers: h})
+               .map(response => response.json());
+  }
+
+  getGuest(id: String): Observable<any> {
+    let h = new Headers({
+        'Content-Type': 'application/json'
+      });
+    return this.http.get(this.url + `/api/v1/users/${id}/as_guest`, {headers: h})
+               .map(response => response.json());
   }
 
   isGuest(): Observable<User> {
