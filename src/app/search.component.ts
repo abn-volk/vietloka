@@ -21,6 +21,7 @@ export class SearchComponent {
   houses: Array<House>;
   currentHouse: House;
   showInfo: boolean = false;
+  loading: boolean = true;
   // bounds: LatLngBoundsLiteral;
 
   ngOnInit() {
@@ -33,6 +34,7 @@ export class SearchComponent {
     this.houseService.getAllHouses().subscribe(
       (houses) => {
         this.houses = houses;
+        this.loading = false;
       }
     )
   }

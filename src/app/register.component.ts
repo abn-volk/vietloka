@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { RegisterRequest, User, UserService } from './user.service';
 import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
@@ -15,7 +16,8 @@ export class RegisterComponent {
   networkError: boolean;
   modalRef: NgbModalRef;
 
-  constructor(private fb: FormBuilder, private userService: UserService, private modalService: NgbModal) { }
+  constructor(private fb: FormBuilder, private userService: UserService, 
+    private modalService: NgbModal, private router: Router) { }
 
   ngOnInit(): void {
     this.buildForm();
@@ -42,6 +44,7 @@ export class RegisterComponent {
 
   // Set validation message when users start to type in
   onValueChanged(data?: any) {
+    this.networkError = false;
     if (!this.registerForm) { return; }
     const form = this.registerForm;
     for (const field in this.formErrors) {
@@ -102,7 +105,7 @@ export class RegisterComponent {
   // Go to the login page after the registration is succeeded
   gotoLogin() {
     this.modalRef.close();
-    window.location.replace('/login');
+    this.router.navigateByUrl('/login');
   }
 
   

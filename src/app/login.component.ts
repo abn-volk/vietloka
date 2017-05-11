@@ -39,6 +39,7 @@ export class LoginComponent {
 
   // Set validation message when users start to type in
   onValueChanged(data?: any) {
+    this.networkError = false;
     if (!this.loginForm) { return; }
     const form = this.loginForm;
     for (const field in this.formErrors) {
