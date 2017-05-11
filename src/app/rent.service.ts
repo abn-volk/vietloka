@@ -10,6 +10,7 @@ export class Rent {
   house: string;
   accepted: boolean;
   completed: boolean;
+  createdAt: Date;
 }
 
 @Injectable()
