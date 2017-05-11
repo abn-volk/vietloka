@@ -21,7 +21,7 @@
           <ngb-tabset class="mx-auto mt-3">
 
             <!-- User Information -->
-            <ngb-tab title="User Profile">
+            <ngb-tab title="About Me">
               <ng-template ngbTabContent>
                 <div>
                   <br>
@@ -59,20 +59,20 @@
                 <div *ngFor="let r of rents">
                   <a (click)="checkRent(r)">
                     {{r.guest.name | uppercase}},
-                     in {{r.createdAt| date: 'dd'}}/{{r.createdAt| date: 'MM'}}/{{r.createdAt| date: 'yyyy'}}
+                     on {{r.createdAt| date: 'dd'}}/{{r.createdAt| date: 'MM'}}/{{r.createdAt| date: 'yyyy'}}
                   </a>
                 </div>
               </ng-template>
             </ngb-tab>
 
             <!-- List of houses users stayed, if the users are guests -->
-            <ngb-tab *ngIf="isGuest" title="Stayed Houses">
+            <ngb-tab *ngIf="isGuest" title="Where I've Stayed'">
               <ng-template ngbTabContent>
                 <br>
                 <div *ngFor="let r of renteds">
                   <a routerLink="/house/{{r.house._id}}">
                     {{r.house.title | uppercase}} at {{r.house.address}},
-                    in {{r.createdAt| date: 'dd'}}/{{r.createdAt| date: 'MM'}}/{{r.createdAt| date: 'yyyy'}}
+                    on {{r.createdAt| date: 'dd'}}/{{r.createdAt| date: 'MM'}}/{{r.createdAt| date: 'yyyy'}}
                   </a>
                 </div>
               </ng-template>
@@ -93,19 +93,20 @@
     </div>
     <div class="modal-body">
       <br>
-      <p>Guest Name: {{selectedRent?.guest.name}}</p>
+      <p>Name: {{selectedRent?.guest.name}}</p>
       <!-- <p>Email: {{user?.email}}</p> -->
-      <p>Guest Gender: {{selectedRent?.guest.gender}}</p>
-      <p>Guest Job: {{selectedRent?.guest.job}}</p>
-      <p>Guest 's Place of Work: {{selectedRent?.guest.placeOfWork}}</p>
+      <p>Gender: {{selectedRent?.guest.gender}}</p>
+      <p>Job: {{selectedRent?.guest.job}}</p>
+      <p>Place of Work: {{selectedRent?.guest.placeOfWork}}</p>
       <!-- <p>Phone: {{user?.phoneNumber}}</p>
       <p>ID: {{user?.identityNumber}}</p> -->
-      <p>Guest 's Birthday:
+      <p>Birthday:
         {{selectedRent?.guest.dateOfBirth | date: 'dd'}}/{{selectedRent?.guest.dateOfBirth | date: 'MM'}}/{{selectedRent?.guest.dateOfBirth | date: 'yyyy'}}
       </p>
+      <p>To accept this guest, click on the confirmation link in your e-mail.</p>
     </div>
     <div class="modal-footer mx-auto">
-      <p> To cofirm this guest to stay at your house, go to the confirmation link in your e-mail</p>
+      <button type="button" class="btn btn-primary" (click)="modalRef.close">OK</button>
     </div>
   </ng-template>
 </div>
