@@ -189,8 +189,8 @@
     </div>
     <div class="modal-footer">
       <button type="button" [disabled]="isRating" class="btn btn-secondary" (click)="closeRateDialog()">Cancel</button>
-      <button type="button" [disabled]="!rateForm.valid || isRating" class="btn btn-danger" (click)="doRate(true)">✗</button>
-      <button type="button" [disabled]="!rateForm.valid || isRating" class="btn btn-success" (click)="doRate(false)">✓</button>
+      <button type="button" [disabled]="!rateForm.valid || isRating" class="btn btn-danger" (click)="doRate(false)">✗</button>
+      <button type="button" [disabled]="!rateForm.valid || isRating" class="btn btn-success" (click)="doRate(true)">✓</button>
     </div>
   </ng-template>
 </div>`

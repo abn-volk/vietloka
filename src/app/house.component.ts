@@ -146,6 +146,7 @@ export class HouseComponent implements OnInit, OnDestroy{
       err => {
         this.isRating = true;
         this.commentNetworkError = true;
+        window.location.reload();
       }
     );
   }
@@ -161,6 +162,7 @@ export class HouseComponent implements OnInit, OnDestroy{
       err => {
         this.isLeaving = false;
         this.rentNetworkError = true;
+        window.location.reload();
       }
     )
   }
