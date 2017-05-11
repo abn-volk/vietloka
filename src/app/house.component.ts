@@ -6,6 +6,9 @@ import { UserService, User } from './user.service';
 import { NgbCarousel, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DomSanitizer } from "@angular/platform-browser";
 import { RentService } from './rent.service';
+import { Observable } from 'rxjs/Rx';
+
+import 'rxjs/add/operator/map';
 
 @Component( {
   selector: 'house-section',
@@ -39,6 +42,8 @@ export class HouseComponent implements OnInit, OnDestroy{
   isHost = (localStorage.getItem('is_host') === 'true');
   currentRent: string;
   hasRequest: boolean = false;
+  notFound: boolean = false;
+  loading: boolean = true;
 
   constructor(private router: Router, private route: ActivatedRoute, private houseService: HouseService,
     private userService: UserService, private sanitizer: DomSanitizer, private fb: FormBuilder,
@@ -55,45 +60,30 @@ export class HouseComponent implements OnInit, OnDestroy{
           this.house = house;
           console.log(house);
           // Get rent history
-          this.rentService.getRentHistory(this.id).subscribe(
-            (rents) => {
+          Observable.forkJoin([
+            this.rentService.getRentHistory(this.id),
+            this.houseService.getHouseRatings(this.id),
+            this.houseService.getHouseComments(this.id)
+          ]).subscribe(
+            (res) => {
+              this.loading = false;
+              let rents = res[0];
               rents.forEach((rent) => {
-                if (rent.accepted && !rent.completed) {this.currentRent = rent.id};
-                if (!rent.accepted) this.hasRequest = true;
-              })
+                 if (rent.accepted && !rent.completed) {this.currentRent = rent.id};
+                 if (!rent.accepted) this.hasRequest = true;
+               });
+               this.ratings = res[1];
+               this.comments = res[2];
+            },
+            (err) => {
+              this.loading = true;
             }
           );
-          // Get ratings
-          this.houseService.getHouseRatings(this.id).subscribe(
-            (ratings) => {
-              this.ratings = ratings;
-            },
-            (error) => {
-              console.log(error);
-            }
-          );
-          // Get reviews
-          this.houseService.getHouseComments(this.id).subscribe(
-            (comments) => {
-              console.log(comments);
-              this.comments = comments;
-              comments.forEach((comment, index) => {
-                this.userService.getUser(comment.guest).subscribe(
-                  (user) => {
-                    this.users.push(user);
-                  },
-                  (error) => {
-                    console.log(error);
-                  }
-                );
-              });
-            },
-            (error) => {
-              console.log(error);
-            }
-           );
         },
-        (error) => window.location.replace('/home')
+        (error) => {
+          this.loading = false;
+          this.notFound = true;
+        }
       );
     });
 

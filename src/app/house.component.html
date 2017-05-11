@@ -127,15 +127,15 @@
   <hr>
   <h4>Reviews (<span class="text-success">{{ratings.approval}}</span>/<span class="text-danger">{{ratings.disapproval}}</span>)</h4>
   <div>
-    <div class="card" *ngFor="let comment of comments; let i = index" [attr.data-index]="i">
+    <div class="card" *ngFor="let comment of comments">
       <div class="card-block">
         <div class="row" >
-          <div><img *ngIf="users[i].picture" [src]="users[i].picture" class="img-thumbnail rounded-circle"></div>
+          <div><img *ngIf="comment.guest.picture" [src]="comment.guest.picture" class="img-thumbnail rounded-circle"></div>
           <div class="col">
             <ul class="list-unstyled">
-            <li><h4>{{users[i].name}}</h4></li>
-            <li class="lead text-success" [ngClass]="{'text-danger': !comments[i].approves}">{{comments[i].title}}</li>
-            <li>{{comments[i].content}}</li>
+            <li><h4>{{comment.guest.name}}</h4></li>
+            <li class="lead text-success" [ngClass]="{'text-danger': !comment.approves}">{{comment.title}}</li>
+            <li>{{comment.content}}</li>
             </ul>
           </div>
         </div>
@@ -192,5 +192,5 @@
   </ng-template>
 </div>`
 
-<notfound-section></notfound-section>
-<loading-section></loading-section>
+<notfound-section *ngIf="notFound"></notfound-section>
+<loading-section *ngIf="loading"></loading-section>
