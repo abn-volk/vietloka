@@ -11,9 +11,8 @@
     <form #form="ngForm" (ngSubmit)="search(form.value.query)">
       <div class="form-group">
         <div class="row">
-        <input type="text" class="col form-control" name="query"
-          aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
-        <button type="submit" class="btn btn-primary">Submit</button>
+          <input type="text" class="col form-control" name="query" aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
+          <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </div>
     </form>
@@ -25,7 +24,7 @@
     <div class="row" style="text-align:center">
       <div class="col-md-12">
         <h3><img src="src/img/pin.png" style="width:75px">Our Most Popular Destinations</h3>
-        <p class="lead">Find homestay in the most popular destinations of Vietnam</p>
+        <p class="lead">Find homestays in the most popular destinations of Vietnam</p>
       </div>
     </div>
     <div class="row" style="padding:10%">
@@ -47,7 +46,7 @@
       </div>
 
       <div class="row" style="text-align:center">
-        <div class="col-md-8" style="cursor:pointer" (click)="search('Ha Long')">
+        <div class="col-md-8" style="cursor:pointer" (click)="search('Ha Long Bay')">
           <img src="src/img/halong.jpg" class="img-fluid img-thumbnail" alt="Ha Long">
           <h5 class="lead">Ha Long Bay</h5>
         </div>
@@ -71,4 +70,3 @@
     </div>
   </div>
 </div>
-
