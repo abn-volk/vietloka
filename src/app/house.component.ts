@@ -28,15 +28,9 @@ export class HouseComponent implements OnInit, OnDestroy{
   id: string;
   sub: any;
   house: House;
-  comments: Array<Comment> = [{
-    title: 'You can dance, you can jive.',
-    content: 'Having the time of your life. Ooh, see that girl, watch that scene, digging the dancing queen. Friday night and the lights are low',
-    guest: 'jlajg',
-    approves: false,
-    rent: 'djgl'
-  }];
-  users: Array<any> = [{id:"590b590b2043f315704f3b53",name:"Vietloka",picture:"https://gravatar.com/avatar/d2fa7965bdc0f8eb4e6a66426acf0574?d=identicon",role:"user",email:"b@e.com",createdAt: new Date("2017-05-04T16:38:35.248Z")}];
-  ratings = {approval: 10, disapproval: 13}
+  comments: Array<Comment> = [];
+  users: Array<any> = [];
+  ratings: any;
   isLoggedIn = (localStorage.getItem('token') && localStorage.getItem('id'));
   isGuest = (localStorage.getItem('is_guest') === 'true');
   isHost = (localStorage.getItem('is_host') === 'true');
