@@ -78,7 +78,7 @@
       <div class="hidden-sm-down" *ngIf="!(isLoggedIn && isHost && !isGuest)">
         <div class="row">
           <button type="button" class="btn btn-success btn-lg mx-auto"
-            [disabled]="!isLoggedIn || !isGuest"
+            [disabled]="!isLoggedIn || !isGuest || checkOwner()"
             (click)="doStay()">Stay at this place</button>
         </div>
         <p *ngIf="!isLoggedIn" class="form-text text-muted">

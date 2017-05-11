@@ -81,6 +81,11 @@ export class HouseComponent implements OnInit, OnDestroy{
     return this.sanitizer.bypassSecurityTrustResourceUrl(i)
   }
 
+  // Check if the users visting the house page is the owner or not
+  checkOwner() {
+    return (localStorage.getItem('id') === this.house.owner.id)
+  }
+
   // If users press on Stay at this place button
   doStay() {
     this.rentService.postRent(this.house.id).subscribe(
@@ -92,6 +97,7 @@ export class HouseComponent implements OnInit, OnDestroy{
       }
     )
   }
+
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
