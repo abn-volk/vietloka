@@ -61,7 +61,7 @@
             <ngb-tab *ngIf ="isHost" title="My Guests">
               <ng-template ngbTabContent>
                 <br>
-                <div *ngFor="let r of rents">
+                <div *ngFor="let r of rents" style="color:#000;cursor:pointer">
                   <a (click)="checkRent(r)">
                     {{r.guest.name | uppercase}},
                      on {{r.createdAt| date: 'dd'}}/{{r.createdAt| date: 'MM'}}/{{r.createdAt| date: 'yyyy'}}
