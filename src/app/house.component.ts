@@ -142,6 +142,7 @@ export class HouseComponent implements OnInit, OnDestroy{
       res => {
         this.isRating = false;
         this.rateModalRef.close();
+        window.location.reload();
       },
       err => {
         this.isRating = true;

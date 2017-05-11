@@ -11,34 +11,6 @@
 
   <div class="mt-3"></div>
 
-  <div class="hidden-md-up" *ngIf="!(isLoggedIn && isHost && !isGuest)">
-
-    <!-- Check if users logged in to use rent feature -->
-    <div class="row">
-      <button type="button" class="btn btn-success btn-lg mx-auto"
-        *ngIf = "!(!!currentRent)"
-        [disabled]="!isLoggedIn || !isGuest || checkOwner() || hasRequest"
-        (click)="doStay()">Stay at this place</button>
-    </div>
-    <p *ngIf="!isLoggedIn" class="form-text text-muted">
-      Please <a routerLink="/login">log into Vietloka</a>
-      or <a routerLink="/register">register an account</a> to use this feature.
-    </p>
-    <p *ngIf="isLoggedIn && !isGuest" class="form-text text-muted">
-      Your account is not verified. <a routerLink="/verify">Verify</a> your account to become a guest.
-    </p>
-    <div class="row" *ngIf="!!currentRent">
-      <button type="button" class="btn btn-danger btn-lg mx-auto"
-        [disabled]="!isLoggedIn || !isGuest || isLeaving"
-        (click)="finishStay()">Leave</button>
-    </div>
-    <ngb-alert type="danger" *ngIf="rentNetworkError"
-      [dismissible]="true" (close)="rentNetworkError = false">
-      An error has occurred. Please try again.
-    </ngb-alert>
-    <br>
-  </div>
-
   <div class="row">
     <div class="col-md-6">
       <h2>{{house.title}}</h2>
@@ -87,7 +59,7 @@
 
     <!-- Check if users have permission to rent -->
     <div class="col-md-6">
-      <div class="hidden-sm-down" *ngIf="!(isLoggedIn && isHost && !isGuest)">
+      <div *ngIf="!(isLoggedIn && isHost && !isGuest)">
         <div class="row" *ngIf="!(!!currentRent)">
           <button type="button" class="btn btn-success btn-lg mx-auto"
             [disabled]="!isLoggedIn || !isGuest || checkOwner() || hasRequest"
@@ -189,8 +161,8 @@
     </div>
     <div class="modal-footer">
       <button type="button" [disabled]="isRating" class="btn btn-secondary" (click)="closeRateDialog()">Cancel</button>
-      <button type="button" [disabled]="!rateForm.valid || isRating" class="btn btn-danger" (click)="doRate(true)">✗</button>
-      <button type="button" [disabled]="!rateForm.valid || isRating" class="btn btn-success" (click)="doRate(false)">✓</button>
+      <button type="button" [disabled]="!rateForm.valid || isRating" class="btn btn-danger" (click)="doRate(false)">✗</button>
+      <button type="button" [disabled]="!rateForm.valid || isRating" class="btn btn-success" (click)="doRate(true)">✓</button>
     </div>
   </ng-template>
 </div>`
