@@ -94,6 +94,7 @@ export class HouseComponent implements OnInit, OnDestroy{
     this.onValueChanged();
   }
 
+  // Set validation message when users start to type in rate dialog
   onValueChanged(data?: any) {
     if (!this.rateForm) return;
     const form = this.rateForm;
@@ -109,20 +110,24 @@ export class HouseComponent implements OnInit, OnDestroy{
     }
   }
 
+  // Form errors, errors when users type in wrong format of review
   formErrors = {
     'title': true,
     'content': true
   };
 
+  // Open Rate Dialog
   showRateDialog() {
     this.rateModalRef = this.modalService.open(this.rateModal);
   }
 
+  // Close Rate Dialog
   closeRateDialog() {
     this.rateModalRef.close();
     window.location.reload();
   }
 
+  // After users press rate button
   doRate(isApprove: boolean) {
     const value = this.rateForm.value;
     let req = {
@@ -145,6 +150,7 @@ export class HouseComponent implements OnInit, OnDestroy{
     );
   }
 
+  // If guests finish their trips
   finishStay() {
     this.isLeaving = true;
     this.rentService.leave(this.currentRent).subscribe(

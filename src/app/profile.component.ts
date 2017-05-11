@@ -24,6 +24,7 @@ export class ProfileComponent {
      private rentService: RentService, private modalService: NgbModal) {}
 
   ngOnInit() {
+    // Get user profile
     this.userService.getProfile()
       .subscribe(
         // Check if user is a host or a guest or both
@@ -38,6 +39,7 @@ export class ProfileComponent {
         reason => {
           window.location.replace('/')
         });
+    // Get all the houses of users, if they are hosts
     this.houseService.getMyHouses().
       subscribe(
         (houses) => {
@@ -47,6 +49,7 @@ export class ProfileComponent {
         (error) => console.log(error)
         // (error) => window.location.replace('/home')
       );
+    // Get all the guests stayed at users' houses, if they are hosts
     this.rentService.getMyGuests()
       .subscribe(
         (rents) => {
@@ -55,6 +58,7 @@ export class ProfileComponent {
         },
         (error) => console.log(error)
       );
+    // Get all the houses that users used to stay in, if they are guests
     this.rentService.getMyRents()
       .subscribe(
         (renteds) => {
@@ -65,9 +69,9 @@ export class ProfileComponent {
       );
   }
 
+  // After hosts click on a guest in my guests tab
   checkRent(rent: Rent) {
     this.modalRef = this.modalService.open(this.rentDialog);
-    console.log(rent);
     this.selectedRent = rent;
     console.log(this.selectedRent);
   }

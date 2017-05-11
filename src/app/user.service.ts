@@ -44,12 +44,13 @@ export class UserService {
   private url = environment.server;
   constructor(private http: Http) {}
 
-
+  // Add a new user to the database
   addUser(request: RegisterRequest): Observable<User> {
     return this.http.post(this.url + '/api/v1/users', JSON.stringify(request), {headers: this.headers})
                .map(response => response.json() as User);
   }
 
+  // Update data of the users in the verify page
   updateUser(request: any): Observable<any> {
     let h = new Headers({
       'Content-Type': 'application/json',
@@ -58,6 +59,7 @@ export class UserService {
     return this.http.put(this.url + '/api/v1/users/' + localStorage.getItem('id'), JSON.stringify(request), {headers: h});
   }
 
+  // Check when users log in
   authenticate(email: string, password: String): Observable<string> {
     let h = new Headers({
       'Content-Type': 'application/json',
@@ -67,12 +69,14 @@ export class UserService {
                .map(response => response.json().token);
   }
 
+  // Get the data of the logged in user
   getProfile(): Observable<User> {
     let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + '/api/v1/users/me', {headers: h})
                .map(response => response.json() as User);
   }
 
+  // Get the data of another user
   getUser(id: String): Observable<User> {
     let h = new Headers({
         'Content-Type': 'application/json'
@@ -81,6 +85,7 @@ export class UserService {
                .map(response => response.json() as User);
   }
 
+  // Get the data of a host
   getHost(id: String): Observable<any> {
     let h = new Headers({
         'Content-Type': 'application/json'
@@ -89,6 +94,7 @@ export class UserService {
                .map(response => response.json());
   }
 
+  // Get the data of a guest
   getGuest(id: String): Observable<any> {
     let h = new Headers({
         'Content-Type': 'application/json'
@@ -97,6 +103,7 @@ export class UserService {
                .map(response => response.json());
   }
 
+  // Get all the house of a host
   getAllHostHouses(id: String): Observable<any> {
     let h = new Headers({
         'Content-Type': 'application/json'
@@ -105,18 +112,21 @@ export class UserService {
                .map(response => response.json());
   }
 
+  // Check if user is a guest
   isGuest(): Observable<User> {
     let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + '/api/v1/guests/self', {headers: h})
                .map(response => response.json() as User);
   }
 
+  // Check if user is a host
   isHost(): Observable<User> {
     let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + '/api/v1/hosts/self', {headers: h})
                .map(response => response.json() as User);
   }
 
+  // Add a Guest object to database
   addGuest(request: any): Observable<User> {
     let h = new Headers({
       'Content-Type': 'application/json',
@@ -126,6 +136,7 @@ export class UserService {
                .map(response => response.json() as User);
   }
 
+  // Add a Host object to database
   addHost(request: any): Observable<User> {
     let h = new Headers({
       'Content-Type': 'application/json',

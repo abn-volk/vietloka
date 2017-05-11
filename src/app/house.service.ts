@@ -47,6 +47,7 @@ export class HouseService {
   });
   constructor(private http: Http) {}
 
+  // Add a house object to database
   addHouse(request: any): Observable<any> {
     let h = new Headers({
       'Content-Type': 'application/json',
@@ -56,29 +57,34 @@ export class HouseService {
                .map(response => response.json());
     }
 
-    getHouse(id: string): Observable<any> {
-      return this.http.get(this.url + `/api/v1/houses/${id}`, {headers: this.h})
-               .map(response => response.json() as House);
-    }
+  // Get info of a house
+  getHouse(id: string): Observable<any> {
+    return this.http.get(this.url + `/api/v1/houses/${id}`, {headers: this.h})
+             .map(response => response.json() as House);
+  }
 
-    getAllHouses(): Observable<any> {
-      return this.http.get(this.url + `/api/v1/houses`, {headers: this.h})
-               .map(response => response.json() as Array<House>);
-    }
+  // Get all the houses in the database
+  getAllHouses(): Observable<any> {
+    return this.http.get(this.url + `/api/v1/houses`, {headers: this.h})
+             .map(response => response.json() as Array<House>);
+  }
 
-    getMyHouses(): Observable<Array<House>> {
-      let h = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token')});
-      return this.http.get(this.url + `/api/v1/houses/mine`, {headers: h})
-               .map(response => response.json() as Array<House>);
-    }
+  // Get all the houses of logged in user, if he/she is a host
+  getMyHouses(): Observable<Array<House>> {
+    let h = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token')});
+    return this.http.get(this.url + `/api/v1/houses/mine`, {headers: h})
+             .map(response => response.json() as Array<House>);
+  }
 
-    getHouseComments(id: string): Observable<Array<Comment>> {
-      return this.http.get(this.url + `/api/v1/houses/${id}/comments`, {headers: this.h})
-                 .map(response => response.json() as Array<Comment>);
-    }
+  // Get all the reviews of a house
+  getHouseComments(id: string): Observable<Array<Comment>> {
+    return this.http.get(this.url + `/api/v1/houses/${id}/comments`, {headers: this.h})
+               .map(response => response.json() as Array<Comment>);
+  }
 
-    getHouseRatings(id: string): Observable<any> {
-      return this.http.get(this.url + `/api/v1/houses/${id}/ratings`, {headers: this.h})
-                 .map(response => response.json());
-    }
+  // Get ratings of a house
+  getHouseRatings(id: string): Observable<any> {
+    return this.http.get(this.url + `/api/v1/houses/${id}/ratings`, {headers: this.h})
+               .map(response => response.json());
+  }
 }

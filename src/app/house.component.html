@@ -2,7 +2,7 @@
 
 <div class="container mt-3" *ngIf="!!house">
 
-
+  <!-- House images -->
   <ngb-carousel *ngIf="house.image.length > 0 && house.image[0] != ''" style="background: black">
     <ng-template ngbSlide *ngFor="let slide of house.image">
       <img [src]="trustResource(slide)" height="500px" class="mx-auto">
@@ -42,7 +42,7 @@
   <div class="row">
     <div class="col-md-6">
       <h2>{{house.title}}</h2>
-      <p class="lead">{{house.address}} 
+      <p class="lead">{{house.address}}
         <a href="http://maps.google.com/?q={{house.map.lat}},{{house.map.lng}}" target="_blank">(View on Google Maps)</a>
       </p>
       <p>{{house.description}}</p>
@@ -158,7 +158,8 @@
       <button type="button" class="btn btn-secondary" (click)="modalRef.close()">OK</button>
     </div>
   </ng-template>
-  
+
+  <!-- Rate dialog -->
   <ng-template #rateModal>
     <div class="modal-header">
       <h4 class="modal-title">Rate your experience!</h4>
