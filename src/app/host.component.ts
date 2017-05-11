@@ -1,8 +1,7 @@
 import { Component, Input, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService, User } from './user.service';
-import { NgbCarousel, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { DomSanitizer } from "@angular/platform-browser";
+import { HouseService, House } from './house.service';
 import { RentService } from './rent.service';
 
 @Component( {
@@ -13,6 +12,7 @@ export class HostComponent implements OnInit{
   id: string;
   sub: any;
   host: User;
+  houses: Array<House>;
   isLoggedIn = (localStorage.getItem('token') && localStorage.getItem('id'));
   isGuest = (localStorage.getItem('is_guest') === 'true');
 
@@ -23,6 +23,7 @@ export class HostComponent implements OnInit{
     this.sub = this.route.params.subscribe(params => {
       this.id = params['id'];
 
+      // Get the host information
       this.userService.getHost(this.id).subscribe(
         (host) => {
           this.host = host;
@@ -31,11 +32,20 @@ export class HostComponent implements OnInit{
         // (error) => console.log(error)
         (error) => window.location.replace('/home')
       );
+
+      // Get the list of hosts' houses
+      this.userService.getAllHostHouse(this.id).subscribe(
+        (houses) => {
+          console.log(houses);
+          this.houses = houses;
+        },
+        (error) => console.log(error)
+      );
     })
   }
 
   mail() {
-    
+
   }
 
 }

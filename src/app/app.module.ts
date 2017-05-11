@@ -13,7 +13,6 @@ import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { ProfileComponent } from './profile.component';
 import { HostComponent} from './host.component';
-import { GuestComponent} from './guest.component';
 import { AboutComponent } from './about.component';
 import { HouseComponent } from './house.component';
 import { VerifyComponent } from './verify.component';
@@ -57,10 +56,6 @@ const routes: Route[] = [
     component: HostComponent,
   },
   {
-    path: 'guest/:id',
-    component: GuestComponent,
-  },
-  {
     path: 'house/:id',
     component: HouseComponent,
   },
@@ -96,7 +91,6 @@ const routes: Route[] = [
     RegisterComponent,
     ProfileComponent,
     HostComponent,
-    GuestComponent,
     HouseComponent,
     PublishComponent,
     SearchComponent,

@@ -16,7 +16,8 @@
     <!-- Check if users logged in to use rent feature -->
     <div class="row">
       <button type="button" class="btn btn-success btn-lg mx-auto"
-        [disabled]="!isLoggedIn || !isGuest"
+        *ngIf = "!(!!currentRent)"
+        [disabled]="!isLoggedIn || !isGuest || checkOwner() || hasRequest"
         (click)="doStay()">Stay at this place</button>
     </div>
     <p *ngIf="!isLoggedIn" class="form-text text-muted">
@@ -26,6 +27,15 @@
     <p *ngIf="isLoggedIn && !isGuest" class="form-text text-muted">
       Your account is not verified. <a routerLink="/verify">Verify</a> your account to become a guest.
     </p>
+    <div class="row" *ngIf="!!currentRent">
+      <button type="button" class="btn btn-danger btn-lg mx-auto"
+        [disabled]="!isLoggedIn || !isGuest || isLeaving"
+        (click)="finishStay()">Leave</button>
+    </div>
+    <ngb-alert type="danger" *ngIf="rentNetworkError"
+      [dismissible]="true" (close)="rentNetworkError = false">
+      An error has occurred. Please try again.
+    </ngb-alert>
     <br>
   </div>
 
@@ -76,17 +86,28 @@
     <!-- Check if users have permission to rent -->
     <div class="col-md-6">
       <div class="hidden-sm-down" *ngIf="!(isLoggedIn && isHost && !isGuest)">
-        <div class="row">
+        <div class="row" *ngIf="!(!!currentRent)">
           <button type="button" class="btn btn-success btn-lg mx-auto"
-            [disabled]="!isLoggedIn || !isGuest || checkOwner()"
+            [disabled]="!isLoggedIn || !isGuest || checkOwner() || hasRequest"
             (click)="doStay()">Stay at this place</button>
         </div>
         <p *ngIf="!isLoggedIn" class="form-text text-muted">
-          Please <a routerLink="/login">log into Vietloka</a> or <a routerLink="/register">register an account</a> to use this feature.
+          Please <a routerLink="/login">log into Vietloka</a>
+          or <a routerLink="/register">register an account</a> to use this feature.
         </p>
         <p *ngIf="isLoggedIn && !isGuest" class="form-text text-muted">
           Your account is not verified. <a routerLink="/verify">Verify</a> your account to become a guest.
         </p>
+        <div class="row">
+          <button type="button" class="btn btn-danger btn-lg mx-auto"
+            *ngIf="!!currentRent"
+            [disabled]="!isLoggedIn || !isGuest || isLeaving"
+            (click)="finishStay()">Leave</button>
+        </div>
+        <ngb-alert type="danger" *ngIf="rentNetworkError"
+          [dismissible]="true" (close)="rentNetworkError = false">
+          An error has occurred. Please try again.
+        </ngb-alert>
       </div>
       <hr>
 
@@ -135,8 +156,41 @@
       <button type="button" class="btn btn-secondary" (click)="modalRef.close()">OK</button>
     </div>
   </ng-template>
-</div>
+  
+  <ng-template #rateModal>
+    <div class="modal-header">
+      <h4 class="modal-title">Rate your experience!</h4>
+    </div>
+    <div class="modal-body">
+      <p>Are you satisfied with your stay? Let us know.</p>
+      <form [formGroup]="rateForm">
+        <ngb-alert type="danger" *ngIf="commentNetworkError"
+          [dismissible]="true" (close)="commentNetworkError = false">
+          An error has occurred. Please try again.
+        </ngb-alert>
+        <div class="form-group" [ngClass]="{'has-danger': formErrors.title}">
+          <input [ngClass]="{'form-control-danger': formErrors.title}"
+            type="text" class="form-control" formControlName="title" placeholder="Title">
+          <div class="form-control-feedback" role="alert">
+            <span *ngIf="formErrors.title">This field is obligatory.</span>
+          </div>
+        </div>
+
+        <div class="form-group" [ngClass]="{'has-danger': formErrors.content}">
+          <textarea class="form-control" formControlName="content" maxlength="5000" rows="3" placeholder="Details"></textarea>
+          <div class="form-control-feedback" role="alert">
+            <span *ngIf="formErrors.content">This field is obligatory.</span>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" [disabled]="isRating" class="btn btn-secondary" (click)="closeRateDialog()">Cancel</button>
+      <button type="button" [disabled]="!rateForm.valid || isRating" class="btn btn-danger" (click)="doRate(true)">✗</button>
+      <button type="button" [disabled]="!rateForm.valid || isRating" class="btn btn-success" (click)="doRate(false)">✓</button>
+    </div>
+  </ng-template>
+</div>`
 
 <notfound-section></notfound-section>
 <loading-section></loading-section>
-
