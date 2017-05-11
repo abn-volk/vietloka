@@ -30,34 +30,6 @@ export class TokenGuard implements CanActivate {
   }
 }
 
-// Protecting routers that only non logged in users can access
-// @Injectable()
-// export class NonLoggedInGuard implements CanActivate {
-//   constructor(private svc: UserService, private router: Router) {}
-//   canActivate(): boolean {
-//     // let id = localStorage.getItem('id');
-//     // let token = localStorage.getItem('token');
-//     // if (token == null) {
-//     //   this.router.navigateByUrl('/');
-//     //   return true;
-//     // }
-//     // if (id == null) {
-//     //   this.svc.getProfile().subscribe(
-//     //     user => {
-//     //       localStorage.setItem('id', user.id);
-//     //       return false;
-//     //     },
-//     //     () => {
-//     //       localStorage.removeItem('token');
-//     //       this.router.navigateByUrl('/');
-//     //       return true;
-//     //     }
-//     //   )
-//     // }
-//     return false;
-//   }
-// }
-
 // Protecting routers that only guests can access
 @Injectable()
 export class GuestGuard implements CanActivate {

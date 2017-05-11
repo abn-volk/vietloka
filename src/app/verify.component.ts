@@ -22,13 +22,6 @@ export class VerifyComponent {
     this.networkError = false;
     this.verifying = false;
     this.buildForm();
-    //
-    // // If users already verified but try to access the page,
-    // // the browser will automatically go to the profile page
-    // if (localStorage.getItem('is_guest') === 'true'
-    //   || localStorage.getItem('is_host') === 'true') {
-    //   window.location.replace('/profile');
-    // }
   }
 
   buildForm(): void {

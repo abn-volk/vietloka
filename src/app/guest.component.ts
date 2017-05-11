@@ -9,17 +9,14 @@ import { RentService } from './rent.service';
   selector: 'guest-section',
   templateUrl: './guest.component.html',
 })
-export class GuestComponent implements OnInit, OnDestroy{
-  @ViewChild('rentModal') rentModal;
-  modalRef: NgbModalRef;
+export class GuestComponent implements OnInit {
   id: string;
   sub: any;
   guest: User;
   isLoggedIn = (localStorage.getItem('token') && localStorage.getItem('id'));
   isHost = (localStorage.getItem('is_host') === 'true');
 
-  constructor(private router: Router, private route: ActivatedRoute,
-    private userService: UserService, private sanitizer: DomSanitizer) {}
+  constructor(private router: Router, private route: ActivatedRoute, private userService: UserService) {}
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -34,15 +31,6 @@ export class GuestComponent implements OnInit, OnDestroy{
         (error) => window.location.replace('/home')
       );
     })
-  }
-
-  trustResource(i: string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(i)
-  }
-
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 
 }

@@ -9,9 +9,7 @@ import { RentService } from './rent.service';
   selector: 'host-section',
   templateUrl: './host.component.html',
 })
-export class HostComponent implements OnInit, OnDestroy{
-  @ViewChild('rentModal') rentModal;
-  modalRef: NgbModalRef;
+export class HostComponent implements OnInit{
   id: string;
   sub: any;
   host: User;
@@ -19,7 +17,7 @@ export class HostComponent implements OnInit, OnDestroy{
   isGuest = (localStorage.getItem('is_guest') === 'true');
 
   constructor(private router: Router, private route: ActivatedRoute,
-    private userService: UserService, private sanitizer: DomSanitizer) {}
+    private userService: UserService) {}
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -36,17 +34,8 @@ export class HostComponent implements OnInit, OnDestroy{
     })
   }
 
-  trustResource(i: string) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(i)
-  }
-
-  // After users press mail button
-  mail(){
-
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+  mail() {
+    
   }
 
 }

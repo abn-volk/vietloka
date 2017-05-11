@@ -92,11 +92,8 @@ export class HouseComponent implements OnInit, OnDestroy{
       }
     )
   }
-
-
   ngOnDestroy() {
     this.sub.unsubscribe();
   }
-
 
 }

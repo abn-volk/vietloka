@@ -9,9 +9,6 @@
 
         <!-- Title -->
         <h1>Guest profile</h1>
-        <img *ngIf="guest?.user.picture" [src]="guest?.user.picture" class="img-thumbnail rounded-circle">
-        <!-- <h2>{{user?.name}}</h2>
-        <div>{{user?.email}}</div> -->
 
         <!-- <Warning if users do not have permission to view this profile -->
         <p *ngIf="!isLoggedIn" class="form-text text-muted">
@@ -22,6 +19,8 @@
           Your account is not verified. <a routerLink="/verify">Verify</a> your account to become a host.
         </p>
 
+        <img *ngIf="guest?.user.picture && isHost" [src]="guest?.user.picture" class="img-thumbnail rounded-circle">
+
         <!-- Profile tabs -->
         <div class="row" *ngIf="isHost">
           <ngb-tabset class="mx-auto mt-3">
@@ -30,12 +29,12 @@
               <ng-template ngbTabContent>
                 <div>
                   <p>Name: {{guest?.user.name}}</p>
-                  <p>Email: {{guest?.user.email}}</p>
+                  <!-- <p>Email: {{guest?.user.email}}</p> -->
                   <p>Gender: {{guest?.user?.gender}}</p>
                   <p>Job: {{guest?.user.job}}</p>
                   <p>Place of Work: {{guest?.user.placeOfWork}}</p>
-                  <p>Phone: {{guest?.user.phoneNumber}}</p>
-                  <p>ID: {{guest?.user.identityNumber}}</p>
+                  <!-- <p>Phone: {{guest?.user.phoneNumber}}</p>
+                  <p>ID: {{guest?.user.identityNumber}}</p> -->
                   <p>Birthday: {{guest?.user.dateOfBirth}}</p>
                 </div>
               </ng-template>
