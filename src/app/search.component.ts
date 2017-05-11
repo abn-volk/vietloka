@@ -45,6 +45,7 @@ export class SearchComponent {
         (data) => {
           this.lat = parseFloat(data.results[0].geometry.location.lat);
           this.lng = parseFloat(data.results[0].geometry.location.lng);
+          this.zoom = 10;
           // let bounds = data.results[0].geometry.viewport;
           // this.bounds = {north: parseFloat(bounds.northeast.lat),
           //                east: parseFloat(bounds.northeast.lng),
