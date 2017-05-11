@@ -25,26 +25,32 @@
         <div class="row" *ngIf="isGuest">
           <ngb-tabset class="mx-auto mt-3">
 
+            <!-- Host information -->
             <ngb-tab title="Host Profile">
               <ng-template ngbTabContent>
                 <div>
                   <p>Name: {{host?.user.name}}</p>
                   <!-- <p>Email: {{host?.user.email}}</p> -->
-                  <p>Gender: {{host?.user?.gender}}</p>
-                  <p>Job: {{host?.user.job}}</p>
-                  <p>Place of Work: {{host?.user.placeOfWork}}</p>
+                  <p>Gender: {{host?.gender}}</p>
+                  <p>Job: {{host?.job}}</p>
+                  <p>Place of Work: {{host?.placeOfWork}}</p>
                   <!-- <p>Phone: {{host?.user.phoneNumber}}</p>
                   <p>ID: {{host?.user.identityNumber}}</p> -->
-                  <p>Birthday: {{host?.user.dateOfBirth}}</p>
+                  <p>Birthday: {{host?.dateOfBirth}}</p>
                 </div>
               </ng-template>
             </ngb-tab>
 
+            <!-- List of hosts's houses -->
             <ngb-tab title="Host's Houses">
-              <ng-template ngbTabContent>Not yet implemented.
+              <ng-template ngbTabContent>
+                <div *ngFor="let h of houses">
+                  <a routerLink="/house/{{h.id}}">{{h.title | uppercase}} at {{h.address}}</a>
+                </div>
               </ng-template>
             </ngb-tab>
 
+            <!-- List of guests stay at hosts' houses -->
             <ngb-tab title="Host's Guests">
               <ng-template ngbTabContent>Not yet implemented
               </ng-template>

@@ -97,6 +97,14 @@ export class UserService {
                .map(response => response.json());
   }
 
+  getAllHostHouse(id: String): Observable<any> {
+    let h = new Headers({
+        'Content-Type': 'application/json'
+      });
+    return this.http.get(this.url + `/api/v1/users/${id}/houses`, {headers: h})
+               .map(response => response.json());
+  }
+
   isGuest(): Observable<User> {
     let h = new Headers({'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + '/api/v1/guests/self', {headers: h})

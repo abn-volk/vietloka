@@ -75,6 +75,7 @@ export class VerifyComponent {
       gender: v.gender,
       dateOfBirth: v.dateOfBirth
     }
+    console.log(updatedInfo)
     this.userService.updateUser(updatedInfo).subscribe(
       () => {
         // Set nationality
@@ -117,7 +118,7 @@ export class VerifyComponent {
   // Go to the profile page after verification
   gotoProfile() {
     this.modalRef.close();
-    this.router.navigateByUrl('/profile');
+    window.location.replace('/profile');
   }
 
 }

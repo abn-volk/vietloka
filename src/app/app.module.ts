@@ -13,12 +13,13 @@ import { LoginComponent } from './login.component';
 import { RegisterComponent } from './register.component';
 import { ProfileComponent } from './profile.component';
 import { HostComponent} from './host.component';
-import { GuestComponent} from './guest.component';
 import { AboutComponent } from './about.component';
 import { HouseComponent } from './house.component';
 import { VerifyComponent } from './verify.component';
 import { PublishComponent } from './publish.component';
 import { SearchComponent } from './search.component';
+import { LoadingComponent } from './loading.component';
+import { NotFoundComponent } from './notfound.component';
 
 import { UserService } from './user.service';
 import { GeocodingService } from './geocoding.service';
@@ -55,10 +56,6 @@ const routes: Route[] = [
     component: HostComponent,
   },
   {
-    path: 'guest/:id',
-    component: GuestComponent,
-  },
-  {
     path: 'house/:id',
     component: HouseComponent,
   },
@@ -82,7 +79,7 @@ const routes: Route[] = [
   },
   {
     path: '**',
-    redirectTo: 'home'
+    component: NotFoundComponent
   }
 ]
 
@@ -94,12 +91,13 @@ const routes: Route[] = [
     RegisterComponent,
     ProfileComponent,
     HostComponent,
-    GuestComponent,
     HouseComponent,
     PublishComponent,
     SearchComponent,
     VerifyComponent,
-    AboutComponent
+    AboutComponent,
+    LoadingComponent,
+    NotFoundComponent
   ],
   imports: [
     NgbModule.forRoot(),

@@ -66,6 +66,12 @@ export class HouseService {
                .map(response => response.json() as Array<House>);
     }
 
+    getMyHouses(): Observable<Array<House>> {
+      let h = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token')});
+      return this.http.get(this.url + `/api/v1/houses/mine`, {headers: h})
+               .map(response => response.json() as Array<House>);
+    }
+
     getHouseComments(id: string): Observable<Array<Comment>> {
       return this.http.get(this.url + `/api/v1/houses/${id}/comments`, {headers: this.h})
                  .map(response => response.json() as Array<Comment>);
