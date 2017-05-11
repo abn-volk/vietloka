@@ -8,24 +8,29 @@
       <div class="card-text text-center">
 
         <!-- Title -->
-        <h1>My profile</h1>
-        <img *ngIf="user?.picture" [src]="user?.picture" class="img-thumbnail rounded-circle">
-
-        <!-- Navigation link to the verify page if the user hasn't been verified yet -->
-        <div *ngIf="!verified">
-          Your account is not verified. To become a verified host or guest, click <a routerLink="/verify">here</a>.
+        <div style="width:100%;background-color:#a5a4a4;padding:5%;padding-top:10%;padding-bottom:0;display:table !important">  
+          <div style="background-color:#292b2c;padding:5%;padding-bottom:1%">
+            <h1 style="color:#fff">My profile</h1>
+            <img *ngIf="user?.picture" [src]="user?.picture" class="img-thumbnail rounded-circle">
+            <p style="padding:1%">{{user?.name}}</p>
+          </div>
         </div>
+        <div style="width:100%;background-color:#292b2c;padding:5%;padding-top:0;padding-bottom:20%">
+        <div style="background-color:#a5a4a4;padding:5%;padding-top:0">
+          <!-- Navigation link to the verify page if the user hasn't been verified yet -->
+          <div *ngIf="!verified" style="padding:2%">
+            Your account is not verified. To become a verified host or guest, click <a routerLink="/verify">here</a>.
+          </div>
 
-        <!-- Profile tabs -->
-        <div class="row" *ngIf="verified">
-          <ngb-tabset class="mx-auto mt-3">
+          <!-- Profile tabs -->
+          <div class="row" *ngIf="verified">
+            <ngb-tabset class="mx-auto mt-3">
 
             <!-- User Information -->
             <ngb-tab title="About Me">
               <ng-template ngbTabContent>
                 <div>
                   <br>
-                  <p>Name: {{user?.name}}</p>
                   <!-- <p>Email: {{user?.email}}</p> -->
                   <p>Gender: {{user?.gender}}</p>
                   <p *ngIf="isHost && isGuest">Role: Host, Guest</p>
@@ -42,15 +47,15 @@
               </ng-template>
             </ngb-tab>
 
-            <!-- List of users' houses, if the users are hosts -->
-            <ngb-tab *ngIf="isHost" title="My Houses">
-              <ng-template ngbTabContent>
-                <br>
-                <div *ngFor="let h of houses">
-                  <a routerLink="/house/{{h.id}}">{{h.title | uppercase}} at {{h.address}}</a>
-                </div>
-              </ng-template>
-            </ngb-tab>
+              <!-- List of users' houses, if the users are hosts -->
+              <ngb-tab *ngIf="isHost" title="My Houses">
+                <ng-template ngbTabContent>
+                  <br>
+                  <div *ngFor="let h of houses">
+                    <p><a routerLink="/house/{{h.id}}">{{h.title | uppercase}} at {{h.address}}</a></p>
+                  </div>
+                </ng-template>
+              </ngb-tab>
 
             <!-- List of guests stayed at users' houses, if the users are hosts -->
             <ngb-tab *ngIf ="isHost" title="My Guests">
@@ -78,9 +83,10 @@
               </ng-template>
             </ngb-tab>
 
-          </ngb-tabset>
+            </ngb-tabset>
+          </div>
         </div>
-
+        </div>
         <button class="btn btn-danger mt-2" (click)="doLogout()">Log out</button>
       </div>
     </div>
