@@ -5,5 +5,4 @@ import {Component, Input} from '@angular/core';
   templateUrl: './loading.component.html',
 })
 export class LoadingComponent {
-  
 }
