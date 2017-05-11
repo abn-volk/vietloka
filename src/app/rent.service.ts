@@ -10,9 +10,10 @@ export class Rent {
   house: string;
   accepted: boolean;
   completed: boolean;
+  createdAt: Date;
 }
 
-@Injectable() 
+@Injectable()
 export class RentService {
   private url = environment.server;
   constructor(private http: Http) {}
@@ -22,7 +23,7 @@ export class RentService {
     });
 
   getRent(id: string): Observable<any> {
-    
+
     return this.http.get(this.url + `/api/v1/rents/${id}`, {headers: this.h})
                .map(response => response.json());
   }
@@ -50,6 +51,18 @@ export class RentService {
   getRentHistory(houseId: string): Observable<Array<Rent>> {
     return this.http.get(this.url + `/api/v1/houses/${houseId}/rent_history`, {headers: this.h})
                .map(response => response.json() as Array<Rent>);
+  }
+
+  getMyRents(): Observable<Array<Rent>> {
+    let h = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token')});
+    return this.http.get(this.url + `/api/v1/rents/mine`, {headers: h})
+             .map(response => response.json() as Array<Rent>);
+  }
+
+  getMyGuests() {
+    let h = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token')});
+    return this.http.get(this.url + `/api/v1/rents/history`, {headers: h})
+             .map(response => response.json() as Array<Rent>);
   }
 
 }

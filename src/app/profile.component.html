@@ -24,6 +24,7 @@
             <ngb-tab title="User Profile">
               <ng-template ngbTabContent>
                 <div>
+                  <br>
                   <p>Name: {{user?.name}}</p>
                   <!-- <p>Email: {{user?.email}}</p> -->
                   <p>Gender: {{user?.gender}}</p>
@@ -34,7 +35,9 @@
                   <p>Place of Work: {{user?.placeOfWork}}</p>
                   <!-- <p>Phone: {{user?.phoneNumber}}</p>
                   <p>ID: {{user?.identityNumber}}</p> -->
-                  <p>Birthday: {{user?.dateOfBirth}}</p>
+                  <p>Birthday:
+                    {{user?.dateOfBirth| date: 'dd'}}/{{user?.dateOfBirth| date: 'MM'}}/{{user?.dateOfBirth| date: 'yyyy'}}
+                  </p>
                 </div>
               </ng-template>
             </ngb-tab>
@@ -51,13 +54,27 @@
 
             <!-- List of guests stayed at users' houses, if the users are hosts -->
             <ngb-tab *ngIf ="isHost" title="My Guests">
-              <ng-template ngbTabContent>Not yet implemented
+              <ng-template ngbTabContent>
+                <br>
+                <div *ngFor="let r of rents">
+                  <a (click)="checkRent(r)">
+                    {{r.guest.name | uppercase}},
+                     in {{r.createdAt| date: 'dd'}}/{{r.createdAt| date: 'MM'}}/{{r.createdAt| date: 'yyyy'}}
+                  </a>
+                </div>
               </ng-template>
             </ngb-tab>
 
             <!-- List of houses users stayed, if the users are guests -->
-            <ngb-tab *ngIf="isGuest" title="Rented Houses">
-              <ng-template ngbTabContent>Not yet implemented
+            <ngb-tab *ngIf="isGuest" title="Stayed Houses">
+              <ng-template ngbTabContent>
+                <br>
+                <div *ngFor="let r of renteds">
+                  <a routerLink="/house/{{r.house._id}}">
+                    {{r.house.title | uppercase}} at {{r.house.address}},
+                    in {{r.createdAt| date: 'dd'}}/{{r.createdAt| date: 'MM'}}/{{r.createdAt| date: 'yyyy'}}
+                  </a>
+                </div>
               </ng-template>
             </ngb-tab>
 
@@ -68,4 +85,27 @@
       </div>
     </div>
   </div>
+
+
+  <ng-template #rentdialog>
+    <div class="modal-header mx-auto">
+      <h4 class="modal-title"><a routerLink="/house/{{selectedRent?.house._id}}">{{selectedRent?.house.title}}</a></h4>
+    </div>
+    <div class="modal-body">
+      <br>
+      <p>Guest Name: {{selectedRent?.guest.name}}</p>
+      <!-- <p>Email: {{user?.email}}</p> -->
+      <p>Guest Gender: {{selectedRent?.guest.gender}}</p>
+      <p>Guest Job: {{selectedRent?.guest.job}}</p>
+      <p>Guest 's Place of Work: {{selectedRent?.guest.placeOfWork}}</p>
+      <!-- <p>Phone: {{user?.phoneNumber}}</p>
+      <p>ID: {{user?.identityNumber}}</p> -->
+      <p>Guest 's Birthday:
+        {{selectedRent?.guest.dateOfBirth | date: 'dd'}}/{{selectedRent?.guest.dateOfBirth | date: 'MM'}}/{{selectedRent?.guest.dateOfBirth | date: 'yyyy'}}
+      </p>
+    </div>
+    <div class="modal-footer mx-auto">
+      <p> To cofirm this guest to stay at your house, go to the confirmation link in your e-mail</p>
+    </div>
+  </ng-template>
 </div>

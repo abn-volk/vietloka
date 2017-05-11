@@ -1,6 +1,6 @@
 <!-- Component for publish page, used for host to publish a house they want to rent -->
 
-<div class="container mt-4">
+<div class="container mt-4" style="padding-bottom:5%;padding-top:5%">
   <h1>Publish</h1>
   <p class="lead"></p>
 
@@ -50,8 +50,10 @@
           {{formErrors.lng}}
         </div>
       </div>
-
-      <button type="button" class="btn btn-info" (click)="showMap()">Pick on map</button>
+      <div class="col-md-4" style="height:100%">
+        <p style="padding:5px"></p>
+        <button type="button" class="btn btn-info" style="height:50%;width:100%" (click)="showMap()">Pick on map</button>
+      </div>
     </div>
 
     <div class="form-group" [ngClass]="{'has-danger': formErrors.price.length > 0}">
@@ -72,13 +74,15 @@
           {{formErrors.numOfMember}}
         </div>
       </div>
-      <div class="col">
-      <label class="checkbox-inline">
-        <input type="checkbox" formControlName="hasChildren">Children
-      </label>
-      <label class="checkbox-inline">
-        <input type="checkbox" formControlName="hasOlders">Elderly people
-      </label>
+      <div class="col" style="text-align:center;padding-top:40px">
+        <div class="row">
+          <label class="checkbox-inline mx-auto">
+            <input type="checkbox" formControlName="hasChildren"> Children
+          </label>
+          <label class="checkbox-inline mx-auto">
+            <input type="checkbox" formControlName="hasOlders"> Elderly people
+          </label>
+        </div>
       </div>
     </div>
 
@@ -100,21 +104,23 @@
       </div>
     </div>
 
-    <label class="checkbox-inline">
-      <input type="checkbox" formControlName="hasElectricHeater">Water heater
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" formControlName="hasWashingMachine">Washing machine
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" formControlName="hasTV">TV
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" formControlName="hasCarPark">Car park
-    </label>
-    <label class="checkbox-inline">
-      <input type="checkbox" formControlName="hasInternet">Internet
-    </label>
+    <div class="row">
+      <label class="checkbox-inline mx-auto">
+        <input type="checkbox" formControlName="hasElectricHeater"> Water heater
+      </label>
+      <label class="checkbox-inline mx-auto">
+        <input type="checkbox" formControlName="hasWashingMachine"> Washing machine
+      </label>
+      <label class="checkbox-inline mx-auto">
+        <input type="checkbox" formControlName="hasTV"> TV
+      </label>
+      <label class="checkbox-inline mx-auto">
+        <input type="checkbox" formControlName="hasCarPark"> Car park
+      </label>
+      <label class="checkbox-inline mx-auto">
+        <input type="checkbox" formControlName="hasInternet"> Internet
+      </label>
+    </div>
 
     <div class="form-group">
       <label for="wc">WC type</label>
