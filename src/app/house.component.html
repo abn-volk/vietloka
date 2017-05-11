@@ -42,7 +42,9 @@
   <div class="row">
     <div class="col-md-6">
       <h2>{{house.title}}</h2>
-      <p class="lead">{{house.address}}</p>
+      <p class="lead">{{house.address}} 
+        <a href="http://maps.google.com/?q={{house.map.lat}},{{house.map.lng}}" target="_blank">(View on Google Maps)</a>
+      </p>
       <p>{{house.description}}</p>
 
       <hr>
@@ -125,17 +127,17 @@
 
   <!-- Reviews -->
   <hr>
-  <h4>Reviews (<span class="text-success">{{ratings.approval}}</span>/<span class="text-danger">{{ratings.disapproval}}</span>)</h4>
+  <h4>Reviews (<span class="text-success">{{ratings?.approval}}</span>/<span class="text-danger">{{ratings?.disapproval}}</span>)</h4>
   <div>
-    <div class="card" *ngFor="let comment of comments; let i = index" [attr.data-index]="i">
+    <div class="card" *ngFor="let comment of comments">
       <div class="card-block">
         <div class="row" >
-          <div><img *ngIf="users[i].picture" [src]="users[i].picture" class="img-thumbnail rounded-circle"></div>
+          <div><img *ngIf="comment.guest.picture" [src]="comment.guest.picture" class="img-thumbnail rounded-circle"></div>
           <div class="col">
             <ul class="list-unstyled">
-            <li><h4>{{users[i].name}}</h4></li>
-            <li class="lead text-success" [ngClass]="{'text-danger': !comments[i].approves}">{{comments[i].title}}</li>
-            <li>{{comments[i].content}}</li>
+            <li><h4>{{comment.guest.name}}</h4></li>
+            <li class="lead text-success" [ngClass]="{'text-danger': !comment.approves}">{{comment.title}}</li>
+            <li>{{comment.content}}</li>
             </ul>
           </div>
         </div>
@@ -172,14 +174,14 @@
           <input [ngClass]="{'form-control-danger': formErrors.title}"
             type="text" class="form-control" formControlName="title" placeholder="Title">
           <div class="form-control-feedback" role="alert">
-            <span *ngIf="formErrors.title">This field is obligatory.</span>
+            <span *ngIf="formErrors.title">This field is obligatory.</span><span> </span>
           </div>
         </div>
 
         <div class="form-group" [ngClass]="{'has-danger': formErrors.content}">
           <textarea class="form-control" formControlName="content" maxlength="5000" rows="3" placeholder="Details"></textarea>
           <div class="form-control-feedback" role="alert">
-            <span *ngIf="formErrors.content">This field is obligatory.</span>
+            <span *ngIf="formErrors.content">This field is obligatory.</span><span> </span>
           </div>
         </div>
       </form>
@@ -192,5 +194,5 @@
   </ng-template>
 </div>`
 
-<notfound-section></notfound-section>
-<loading-section></loading-section>
+<notfound-section *ngIf="notFound"></notfound-section>
+<loading-section *ngIf="loading"></loading-section>
