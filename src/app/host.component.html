@@ -29,6 +29,7 @@
             <ngb-tab title="Host Profile">
               <ng-template ngbTabContent>
                 <div>
+                  <br>
                   <p>Name: {{host?.user.name}}</p>
                   <!-- <p>Email: {{host?.user.email}}</p> -->
                   <p>Gender: {{host?.gender}}</p>
@@ -44,15 +45,10 @@
             <!-- List of hosts's houses -->
             <ngb-tab title="Host's Houses">
               <ng-template ngbTabContent>
+                <br>
                 <div *ngFor="let h of houses">
                   <a routerLink="/house/{{h.id}}">{{h.title | uppercase}} at {{h.address}}</a>
                 </div>
-              </ng-template>
-            </ngb-tab>
-
-            <!-- List of guests stay at hosts' houses -->
-            <ngb-tab title="Host's Guests">
-              <ng-template ngbTabContent>Not yet implemented
               </ng-template>
             </ngb-tab>
 

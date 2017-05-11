@@ -47,12 +47,12 @@ export class ProfileComponent {
     this.rentService.getMyRents()
       .subscribe(
         (rents) => {
-          // console.log(rents);
+          console.log(rents);
           this.rents = rents;
         },
         (error) => console.log(error)
       );
-    this.rentService.getMyGuest()
+    this.rentService.getMyGuests()
       .subscribe(
         (renteds) => {
           console.log(renteds);

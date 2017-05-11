@@ -58,7 +58,7 @@ export class RentService {
              .map(response => response.json() as Array<Rent>);
   }
 
-  getMyGuest() {
+  getMyGuests() {
     let h = new Headers({'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token')});
     return this.http.get(this.url + `/api/v1/rents/history`, {headers: h})
              .map(response => response.json() as Array<Rent>);

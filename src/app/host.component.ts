@@ -2,7 +2,6 @@ import { Component, Input, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UserService, User } from './user.service';
 import { HouseService, House } from './house.service';
-import { RentService } from './rent.service';
 
 @Component( {
   selector: 'host-section',
@@ -34,18 +33,15 @@ export class HostComponent implements OnInit{
       );
 
       // Get the list of hosts' houses
-      this.userService.getAllHostHouse(this.id).subscribe(
+      this.userService.getAllHostHouses(this.id).subscribe(
         (houses) => {
           console.log(houses);
           this.houses = houses;
         },
         (error) => console.log(error)
       );
+
     })
-  }
-
-  mail() {
-
   }
 
 }

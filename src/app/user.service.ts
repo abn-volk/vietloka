@@ -97,7 +97,7 @@ export class UserService {
                .map(response => response.json());
   }
 
-  getAllHostHouse(id: String): Observable<any> {
+  getAllHostHouses(id: String): Observable<any> {
     let h = new Headers({
         'Content-Type': 'application/json'
       });
