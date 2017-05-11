@@ -39,7 +39,11 @@
             </ngb-tab>
 
             <ngb-tab *ngIf="isHost" title="My Houses">
-              <ng-template ngbTabContent>Not yet implemented.
+              <ng-template ngbTabContent>
+                <br>
+                <div *ngFor="let h of houses">
+                  <a routerLink="/house/{{h.id}}">{{h.title | uppercase}} at {{h.address}}</a>
+                </div>
               </ng-template>
             </ngb-tab>
 

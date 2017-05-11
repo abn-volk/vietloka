@@ -75,6 +75,7 @@ export class VerifyComponent {
       gender: v.gender,
       dateOfBirth: v.dateOfBirth
     }
+    console.log(updatedInfo)
     this.userService.updateUser(updatedInfo).subscribe(
       () => {
         // Set nationality

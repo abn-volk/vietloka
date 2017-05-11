@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User, UserService } from './user.service';
+import { House, HouseService } from './house.service';
 import { NgbTab, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
 @Component( {
@@ -8,11 +9,12 @@ import { NgbTab, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 })
 export class ProfileComponent {
   user: User;
+  houses: Array<House>;
   verified = false;
   isHost = false;
   isGuest = false;
 
-  constructor (private userService: UserService) {}
+  constructor (private userService: UserService, private houseService: HouseService) {}
 
   ngOnInit() {
     this.userService.getProfile()
@@ -29,9 +31,20 @@ export class ProfileComponent {
         reason => {
           window.location.replace('/')
         });
-
+    this.houseService.getMyHouses().
+      subscribe(
+        (houses) => {
+          console.log(houses);
+          this.houses = houses;
+        },
+        (error) => console.log(error)
+        // (error) => window.location.replace('/home')
+      );
   }
 
+  showMyHouse() {
+
+  }
 
   // After users press log out button
   doLogout() {
