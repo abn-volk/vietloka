@@ -19,6 +19,8 @@ import { HouseComponent } from './house.component';
 import { VerifyComponent } from './verify.component';
 import { PublishComponent } from './publish.component';
 import { SearchComponent } from './search.component';
+import { LoadingComponent } from './loading.component';
+import { NotFoundComponent } from './notfound.component';
 
 import { UserService } from './user.service';
 import { GeocodingService } from './geocoding.service';
@@ -82,7 +84,7 @@ const routes: Route[] = [
   },
   {
     path: '**',
-    redirectTo: 'home'
+    component: NotFoundComponent
   }
 ]
 
@@ -99,7 +101,9 @@ const routes: Route[] = [
     PublishComponent,
     SearchComponent,
     VerifyComponent,
-    AboutComponent
+    AboutComponent,
+    LoadingComponent,
+    NotFoundComponent
   ],
   imports: [
     NgbModule.forRoot(),
