@@ -20,6 +20,7 @@
         <div class="row" *ngIf="verified">
           <ngb-tabset class="mx-auto mt-3">
 
+            <!-- User Information -->
             <ngb-tab title="User Profile">
               <ng-template ngbTabContent>
                 <div>
@@ -38,6 +39,7 @@
               </ng-template>
             </ngb-tab>
 
+            <!-- List of users' houses, if the users are hosts -->
             <ngb-tab *ngIf="isHost" title="My Houses">
               <ng-template ngbTabContent>
                 <br>
@@ -47,11 +49,13 @@
               </ng-template>
             </ngb-tab>
 
-            <ngb-tab *ngIf="isHost" title="My Guests">
+            <!-- List of guests stayed at users' houses, if the users are hosts -->
+            <ngb-tab *ngIf ="isHost" title="My Guests">
               <ng-template ngbTabContent>Not yet implemented
               </ng-template>
             </ngb-tab>
 
+            <!-- List of houses users stayed, if the users are guests -->
             <ngb-tab *ngIf="isGuest" title="Rented Houses">
               <ng-template ngbTabContent>Not yet implemented
               </ng-template>

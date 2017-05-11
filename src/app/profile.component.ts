@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { User, UserService } from './user.service';
 import { House, HouseService } from './house.service';
+// import { Rent, RentService} from './rent.service';
 import { NgbTab, NgbTabset } from '@ng-bootstrap/ng-bootstrap';
 
 @Component( {
@@ -40,10 +41,6 @@ export class ProfileComponent {
         (error) => console.log(error)
         // (error) => window.location.replace('/home')
       );
-  }
-
-  showMyHouse() {
-
   }
 
   // After users press log out button
