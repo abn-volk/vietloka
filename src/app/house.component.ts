@@ -52,14 +52,14 @@ export class HouseComponent implements OnInit, OnDestroy{
       this.houseService.getHouse(this.id).subscribe(
         (house) => {
           this.house = house;
-          console.log(house);
+          //console.log(house);
           // Get rent history
           Observable.forkJoin([
             this.rentService.getRentHistory(this.id),
             this.houseService.getHouseRatings(this.id),
             this.houseService.getHouseComments(this.id)
           ]).subscribe(
-            (res) => {
+            (res: any) => {
               this.loading = false;
               let rents = res[0];
               rents.forEach((rent) => {
@@ -185,7 +185,7 @@ export class HouseComponent implements OnInit, OnDestroy{
         window.location.reload();
       },
       (error) => {
-        console.log(error);
+        //console.log(error);
       }
     )
   }

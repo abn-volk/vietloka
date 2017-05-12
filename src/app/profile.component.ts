@@ -73,7 +73,7 @@ export class ProfileComponent {
   checkRent(rent: Rent) {
     this.modalRef = this.modalService.open(this.rentDialog);
     this.selectedRent = rent;
-    console.log(this.selectedRent);
+    //console.log(this.selectedRent);
   }
 
   // After users press log out button
