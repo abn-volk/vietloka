@@ -26,7 +26,7 @@
       <ul class="list-unstyled">
         <li>Price: {{house.price}} VND per day</li>
         <li>Area: {{house.area}} sqm</li>
-        <li>Number of guests: <span></span>/{{house.numOfTotalSlots}}</li>
+        <li>Number of guests: <span>{{currentGuests}}</span>/{{house.numOfTotalSlots}}</li>
         <li>Children: <span *ngIf="house.hasChildren">Yes</span><span *ngIf="!house.hasChildren">No</span></li>
         <li>Elderly people: <span *ngIf="house.hasOlders">Yes</span><span *ngIf="!house.hasOlders">No</span></li>
       </ul>
@@ -62,7 +62,7 @@
       <div *ngIf="!(isLoggedIn && isHost && !isGuest)">
         <div class="row" *ngIf="!(!!currentRent)">
           <button type="button" class="btn btn-success btn-lg mx-auto"
-            [disabled]="!isLoggedIn || !isGuest || checkOwner() || hasRequest"
+            [disabled]="!isLoggedIn || !isGuest || checkOwner() || hasRequest || (house.numOfTotalSlots == currentGuests)"
             (click)="doStay()">Stay at this place</button>
         </div>
         <p *ngIf="!isLoggedIn" class="form-text text-muted">

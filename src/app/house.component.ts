@@ -38,6 +38,7 @@ export class HouseComponent implements OnInit, OnDestroy{
   hasRequest: boolean = false;
   notFound: boolean = false;
   loading: boolean = true;
+  currentGuests: number = 0;
 
   constructor(private router: Router, private route: ActivatedRoute, private houseService: HouseService,
     private userService: UserService, private sanitizer: DomSanitizer, private fb: FormBuilder,
@@ -57,7 +58,8 @@ export class HouseComponent implements OnInit, OnDestroy{
           Observable.forkJoin([
             this.rentService.getRentHistory(this.id),
             this.houseService.getHouseRatings(this.id),
-            this.houseService.getHouseComments(this.id)
+            this.houseService.getHouseComments(this.id),
+            this.houseService.getCurrentlyStaying(this.id)
           ]).subscribe(
             (res: any) => {
               this.loading = false;
@@ -68,6 +70,7 @@ export class HouseComponent implements OnInit, OnDestroy{
                });
                this.ratings = res[1];
                this.comments = res[2];
+               this.currentGuests = res[3].count;
             },
             (err) => {
               this.loading = true;

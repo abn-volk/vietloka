@@ -87,4 +87,10 @@ export class HouseService {
     return this.http.get(this.url + `/api/v1/houses/${id}/ratings`, {headers: this.h})
                .map(response => response.json());
   }
+
+  // Returns the number of current guests for a house
+  getCurrentlyStaying(id: string): Observable<any> {
+    return this.http.get(this.url + `/api/v1/houses/${id}/current_staying`, {headers: this.h})
+               .map(response => response.json());
+  }
 }
