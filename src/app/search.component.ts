@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { GeocodingService } from './geocoding.service';
 import { LatLngBoundsLiteral } from "@agm/core";
@@ -11,10 +12,9 @@ import { House, HouseService } from "app/house.service";
   styleUrls: ['search.component.css']
 })
 export class SearchComponent {
-  constructor(private route: ActivatedRoute, private router: Router,
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router,
     private houseService: HouseService, private geocodingService: GeocodingService) {}
 
-  query = '';
   zoom: number = 6;
   lat: number = 18;
   lng: number = 105;
@@ -22,13 +22,27 @@ export class SearchComponent {
   currentHouse: House;
   showInfo: boolean = false;
   loading: boolean = true;
+  searchForm: FormGroup;
+  searchResults: Array<any>;
+  query: string;
   // bounds: LatLngBoundsLiteral;
 
   ngOnInit() {
+    this.searchForm = this.fb.group({
+        'query': ['', [Validators.required]]
+      });
+
+    this.searchForm.valueChanges.debounceTime(300)
+        .subscribe(
+          data => this.onQueryChanged(data)
+        );
+    this.searchForm.valueChanges.subscribe(
+      data => this.query = this.searchForm.value.query
+    )
     this.route.queryParams.subscribe((params: Params) => {
       if (params['query']) {
-        this.query = params['query'];
-        this.submitSearch({query: this.query});
+        this.searchForm.setValue({query: params['query']});
+        this.submitSearch(null);
       }
     });
     this.houseService.getAllHouses().subscribe(
@@ -39,11 +53,29 @@ export class SearchComponent {
     )
   }
 
+  onQueryChanged(data?: any): void {
+    let q = this.searchForm.value.query;
+    if (!!q && q.length > 0) {
+      this.geocodingService.find(q).subscribe(
+        (data) => {
+          this.searchResults = data.results;
+        }
+      )
+    }
+    else this.searchResults = [];
+  }
+
+  chooseAddress(address: string) {
+    this.searchResults = [];
+    this.query = address;
+    this.submitSearch(null);
+  }
+
 
   // After users press submit button
-  submitSearch(value) {
-    if (value.query) {
-      this.geocodingService.find(value.query).subscribe(
+  submitSearch(event: any) {
+    if (this.query) {
+      this.geocodingService.find(this.query).subscribe(
         (data) => {
           this.lat = parseFloat(data.results[0].geometry.location.lat);
           this.lng = parseFloat(data.results[0].geometry.location.lng);

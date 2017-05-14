@@ -11,7 +11,7 @@
     <form #form="ngForm" (ngSubmit)="search(form.value.query)">
       <div class="form-group">
         <div class="row">
-          <input type="text" class="col form-control" name="query" aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
+          <input type="text" class="col form-control" name="query" autocomplete="false" placeholder="Search for a place" [(ngModel)]="query">
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </div>

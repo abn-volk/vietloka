@@ -2,13 +2,17 @@
 
 <div class="container" id="top-form">
   <!-- Search bar -->
-  <form #form="ngForm" (ngSubmit)="submitSearch(form.value)">
+  <form [formGroup]="searchForm" (ngSubmit)="submitSearch($event)">
     <div class="form-group">
       <div class="row">
-        <input type="text" class="col form-control" name="query"
-          aria-describedby="helpId" placeholder="Search for a place" [(ngModel)]="query">
+        <input type="text" class="col form-control" formControlName="query"
+         required placeholder="Search for a place">
         <button type="submit" class="btn btn-primary">Submit</button>
       </div>
+      <div class="list-group">
+          <a *ngFor="let opt of searchResults" class="list-group-item"
+            (click)="chooseAddress(opt.formatted_address)">{{opt.formatted_address}}</a>
+        </div>
 
     </div>
   </form>
